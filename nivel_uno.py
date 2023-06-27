@@ -3,6 +3,7 @@ from pygame.locals import *
 from configuraciones import *
 from class_personaje import Personaje
 from class_plataforma import Plataforma
+from class_enemigos import Enemigos
 from modo import *
 '''
 #Class = parte estatica, con atributos y variables, lo que me permite describir a un objeto
@@ -17,14 +18,11 @@ from modo import *
 '''
 
 #######################################################################
-def actualizar_pantalla(pantalla, un_personaje: Personaje, fondo, lados_piso, texto, lista_plataformas, lista_lados_plataformas):
+def actualizar_pantalla(pantalla, un_personaje: Personaje, fondo, lados_piso, texto, lista_plataformas, lista_lados_plataformas,mini_bot):
     pantalla.blit(fondo, (0,0))
     pantalla.blit(texto, (10, 10))
-
+    pantalla.blit(mini_bot.imagen, mini_bot.rect.topleft)
     un_personaje.update(pantalla, lados_piso, lista_lados_plataformas)
-
-    # for plataforma in lista_plataformas:
-    #     pantalla.blit(plataforma.image, (plataforma.rect.x, plataforma.rect.y))
 
     for plataforma in lista_plataformas:
         for rect in plataforma.rects:
@@ -65,6 +63,9 @@ diccionario_animaciones["camina_izquierda"] = personaje_camina_izquierda
 
 mi_personaje = Personaje(tamaño, diccionario_animaciones, posicion_inicial, 5)
 
+#ENEMIGOS
+mini_bot = Enemigos((40,36),"mini-bot\\0.png",(450,350), 5)
+
 #PISO
 piso = pygame.Rect(0,0,W,20)
 piso.top = mi_personaje.lados["main"].bottom
@@ -72,11 +73,6 @@ piso.top = mi_personaje.lados["main"].bottom
 lados_piso = obtener_rectangulos(piso)
 
 #PLATAFORMAS
-
-# plataforma = Plataforma("recursos\\plataforma.png", 190, 60, 500, 450)
-# otra_plataforma = Plataforma("recursos\\0.png", 50, 50, 330, 400)
-# plataforma_final = Plataforma("recursos\\suelo.png", 250, 250, 950, 150)
-# lista_plataformas = [plataforma, otra_plataforma, plataforma_final]
 plataformas_1 = Plataforma("recursos\\plataforma.png", 180, 50, [(330, 400), (200, 300), (100, 200)])
 plataformas_2 = Plataforma("recursos\\0.png", 50, 50, [(690, 400), (500, 200), (600, 350)])
 plataformas_3 = Plataforma("recursos\\suelo.png", 210, 210, [(750, 150)])
@@ -115,10 +111,10 @@ while True:
         elif evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_TAB:
                 cambiar_modo()        
-
+#and posicion_inicial[0] < W - 5 - posicion_inicial[1]
     keys = pygame.key.get_pressed()
     
-    if(keys[pygame.K_RIGHT]) and posicion_inicial[0] < W - 5 - posicion_inicial[1]:
+    if(keys[pygame.K_RIGHT]) :
         mi_personaje.que_hace = "derecha"
     elif(keys[pygame.K_LEFT]):
         mi_personaje.que_hace = "izquierda"
@@ -128,22 +124,16 @@ while True:
         mi_personaje.que_hace = "quieto"
 
 
-    actualizar_pantalla(PANTALLA, mi_personaje, fondo, lados_piso, texto, lista_plataformas, lista_lados_plataformas)
+    actualizar_pantalla(PANTALLA, mi_personaje, fondo, lados_piso, texto, lista_plataformas, lista_lados_plataformas, mini_bot)
 
     if get_mode():
         pygame.draw.rect(PANTALLA, "Blue", piso, 2)
         for lado in mi_personaje.lados: 
             pygame.draw.rect(PANTALLA, "Red", mi_personaje.lados[lado] , 2)
 
-
-        # for rect in lista_lados_plataformas:
-        #     pygame.draw.rect(PANTALLA, "Green", rect, 2)
         for lados_plataforma in lista_lados_plataformas:
             for lados in lados_plataforma:
                 for lado in lados.values():
                     pygame.draw.rect(PANTALLA, "Green", lado, 2)
-        # for lados_plataforma in lista_lados_plataformas:
-        #     for lado in lados_plataforma:
-        #         pygame.draw.rect(PANTALLA, "Green", lado, 2)
 
     pygame.display.update()
