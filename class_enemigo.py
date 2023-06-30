@@ -1,6 +1,6 @@
 import pygame
 
-class Enemigos(pygame.sprite.Sprite):
+class Enemigo(pygame.sprite.Sprite):
     def __init__(self, tamaño, path_imagen, posicion_inicial, velocidad) -> None:
         super().__init__()
         #TAMAÑO IMAGEN
@@ -16,27 +16,27 @@ class Enemigos(pygame.sprite.Sprite):
         # self.lados = obtener_rectangulos(rectangulo)
         #MOVIMIENTO
         self.velocidad = velocidad
-        # self.desplazamiento_y = 0
+        self.desplazamiento_y = 0
 
     # def reescalar_animaciones(self):
     #     for clave in self.animaciones:
     #         reescalar_imagenes(self.animaciones[clave], (self.ancho, self.alto))
 
-    def animar(self, pantalla, que_animacion:str):
-        animacion = self.animaciones[que_animacion]
-        largo = len(animacion)
+    # def animar(self, pantalla, que_animacion:str):
+    #     animacion = self.animaciones[que_animacion]
+    #     largo = len(animacion)
 
-        if self.contador_pasos >= largo:
-            #algo interno de la clase el contador de pasos, no por afuera
-            self.contador_pasos = 0
+    #     if self.contador_pasos >= largo:
+    #         #algo interno de la clase el contador de pasos, no por afuera
+    #         self.contador_pasos = 0
 
-        pantalla.blit(animacion[self.contador_pasos], self.lados["main"])
-        self.contador_pasos += 1
+    #     pantalla.blit(animacion[self.contador_pasos], self.lados["main"])
+    #     self.contador_pasos += 1
 
-    def mover(self, velocidad):
-        #por cada lado de la lista de lados
-        for lado in self.lados:
-            self.lados[lado].x += velocidad
+    # def mover(self, velocidad):
+    #     #por cada lado de la lista de lados
+    #     for lado in self.lados:
+    #         self.lados[lado].x += velocidad
 
     # def update(self, pantalla):
     #     match self.que_hace:

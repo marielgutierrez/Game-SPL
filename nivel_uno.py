@@ -3,7 +3,7 @@ from pygame.locals import *
 from configuraciones import *
 from class_personaje import Personaje
 from class_plataforma import Plataforma
-from class_enemigos import Enemigos
+from class_enemigo import Enemigo
 from modo import *
 '''
 #Class = parte estatica, con atributos y variables, lo que me permite describir a un objeto
@@ -63,8 +63,8 @@ diccionario_animaciones["camina_izquierda"] = personaje_camina_izquierda
 
 mi_personaje = Personaje(tamaño, diccionario_animaciones, posicion_inicial, 5)
 
-#ENEMIGOS
-mini_bot = Enemigos((40,36),"mini-bot\\0.png",(450,350), 5)
+#ENEMIGO
+mini_bot = Enemigo((40,36),"mini-bot\\0.png",(450,350), 5)
 
 #PISO
 piso = pygame.Rect(0,0,W,20)
@@ -84,11 +84,9 @@ lados_plataformas_3 = [obtener_rectangulos(coordinate) for coordinate in platafo
 lista_plataformas = [plataformas_1, plataformas_2, plataformas_3]
 
 # lista_lados_plataformas = []
-
 # for plataforma in lista_plataformas:
 #     lados_plataforma = [obtener_rectangulos(coordinate) for coordinate in plataforma.rects]
 #     lista_lados_plataformas.append(lados_plataforma)
-
 # lista_plataformas = [plataformas_1.rects, plataformas_2.rects, plataformas_3.rects]
 lista_lados_plataformas = [lados_plataformas_1, lados_plataformas_2, lados_plataformas_3]
 
@@ -111,10 +109,9 @@ while True:
         elif evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_TAB:
                 cambiar_modo()        
-#and posicion_inicial[0] < W - 5 - posicion_inicial[1]
     keys = pygame.key.get_pressed()
     
-    if(keys[pygame.K_RIGHT]) :
+    if(keys[pygame.K_RIGHT]) and posicion_inicial[0] < W - 5 - posicion_inicial[1]:
         mi_personaje.que_hace = "derecha"
     elif(keys[pygame.K_LEFT]):
         mi_personaje.que_hace = "izquierda"
