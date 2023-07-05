@@ -7,7 +7,7 @@ def girar_imagenes(lista_original, flip_x, flip_y):
 
     return lista_girada
 
-def reescalar_imagenes(lista_animaciones,tamaño):
+def reescalar_imagenes(lista_animaciones, tamaño):
         for i in range(len(lista_animaciones)):
             imagen = lista_animaciones[i]
             lista_animaciones[i] = pygame.transform.scale(imagen, tamaño)

@@ -86,7 +86,6 @@ class Personaje:
         #Estoy intentando que el lado de abajo (bottom) del personaje colisione con el top del cada plataforma
         #cuando ejecuto este for el personaje no puede saltar, si lo comento este puede saltar pero no colisiona con los rectangulos de las plataformas
         #Estaria necesitando algun consejo con el manejo de Clases para pygame, porque no estoy segura de usar la clase pygame.sprite.Sprite como en la clase Enemigo para el tema de colisiones
-        
         for plataforma in plataformas:
             for rect in plataforma:
                 if self.lados["bottom"].colliderect(rect["top"]):

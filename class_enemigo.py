@@ -1,22 +1,44 @@
 import pygame
 
 class Enemigo(pygame.sprite.Sprite):
-    def __init__(self, tamaño, path_imagen, posicion_inicial, velocidad) -> None:
+    def __init__(self, tamaño, path_imagenA, path_imagenB, posicion_inicial, velocidad) -> None:
         super().__init__()
         #TAMAÑO IMAGEN
-        self.imagen = pygame.image.load(path_imagen)
+        self.imagenA = pygame.image.load(path_imagenA)
+        self.imagenB = pygame.image.load(path_imagenB)
+
         self.ancho = tamaño[0]
         self.alto = tamaño[1]
-        self.imagen = pygame.transform.scale(self.imagen, (self.ancho, self.alto))
+        
+        self.imagenA = pygame.transform.scale(self.imagenA, (self.ancho, self.alto))
+        self.imagenB = pygame.transform.scale(self.imagenB, (self.ancho, self.alto))
+
         #RECTANGULOS
+
+        self.listaImagenes = [self.imagenA, self.imagenB]
+        self.posImagen = 0
+        self.imagenEnemigo = self.listaImagenes[self.posImagen]
+        self.rect = self.imagenEnemigo.get_rect()
+
         self.listaDisparo = []
-        self.rect = self.imagen.get_rect()
         self.rect.top = posicion_inicial[1]
         self.rect.left = posicion_inicial[0]
         # self.lados = obtener_rectangulos(rectangulo)
         #MOVIMIENTO
         self.velocidad = velocidad
         self.desplazamiento_y = 0
+
+
+        self.tiempoCambio = 1
+
+    def comportamiento(self, tiempo):
+        #Definimos el comportamiento de la animacion en un determinado tiempo 
+        if self.tiempoCambio == tiempo:
+            self.posImagen += 1
+            self.tiempoCambio += 1
+
+            if self.posImagen > len(self.listaImagenes)-1:
+                self.posImagen = 0
 
     # def reescalar_animaciones(self):
     #     for clave in self.animaciones:
