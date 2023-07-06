@@ -41,10 +41,15 @@ class NivelUno(Nivel):
         plataformas_2 = Plataforma("recursos\\0.png", 50, 50, (500, 200))
         plataformas_3 = Plataforma("recursos\\suelo.png", 210, 210, (750, 150))
 
+        lados_piso = obtener_rectangulos(piso)
+        lados_plataforma_1 = obtener_rectangulos(plataformas_1)
+        lados_plataforma_2 = obtener_rectangulos(plataformas_2)
+        lados_plataforma_3 = obtener_rectangulos(plataformas_3)
+
         # lados_plataformas_1 = [obtener_rectangulos(coordinate) for coordinate in plataformas_1.rects]
         # lados_plataformas_2 = [obtener_rectangulos(coordinate) for coordinate in plataformas_2.rects]
         # lados_plataformas_3 = [obtener_rectangulos(coordinate) for coordinate in plataformas_3.rects]
 
-        lista_plataformas = [piso, plataformas_1, plataformas_2, plataformas_3]
+        lista_plataformas = [lados_piso, lados_plataforma_1, lados_plataforma_2, lados_plataforma_3]
 
         super().__init__(pantalla, mi_personaje, lista_plataformas, fondo)

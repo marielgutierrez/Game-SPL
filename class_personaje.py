@@ -44,7 +44,7 @@ class Personaje:
         for lado in self.lados:
             self.lados[lado].x += velocidad
 
-    def update(self, pantalla, piso, plataformas):
+    def update(self, pantalla, plataformas):
         match self.que_hace:
             case "derecha":
                 if not self.esta_saltando:
@@ -62,9 +62,9 @@ class Personaje:
                 if not self.esta_saltando:
                     self.animar(pantalla, "quieto")
 
-        self.aplicar_gravedad(pantalla, piso, plataformas)
+        self.aplicar_gravedad(pantalla, plataformas)
 
-    def aplicar_gravedad(self, pantalla, piso, plataformas):
+    def aplicar_gravedad(self, pantalla, plataformas):
 
         if self.esta_saltando:
             self.animar(pantalla, "salta")
@@ -74,27 +74,37 @@ class Personaje:
             #mientras que esa suma sea menor al limite velocidad caida
             if self.desplazamiento_y + self.gravedad < self.limite_velocidad_caida:
                 self.desplazamiento_y += self.gravedad
-
-        if self.lados["bottom"].colliderect(piso["top"]):
-            self.desplazamiento_y = 0
-            self.esta_saltando = False
-            self.lados["main"].bottom = piso["main"].top + 5
-        else:
-            self.esta_saltando = True
         
+        # if self.lados["bottom"].colliderect(piso["top"]): #no funciona pq no aplique obtener_rectangulos en la clase plataforma
+        #     self.desplazamiento_y = 0
+        #     self.esta_saltando = False
+        #     self.lados["main"].bottom = piso["main"].top + 5
+        # else:
+        #     self.esta_saltando = True
+
+        for plataforma in plataformas:
+            if self.lados["bottom"].colliderect(plataforma["top"]): #no funciona pq no aplique obtener_rectangulos en la clase plataforma
+                self.desplazamiento_y = 0
+                self.esta_saltando = False
+                self.lados["main"].bottom = plataforma["main"].top + 5
+                break
+            else:
+                self.esta_saltando = True
+
+
+
         #ACA ESTA EL ERROR DE PQ NO SALTA######################################################################
         #Estoy intentando que el lado de abajo (bottom) del personaje colisione con el top del cada plataforma
         #cuando ejecuto este for el personaje no puede saltar, si lo comento este puede saltar pero no colisiona con los rectangulos de las plataformas
-        #Estaria necesitando algun consejo con el manejo de Clases para pygame, porque no estoy segura de usar la clase pygame.sprite.Sprite como en la clase Enemigo para el tema de colisiones
-        for plataforma in plataformas:
-            for rect in plataforma:
-                if self.lados["bottom"].colliderect(rect["top"]):
-                    self.desplazamiento_y = 0
-                    self.esta_saltando = False
-                    self.lados["main"].bottom = rect["main"].top + 5
-                    break
-                else:
-                    self.esta_saltando = True
+        # for plataforma in plataformas:
+        #     for rect in plataforma:
+        #         if self.lados["bottom"].colliderect(rect["top"]):
+        #             self.desplazamiento_y = 0
+        #             self.esta_saltando = False
+        #             self.lados["main"].bottom = rect["main"].top + 5
+        #             break
+        #         else:
+        #             self.esta_saltando = True
 
 
 

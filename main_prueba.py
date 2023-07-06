@@ -93,8 +93,8 @@ lista_plataformas = [plataformas_1, plataformas_2, plataformas_3]
 # for plataforma in lista_plataformas:
 #     lados_plataforma = [obtener_rectangulos(coordinate) for coordinate in plataforma.rects]
 #     lista_lados_plataformas.append(lados_plataforma)
-# lista_plataformas = [plataformas_1.rects, plataformas_2.rects, plataformas_3.rects]
-lista_lados_plataformas = [lados_plataformas_1, lados_plataformas_2, lados_plataformas_3]
+lista_lados_plataformas = [plataformas_1.rects, plataformas_2.rects, plataformas_3.rects]
+#lista_lados_plataformas = [lados_plataformas_1, lados_plataformas_2, lados_plataformas_3]
 
 while True:
 
