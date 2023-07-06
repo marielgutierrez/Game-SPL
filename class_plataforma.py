@@ -9,10 +9,10 @@ class Plataforma():
         self.image = pygame.transform.scale(self.image, (width, height))
         #self.rects = []
         #for coordinate in coordinates:
-        rectangulo = self.image.get_rect()
-        rectangulo.x = coordinate[0]
-        rectangulo.y = coordinate[1]
-        self.lados = obtener_rectangulos(rectangulo)
+        self.rectangulo = self.image.get_rect()
+        self.rectangulo.x = coordinate[0]
+        self.rectangulo.y = coordinate[1]
+        self.lados = obtener_rectangulos(self.rectangulo)
         #self.rects.append(rect)
         # self._slave = None
         # self.slave_rect = None
@@ -21,6 +21,7 @@ class Plataforma():
     def update(self):
         pass
     
-    def draw(self,pantalla):
-        pantalla.blit(self.image, (self.rect.x, self.rect.y)) #VER PARAMETROS DE ESTA FUNCION
-        pygame.draw.rect(pantalla, "Green", self.rect)
+    def draw(self, pantalla):
+        pantalla.blit(self.image, (self.rectangulo.x, self.rectangulo.y)) #VER PARAMETROS DE ESTA FUNCION
+        # for lado in self.lados:
+        #     pygame.draw.rect(pantalla, "Blue", self.lados[lado])

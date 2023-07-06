@@ -83,10 +83,10 @@ class Personaje:
         #     self.esta_saltando = True
 
         for plataforma in plataformas:
-            if self.lados["bottom"].colliderect(plataforma["top"]): #no funciona pq no aplique obtener_rectangulos en la clase plataforma
+            if self.lados["bottom"].colliderect(plataforma.lados["top"]): #no funciona pq no aplique obtener_rectangulos en la clase plataforma
                 self.desplazamiento_y = 0
                 self.esta_saltando = False
-                self.lados["main"].bottom = plataforma["main"].top + 5
+                self.lados["main"].bottom = plataforma.lados["main"].top + 5
                 break
             else:
                 self.esta_saltando = True

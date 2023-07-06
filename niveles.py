@@ -16,6 +16,7 @@ class Nivel:
                     cambiar_modo()      
         self.leer_inputs()
         self.actualizar_pantalla()
+        self.dibujar_rectangulos()
 
     def actualizar_pantalla(self):
         self._slave.blit(self.img_fondo, (0,0))
@@ -32,9 +33,11 @@ class Nivel:
     
         keys = pygame.key.get_pressed()
 
-        if(keys[pygame.K_RIGHT]) and self.jugador.rectangulo.x > self.jugador.velocidad:
+        if(keys[pygame.K_RIGHT]):
+            #and self.jugador.rectangulo.x > self.jugador.velocidad
             self.jugador.que_hace = "derecha"
-        elif(keys[pygame.K_LEFT]) and self.jugador.rectangulo.x < self._slave.width - self.jugador.ancho - 5:
+        elif(keys[pygame.K_LEFT]):
+            #and self.jugador.rectangulo.x < self._slave.width - self.jugador.ancho - 5
             #verificar la logica para que el personaje no se salga de la pantalla
             self.jugador.que_hace = "izquierda"
         elif(keys[pygame.K_UP]):
@@ -43,8 +46,7 @@ class Nivel:
             self.jugador.que_hace = "quieto"
 
     def dibujar_rectangulos(self):
-        if get_mode():
-
+            
             #pygame.draw.rect(self._slave, "Blue", piso, 2)
             for lado in self.jugador.lados: 
                 pygame.draw.rect(self._slave, "Red", self.jugador.lados[lado] , 2)

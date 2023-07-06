@@ -29,27 +29,27 @@ class NivelUno(Nivel):
 
         #PLATAFORMAS
         #piso
-        # piso = pygame.Rect(0,0,W,20)
+        #piso = pygame.Rect(0,0,W,20)
         # piso.top = mi_personaje.lados["main"].bottom
 
         # lados_piso = obtener_rectangulos(piso)
 
-        piso = Plataforma("recursos\\vacio-png.png",0, mi_personaje.lados["main"].bottom, (W,20))
-
+        piso = Plataforma("recursos\\vacio-png.png", W, 100, (0,500))
+        #mi_personaje.lados["main"].bottom
         #PLATAFORMAS
         plataformas_1 = Plataforma("recursos\\plataforma.png", 180, 50, (330, 400))
         plataformas_2 = Plataforma("recursos\\0.png", 50, 50, (500, 200))
         plataformas_3 = Plataforma("recursos\\suelo.png", 210, 210, (750, 150))
 
-        lados_piso = obtener_rectangulos(piso)
-        lados_plataforma_1 = obtener_rectangulos(plataformas_1)
-        lados_plataforma_2 = obtener_rectangulos(plataformas_2)
-        lados_plataforma_3 = obtener_rectangulos(plataformas_3)
+        # lados_piso = obtener_rectangulos(piso.lados)
+        # lados_plataforma_1 = obtener_rectangulos(plataformas_1.lados)
+        # lados_plataforma_2 = obtener_rectangulos(plataformas_2.lados)
+        # lados_plataforma_3 = obtener_rectangulos(plataformas_3.lados)
 
         # lados_plataformas_1 = [obtener_rectangulos(coordinate) for coordinate in plataformas_1.rects]
         # lados_plataformas_2 = [obtener_rectangulos(coordinate) for coordinate in plataformas_2.rects]
         # lados_plataformas_3 = [obtener_rectangulos(coordinate) for coordinate in plataformas_3.rects]
 
-        lista_plataformas = [lados_piso, lados_plataforma_1, lados_plataforma_2, lados_plataforma_3]
+        lista_plataformas = [piso, plataformas_1, plataformas_2, plataformas_3]
 
         super().__init__(pantalla, mi_personaje, lista_plataformas, fondo)
