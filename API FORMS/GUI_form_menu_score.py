@@ -18,9 +18,9 @@ class FormMenuScore(Form):
         self.margen_y = margen_y
 
         lbl_jugador = Label(self._slave, x=margen_x + 10, y=20, w=w/2-margen_x-10, h=50, text="Jugador",
-                       font="Verdana", font_size=30, font_color="White", path_image="bar.png")
+                       font="Verdana", font_size=30, font_color="White", path_image="API FORMS\\bar.png")
         lbl_puntaje = Label(self._slave, x=margen_x + 10, y=20, w=w/2-margen_x-10, h=50, text="Jugador",
-                       font="Verdana", font_size=30, font_color="White", path_image="bar.png")
+                       font="Verdana", font_size=30, font_color="White", path_image="API FORMS\\bar.png")
         
         self.lista_widgets.append(lbl_jugador)
         self.lista_widgets.append(lbl_puntaje)
@@ -33,7 +33,7 @@ class FormMenuScore(Form):
                 cadena = ""
                 cadena = f"{s}"
                 jugador = Label(self._slave, pos_inicial_x, pos_inicial_y, w/2-margen_x, 100, cadena, "Verdana",
-                                30, "White", "Table.png")
+                                30, "White", "API FORMS\\Table.png")
                 self.lista_widgets.append(jugador)
                 pos_inicial_x += w/2 - margen_x
             pos_inicial_y += 100 + espacio

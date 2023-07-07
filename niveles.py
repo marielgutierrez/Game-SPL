@@ -46,7 +46,8 @@ class Nivel:
             self.jugador.que_hace = "quieto"
 
     def dibujar_rectangulos(self):
-            
+        
+        if get_mode():
             #pygame.draw.rect(self._slave, "Blue", piso, 2)
             for lado in self.jugador.lados: 
                 pygame.draw.rect(self._slave, "Red", self.jugador.lados[lado] , 2)

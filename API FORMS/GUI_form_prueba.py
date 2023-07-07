@@ -21,9 +21,9 @@ class FormPrueba(Form):
         ### CONTROLES
         self.txtbox = TextBox(self._slave, x, y, 50, 50, 150, 30, "Gray", "White","Red", "Blue",2, font= "Comic Sans", font_size=15, font_color ="Black" )
         self.btn_play = Button(self._slave, x, y, 100, 100, 100, 50, "Red", "Blue", self.btn_play_click, "Nombre", "Pausa", font = "Verdana", font_size=15,font_color="White")
-        self.label_volumen = Label(self._slave, 650, 190, 100,50,"20%", "Comic Sans", 15,"White", "Table.png")#FALTA imagen
-        self.slider_volumen = Slider(self._slave, x, y,100,200,500,15,self.volumen,"Blue","White")
-        self.btn_tabla = Button_Image(self._slave, x, y, 255,100,50,50,"Menu_BTN.png",self.btn_tabla_click, "lalal")
+        self.label_volumen = Label(self._slave, 650, 190, 100,50,"20%", "Comic Sans", 15,"White", "API FORMS\\Table.png")#FALTA imagen
+        self.slider_volumen = Slider(self._slave, x, y,100,200,500,15,self.volumen,"Violet","White")
+        self.btn_tabla = Button_Image(self._slave, x, y, 255,100,50,50,"API FORMS\\Menu_BTN.png",self.btn_tabla_click, "lalal")
         ###################
 
         #Agrego los controles a la lista
@@ -36,7 +36,7 @@ class FormPrueba(Form):
         ########################
 
 
-        pygame.mixer.music.load("Vengeance (Loopable).wav") #poner musica path
+        pygame.mixer.music.load("API FORMS\\Vengeance (Loopable).wav") #poner musica path
 
         pygame.mixer.music.set_volume(self.volumen)
         pygame.mixer.music.play(-1)
@@ -73,7 +73,7 @@ class FormPrueba(Form):
     def update_volumen(self, lista_eventos):
         self.volumen = self.slider_volumen.value
         self.label_volumen.set_text(f"{round(self.volumen * 100)}%")
-        pygame.mixer.music.set_volume(self.volume)
+        pygame.mixer.music.set_volume(self.volumen)
 
     def btn_tabla_click(self, texto):
         dict_score = [{"Jugador": "Gio", "Score": 1000},
@@ -89,7 +89,7 @@ class FormPrueba(Form):
                                      (220,0,220),
                                      "White",
                                      True,
-                                     "Window.png",
+                                     "API FORMS\\Window.png",
                                      dict_score,
                                      100,
                                      10,

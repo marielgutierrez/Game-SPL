@@ -29,9 +29,9 @@ pygame.init()
 nivel_actual = NivelUno(PANTALLA)
 
 #MUSICA
-# ruta_musica = "hero-80s-127027.mp3"
-# musica_fondo = pygame.mixer.music.load(ruta_musica)
-# pygame.mixer.music.play(-1)
+ruta_musica = "recursos\\music\\hero-80s-127027.mp3"
+musica_fondo = pygame.mixer.music.load(ruta_musica)
+pygame.mixer.music.play(-1)
 
 #CRONOMETRO
 tiempo_inicial = pygame.time.get_ticks()

@@ -28,7 +28,7 @@ class NivelDos(Nivel):
         mi_personaje = Personaje(tamaño, diccionario_animaciones, posicion_inicial, 5)
 
         #PISO
-        piso = Plataforma("recursos\\vacio-png.png",0, mi_personaje.lados["main"].bottom, (W,20))
+        piso = Plataforma("recursos\\vacio-png.png", W, 100, (0,490))
 
         #PLATAFORMAS
         plataformas_1 = Plataforma("recursos\\plataforma.png", 180, 50, (330, 400))

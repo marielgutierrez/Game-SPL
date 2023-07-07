@@ -34,7 +34,7 @@ class NivelUno(Nivel):
 
         # lados_piso = obtener_rectangulos(piso)
 
-        piso = Plataforma("recursos\\vacio-png.png", W, 100, (0,500))
+        piso = Plataforma("recursos\\vacio-png.png", W, 100, (0,490))
         #mi_personaje.lados["main"].bottom
         #PLATAFORMAS
         plataformas_1 = Plataforma("recursos\\plataforma.png", 180, 50, (330, 400))
