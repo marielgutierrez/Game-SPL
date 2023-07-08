@@ -4,6 +4,7 @@ from configuraciones import *
 from class_enemigo import Enemigo
 from nivel_uno import NivelUno
 from nivel_dos import NivelDos
+from inicio_game import InicioJuego
 from modo import *
 '''
 #Class = parte estatica, con atributos y variables, lo que me permite describir a un objeto
@@ -26,8 +27,8 @@ pygame.display.set_caption("Futurist Hero")
 #PANTALLA.blit(fondo, (0,0))
 pygame.init()
 
-nivel_actual = NivelUno(PANTALLA)
-
+#nivel_actual = NivelUno(PANTALLA)
+inicio_juego = InicioJuego(PANTALLA)
 #MUSICA
 ruta_musica = "recursos\\music\\hero-80s-127027.mp3"
 musica_fondo = pygame.mixer.music.load(ruta_musica)
@@ -60,6 +61,6 @@ while True:
             pygame.quit()
             sys.exit(0)
     
-    nivel_actual.update(eventos)
-
+    #nivel_actual.update(eventos)
+    inicio_juego.update(eventos)
     pygame.display.update()

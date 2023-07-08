@@ -10,20 +10,24 @@ from GUI_button_image import *
 from GUI_form_menu_score import *
 
 class FormPrueba(Form):
-    def __init__(self, screen, x, y, w, h, color_background, color_border="Black", border_size=-1, active=True):
+    def __init__(self, screen, x, y, w, h, color_background, color_border="Black", border_size=-1, active=True, path_image=""):
         super().__init__(screen, x, y, w, h, color_background, color_border, border_size, active)
 
         self.volumen = 0.2
         self.flag_play = True
 
-        pygame.mixer.init()
+        imagen_aux = pygame.image.load(path_image)
+        imagen_aux = pygame.transform.scale(imagen_aux, (w,h))
 
+        self._slave = imagen_aux
+        pygame.mixer.init()
+        #650
         ### CONTROLES
         self.txtbox = TextBox(self._slave, x, y, 50, 50, 150, 30, "Gray", "White","Red", "Blue",2, font= "Comic Sans", font_size=15, font_color ="Black" )
         self.btn_play = Button(self._slave, x, y, 100, 100, 100, 50, "Red", "Blue", self.btn_play_click, "Nombre", "Pausa", font = "Verdana", font_size=15,font_color="White")
-        self.label_volumen = Label(self._slave, 650, 190, 100,50,"20%", "Comic Sans", 15,"White", "API FORMS\\Table.png")#FALTA imagen
-        self.slider_volumen = Slider(self._slave, x, y,100,200,500,15,self.volumen,"Violet","White")
-        self.btn_tabla = Button_Image(self._slave, x, y, 255,100,50,50,"API FORMS\\Menu_BTN.png",self.btn_tabla_click, "lalal")
+        self.label_volumen = Label(self._slave, 370, 190, 100,50,"20%", "Comic Sans", 15,"White", "Formularios\\recursos_form\\Table.png")#FALTA imagen
+        self.slider_volumen = Slider(self._slave, x, y,100,200,250,12,self.volumen,"Violet","White")
+        self.btn_tabla = Button_Image(self._slave, x, y, 255,100,50,50,"Formularios\\recursos_form\\Menu_BTN.png",self.btn_tabla_click, "lalal")
         ###################
 
         #Agrego los controles a la lista
@@ -36,23 +40,25 @@ class FormPrueba(Form):
         ########################
 
 
-        pygame.mixer.music.load("API FORMS\\Vengeance (Loopable).wav") #poner musica path
+        pygame.mixer.music.load("Formularios\\recursos_form\\Vengeance (Loopable).wav") #poner musica path
 
         pygame.mixer.music.set_volume(self.volumen)
         pygame.mixer.music.play(-1)
 
-        self.render()
+        #self.render()
     
     def update(self, lista_eventos):
-        if self.active:
-            self.draw()
-            self.render()
-            for widget in self.lista_widgets:
-                widget.update(lista_eventos)
-            self.update_volumen(lista_eventos)
-
-    def render(self):
-        self._slave.fill(self._color_background)
+        if self.verificar_dialog_result():
+            if self.active:
+                #self.render()
+                for widget in self.lista_widgets:
+                    widget.update(lista_eventos)
+                self.update_volumen(lista_eventos)
+                self.draw()
+        else:
+            self.hijo.update(lista_eventos)
+    # def render(self):
+    #     self._slave.fill(self._color_background)
 
     def btn_play_click(self, texto):
         if self.flag_play:
@@ -89,13 +95,13 @@ class FormPrueba(Form):
                                      (220,0,220),
                                      "White",
                                      True,
-                                     "API FORMS\\Window.png",
+                                     "Formularios\\recursos_form\\Window.png",
                                      dict_score,
                                      100,
                                      10,
                                      10)
         
-        self.show_dialog
+        self.show_dialog(form_puntaje)
         #VER VIDEO CLASE 21
 
 
