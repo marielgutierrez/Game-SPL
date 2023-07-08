@@ -4,6 +4,7 @@ from configuraciones import *
 from niveles import Nivel
 from class_personaje import Personaje
 from class_plataforma import Plataforma
+from class_enemigo import Enemigo
 
 class NivelUno(Nivel):
     def __init__(self, pantalla: pygame.Surface) -> None:
@@ -26,13 +27,19 @@ class NivelUno(Nivel):
         diccionario_animaciones["camina_izquierda"] = personaje_camina_izquierda
 
         mi_personaje = Personaje(tamaño, diccionario_animaciones, posicion_inicial, 5)
-
+        #mini_bot = Enemigo((40,36),"mini-bot\\0.png", "mini-bot\\3.png",(450,350), 5)
         #PLATAFORMAS
         #piso
         #piso = pygame.Rect(0,0,W,20)
         # piso.top = mi_personaje.lados["main"].bottom
-
         # lados_piso = obtener_rectangulos(piso)
+
+        #CRONOMETRO
+        tiempo_inicial = pygame.time.get_ticks()
+        tiempo_limite = 600000
+        tipo_fuente = "Consolas"
+        tamaño = 20
+        fuente = pygame.font.SysFont(tipo_fuente, tamaño)
 
         piso = Plataforma("recursos\\vacio-png.png", W, 100, (0,490))
         #mi_personaje.lados["main"].bottom
@@ -41,15 +48,6 @@ class NivelUno(Nivel):
         plataformas_2 = Plataforma("recursos\\0.png", 50, 50, (500, 200))
         plataformas_3 = Plataforma("recursos\\suelo.png", 210, 210, (750, 150))
 
-        # lados_piso = obtener_rectangulos(piso.lados)
-        # lados_plataforma_1 = obtener_rectangulos(plataformas_1.lados)
-        # lados_plataforma_2 = obtener_rectangulos(plataformas_2.lados)
-        # lados_plataforma_3 = obtener_rectangulos(plataformas_3.lados)
-
-        # lados_plataformas_1 = [obtener_rectangulos(coordinate) for coordinate in plataformas_1.rects]
-        # lados_plataformas_2 = [obtener_rectangulos(coordinate) for coordinate in plataformas_2.rects]
-        # lados_plataformas_3 = [obtener_rectangulos(coordinate) for coordinate in plataformas_3.rects]
-
         lista_plataformas = [piso, plataformas_1, plataformas_2, plataformas_3]
 
-        super().__init__(pantalla, mi_personaje, lista_plataformas, fondo)
+        super().__init__(pantalla, mi_personaje, lista_plataformas, fondo, tiempo_inicial, tiempo_limite, fuente)

@@ -27,40 +27,25 @@ pygame.display.set_caption("Futurist Hero")
 #PANTALLA.blit(fondo, (0,0))
 pygame.init()
 
-#nivel_actual = NivelUno(PANTALLA)
-inicio_juego = InicioJuego(PANTALLA)
-#MUSICA
-ruta_musica = "recursos\\music\\hero-80s-127027.mp3"
-musica_fondo = pygame.mixer.music.load(ruta_musica)
-pygame.mixer.music.play(-1)
+nivel_actual = NivelUno(PANTALLA)
+#inicio_juego = InicioJuego(PANTALLA)
 
-#CRONOMETRO
-tiempo_inicial = pygame.time.get_ticks()
-tiempo_limite = 600000  
-tipo_fuente = "Consolas"
-tamaño = 20
-fuente = pygame.font.SysFont(tipo_fuente, tamaño)
+#MUSICA
+# ruta_musica = "recursos\\music\\hero-80s-127027.mp3"
+# musica_fondo = pygame.mixer.music.load(ruta_musica)
+# pygame.mixer.music.play(-1)
 
 
 while True:
 
     RELOJ.tick(FPS)
-    #cronometro
-    tiempo_actual = pygame.time.get_ticks()
-    tiempo_transcurrido = tiempo_actual - tiempo_inicial
-
-    if tiempo_transcurrido >= tiempo_limite:
-        pygame.quit()
-        sys.exit(0)
-
-    texto = fuente.render(f"Time: {tiempo_transcurrido // 1000}", True, "White")
-    
     eventos = pygame.event.get()
     for evento in eventos:
         if evento.type == pygame.QUIT:
             pygame.quit()
             sys.exit(0)
     
-    #nivel_actual.update(eventos)
-    inicio_juego.update(eventos)
+    #PANTALLA.blit(texto, (10, 10))
+    nivel_actual.update(eventos)
+    #inicio_juego.update(eventos)
     pygame.display.update()

@@ -11,8 +11,6 @@ FPS = 60
 reloj = pygame.time.Clock()
 pantalla = pygame.display.set_mode((WIDTH,HEIGHT))
 
-#Como puedo hacer que esta clase pase una ruta a una imagen en vez de un color?
-
 form_prueba = FormPrueba(pantalla, 200, 100, 600, 350, "Blue", "Magenta", 5, True, "Formularios\\recursos_form\\interfaz_user.jpg")
 while True:
     reloj.tick(FPS)
