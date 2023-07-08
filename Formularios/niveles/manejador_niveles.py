@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
-from nivel_uno import NivelUno
-from nivel_dos import NivelDos
+from niveles.nivel_uno import NivelUno
+from niveles.nivel_dos import NivelDos
 
 #Instanciar los niveles al momento de usar la interfaz grafica
 class Manejador_niveles:

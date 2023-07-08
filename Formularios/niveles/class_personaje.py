@@ -1,4 +1,4 @@
-from configuraciones import *
+from niveles.configuraciones import *
 
 class Personaje:
     def __init__(self, tamaño, animaciones, posicion_inicial, velocidad) -> None:

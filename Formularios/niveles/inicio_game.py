@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from configuraciones import *
+from niveles.configuraciones import *
 
 class InicioJuego:
     def __init__(self, pantalla: pygame.Surface) -> None:

@@ -1,10 +1,10 @@
 import pygame, sys
 from pygame.locals import *
-from configuraciones import *
-from class_personaje import Personaje
-from class_plataforma import Plataforma
-from class_enemigo import Enemigo
-from modo import *
+from niveles.configuraciones import *
+from niveles.class_personaje import Personaje
+from niveles.class_plataforma import Plataforma
+from niveles.class_enemigo import Enemigo
+from niveles.modo import *
 '''
 #Class = parte estatica, con atributos y variables, lo que me permite describir a un objeto
 #Se define primero un constructor

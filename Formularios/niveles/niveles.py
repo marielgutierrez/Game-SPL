@@ -1,5 +1,5 @@
 import pygame, sys
-from modo import *
+from niveles.modo import *
 #from main_copy import *
 
 class Nivel:

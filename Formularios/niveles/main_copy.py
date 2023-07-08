@@ -1,11 +1,11 @@
 import pygame, sys
 from pygame.locals import *
-from configuraciones import *
-from class_enemigo import Enemigo
-from nivel_uno import NivelUno
-from nivel_dos import NivelDos
-from inicio_game import InicioJuego
-from modo import *
+from niveles.configuraciones import *
+from niveles.class_enemigo import Enemigo
+from niveles.nivel_uno import NivelUno
+from niveles.nivel_dos import NivelDos
+from niveles.inicio_game import InicioJuego
+from niveles.modo import *
 '''
 #Class = parte estatica, con atributos y variables, lo que me permite describir a un objeto
 #Se define primero un constructor
@@ -27,7 +27,7 @@ pygame.display.set_caption("Futurist Hero")
 #PANTALLA.blit(fondo, (0,0))
 pygame.init()
 
-nivel_actual = NivelUno(PANTALLA)
+nivel_actual = NivelDos(PANTALLA)
 #inicio_juego = InicioJuego(PANTALLA)
 
 #MUSICA

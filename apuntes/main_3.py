@@ -1,7 +1,7 @@
 import pygame
 #sys
-from configuraciones import *
-from modo import *
+from niveles.configuraciones import *
+from niveles.modo import *
 
 ####################FUNCIONES DE MOVIMIENTO#############
 def mover_personaje(rectangulo_personaje: pygame.Rect, velocidad):

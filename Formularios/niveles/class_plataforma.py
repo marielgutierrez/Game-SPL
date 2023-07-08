@@ -1,5 +1,5 @@
 import pygame
-from configuraciones import *
+from niveles.configuraciones import *
 
 class Plataforma():
     def __init__(self, image_path, width, height, coordinate):

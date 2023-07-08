@@ -8,6 +8,7 @@ from GUI_label import *
 from GUI_form import *
 from GUI_button_image import *
 from GUI_form_menu_score import *
+from GUI_form_menu_play import *
 
 class FormPrueba(Form):
     def __init__(self, screen, x, y, w, h, color_background, color_border="Black", border_size=-1, active=True, path_image=""):
@@ -27,7 +28,9 @@ class FormPrueba(Form):
         self.btn_play = Button(self._slave, x, y, 100, 100, 100, 50, "Red", "Blue", self.btn_play_click, "Nombre", "Pausa", font = "Verdana", font_size=15,font_color="White")
         self.label_volumen = Label(self._slave, 370, 190, 100,50,"20%", "Comic Sans", 15,"White", "Formularios\\recursos_form\\Table.png")#FALTA imagen
         self.slider_volumen = Slider(self._slave, x, y,100,200,250,12,self.volumen,"Violet","White")
+        
         self.btn_tabla = Button_Image(self._slave, x, y, 255,100,50,50,"Formularios\\recursos_form\\Menu_BTN.png",self.btn_tabla_click, "lalal")
+        self.btn_jugar = Button_Image(self._slave, x, y, 300, 100, 50, 50, "Formularios\\recursos_form\\BOTONES\\0.png", self.btn_jugar_click, "a" )
         ###################
 
         #Agrego los controles a la lista
@@ -35,12 +38,14 @@ class FormPrueba(Form):
         self.lista_widgets.append(self.btn_play)
         self.lista_widgets.append(self.label_volumen)        
         self.lista_widgets.append(self.slider_volumen)        
-        self.lista_widgets.append(self.btn_tabla)        
+        self.lista_widgets.append(self.btn_tabla)
+        self.lista_widgets.append(self.btn_jugar)
+                
 
         ########################
 
 
-        pygame.mixer.music.load("Formularios\\recursos_form\\Vengeance (Loopable).wav") #poner musica path
+        pygame.mixer.music.load("Formularios\\recursos\\music\\hero-80s-127027.mp3") #poner musica path
 
         pygame.mixer.music.set_volume(self.volumen)
         pygame.mixer.music.play(-1)
@@ -60,6 +65,18 @@ class FormPrueba(Form):
     # def render(self):
     #     self._slave.fill(self._color_background)
 
+    def btn_jugar_click(self, param):
+        frm_jugar = FormMenuPlay(screen=self._master,
+                                x = self._master.get_width() / 2 - 250,
+                                y = self._master.get_height() / 2 - 250,
+                                w = 500,
+                                h = 500,
+                                color_background = (220,0,220),
+                                path_image="Formularios\\recursos_form\\Window.png",
+                                color_border = (255,255,255),
+                                active= True)
+        self.show_dialog(frm_jugar)
+
     def btn_play_click(self, texto):
         if self.flag_play:
             pygame.mixer.music.pause()
@@ -78,30 +95,33 @@ class FormPrueba(Form):
 
     def update_volumen(self, lista_eventos):
         self.volumen = self.slider_volumen.value
+        self.label_volumen.update(lista_eventos)
         self.label_volumen.set_text(f"{round(self.volumen * 100)}%")
         pygame.mixer.music.set_volume(self.volumen)
 
     def btn_tabla_click(self, texto):
         dict_score = [{"Jugador": "Gio", "Score": 1000},
-                      {"Jugador": "Fausto", "Score": 990},
-                      {"Jugador": "Gonza", "Score": 800}                       
+                    {"Jugador": "Fausto", "Score": 990},
+                    {"Jugador": "Gonza", "Score": 800}                       
                     ]
         
         form_puntaje = FormMenuScore(self._master,
-                                     250,
-                                     25,
-                                     500,
-                                     550,
-                                     (220,0,220),
-                                     "White",
-                                     True,
-                                     "Formularios\\recursos_form\\Window.png",
-                                     dict_score,
-                                     100,
-                                     10,
-                                     10)
+                                    250,
+                                    25,
+                                    500,
+                                    550,
+                                    (220,0,220),
+                                    "White",
+                                    True,
+                                    "Formularios\\recursos_form\\Window.png",
+                                    dict_score,
+                                    100,
+                                    10,
+                                    10)
         
         self.show_dialog(form_puntaje)
+
+    
         #VER VIDEO CLASE 21
 
 

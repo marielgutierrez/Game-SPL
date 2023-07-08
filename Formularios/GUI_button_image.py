@@ -21,7 +21,7 @@ class Button_Image(Widget):
         self._master_y = master_y
         
         aux_image = pygame.image.load(path_image)
-        aux_image = pygame.transform.scale(aux_image,(w,h))
+        aux_image = pygame.transform.scale(aux_image, (w,h))
         self._slave = aux_image
         
         self.isclicked = False

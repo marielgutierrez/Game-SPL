@@ -31,26 +31,26 @@ def obtener_rectangulos(principal: pygame.Rect):
 
 #set de imagenes del personaje
 personaje_quieto = [
-    pygame.image.load("main-character\\punk\\punk_quieto\\0.png"),
-    pygame.image.load("main-character\\punk\\punk_quieto\\1.png"),
-    pygame.image.load("main-character\\punk\\punk_quieto\\2.png"),
-    pygame.image.load("main-character\\punk\\punk_quieto\\3.png")    
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_quieto\\0.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_quieto\\1.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_quieto\\2.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_quieto\\3.png")    
 ]
 
 personaje_camina = [
-    pygame.image.load("main-character\\punk\\punk_camina\\0.png"),
-    pygame.image.load("main-character\\punk\\punk_camina\\1.png"),
-    pygame.image.load("main-character\\punk\\punk_camina\\2.png"),
-    pygame.image.load("main-character\\punk\\punk_camina\\3.png"),
-    pygame.image.load("main-character\\punk\\punk_camina\\4.png"),
-    pygame.image.load("main-character\\punk\\punk_camina\\5.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\0.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\1.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\2.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\3.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\4.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\5.png"),
 ]
 
 personaje_salta = [
-    pygame.image.load("main-character\\punk\\punk_salta\\0.png"),
-    pygame.image.load("main-character\\punk\\punk_salta\\1.png"),
-    pygame.image.load("main-character\\punk\\punk_salta\\2.png"),
-    pygame.image.load("main-character\\punk\\punk_salta\\3.png"),]
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_salta\\0.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_salta\\1.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_salta\\2.png"),
+    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_salta\\3.png"),]
 
 personaje_camina_izquierda = girar_imagenes(personaje_camina, True, False)
 
