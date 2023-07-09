@@ -14,7 +14,7 @@ class FormPrueba(Form):
     def __init__(self, screen, x, y, w, h, color_background, color_border="Black", border_size=-1, active=True, path_image=""):
         super().__init__(screen, x, y, w, h, color_background, color_border, border_size, active)
 
-        self.volumen = 0.2
+        self.volumen = 0.1
         self.flag_play = True
 
         imagen_aux = pygame.image.load(path_image)
@@ -22,7 +22,6 @@ class FormPrueba(Form):
 
         self._slave = imagen_aux
         pygame.mixer.init()
-        #650
         ### CONTROLES
         self.txtbox = TextBox(self._slave, x, y, 50, 50, 150, 30, "Gray", "White","Red", "Blue",2, font= "Comic Sans", font_size=15, font_color ="Black" )
         self.btn_play = Button(self._slave, x, y, 100, 100, 100, 50, "Red", "Blue", self.btn_play_click, "Nombre", "Pausa", font = "Verdana", font_size=15,font_color="White")
@@ -32,6 +31,25 @@ class FormPrueba(Form):
         self.btn_tabla = Button_Image(self._slave, x, y, 255,100,50,50,"Formularios\\recursos_form\\Menu_BTN.png",self.btn_tabla_click, "lalal")
         self.btn_jugar = Button_Image(self._slave, x, y, 300, 100, 50, 50, "Formularios\\recursos_form\\BOTONES\\0.png", self.btn_jugar_click, "a" )
         ###################
+        #PARA SALIR DEL MENU PRINCIPAL E IR AL INICIO
+        self._btn_home = Button_Image(screen=self._slave, 
+                                    x = w-70,
+                                    y = h-70,
+                                    master_x = x,
+                                    master_y = y,
+                                    w = 50,
+                                    h = 50,
+                                    color_background = (255,0,0),
+                                    color_border = (255,0,255),
+                                    onclick= self.btn_home_click,
+                                    onclick_param = "",
+                                    text = "",
+                                    font = "Verdana",
+                                    font_size = 15,
+                                    font_color = (0,255,0),
+                                    path_image = "Formularios\\recursos_form\\home.png")
+        self.lista_widgets.append(self._btn_home)
+
 
         #Agrego los controles a la lista
         self.lista_widgets.append(self.txtbox)
@@ -40,8 +58,6 @@ class FormPrueba(Form):
         self.lista_widgets.append(self.slider_volumen)        
         self.lista_widgets.append(self.btn_tabla)
         self.lista_widgets.append(self.btn_jugar)
-                
-
         ########################
 
 
@@ -70,7 +86,7 @@ class FormPrueba(Form):
                                 x = self._master.get_width() / 2 - 250,
                                 y = self._master.get_height() / 2 - 250,
                                 w = 500,
-                                h = 500,
+                                h = 550,
                                 color_background = (220,0,220),
                                 path_image="Formularios\\recursos_form\\Window.png",
                                 color_border = (255,255,255),
@@ -121,10 +137,8 @@ class FormPrueba(Form):
         
         self.show_dialog(form_puntaje)
 
-    
-        #VER VIDEO CLASE 21
-
-
+    def btn_home_click(self, param):
+        self.end_dialog()
 
         #formularios
         #crear controles
