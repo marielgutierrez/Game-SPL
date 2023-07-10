@@ -1,7 +1,7 @@
 import pygame, sys
-from niveles.configuraciones import *
-from niveles.class_personaje import *
-from niveles.modo import *
+from Formularios.niveles.configuraciones import *
+from Formularios.niveles.class_personaje import *
+from Formularios.niveles.modo import *
 ####################FUNCIONES DE MOVIMIENTO#############
 
 def obtener_rectangulos(principal: pygame.Rect):

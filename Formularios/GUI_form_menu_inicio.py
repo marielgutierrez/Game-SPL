@@ -12,22 +12,19 @@ class FormMenuInicio(Form):
         self._height = pantalla.get_height()
         imagen_aux = pygame.image.load(path_image)
         imagen_aux = pygame.transform.scale(imagen_aux, (self._width, self._height))
-
+        #497, 369)
+        #1280 x 533
         self._slave = imagen_aux
         self._btn_start = Button_Image(screen=self._slave, 
                             master_x = self._x,
                             master_y = self._y,
-                            x = 450,
-                            y = 400,
-                            w = 100,
+                            x = 440,
+                            y = 369,
+                            w = 120,
                             h = 50,
-                            path_image = "Formularios\\recursos_form\\Table.png",
+                            path_image = "Formularios\\recursos_form\\start_boton.png",
                             onclick= self.btn_start_click,
-                            onclick_param = "",
-                            text = "START",
-                            font = "Consolas",
-                            font_size = 12,
-                            font_color = "White")
+                            onclick_param = "")
         
         self.lista_widgets.append(self._btn_start)
 

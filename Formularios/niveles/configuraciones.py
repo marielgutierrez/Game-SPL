@@ -54,5 +54,7 @@ personaje_salta = [
 
 personaje_camina_izquierda = girar_imagenes(personaje_camina, True, False)
 
+personaje_quieto_izquierda = girar_imagenes(personaje_quieto, True, False)
+
 
 

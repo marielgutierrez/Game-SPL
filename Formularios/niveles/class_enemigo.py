@@ -1,8 +1,8 @@
 import pygame
+from pygame.locals import *
 
-class Enemigo(pygame.sprite.Sprite):
+class Enemigo(object):
     def __init__(self, tamaño, path_imagenA, path_imagenB, posicion_inicial, velocidad) -> None:
-        super().__init__()
         #TAMAÑO IMAGEN
         self.imagenA = pygame.image.load(path_imagenA)
         self.imagenB = pygame.image.load(path_imagenB)
@@ -14,7 +14,6 @@ class Enemigo(pygame.sprite.Sprite):
         self.imagenB = pygame.transform.scale(self.imagenB, (self.ancho, self.alto))
 
         #RECTANGULOS
-
         self.listaImagenes = [self.imagenA, self.imagenB]
         self.posImagen = 0
         self.imagenEnemigo = self.listaImagenes[self.posImagen]

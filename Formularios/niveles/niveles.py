@@ -1,61 +1,86 @@
 import pygame, sys
 from niveles.modo import *
-#from main_copy import *
 
 class Nivel:
-    def __init__(self, pantalla, personaje_principal, lista_plataformas, imagen_fondo, time_inicial, time_limite, fuente) -> None:
+    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, imagen_fondo, time_inicial, time_limite, fuente, items) -> None:
         self._slave = pantalla
+        self.ancho = w
         self.jugador = personaje_principal
         self.plataformas = lista_plataformas
         self.img_fondo = imagen_fondo
         self.time_inicial = time_inicial
         self.time_limite = time_limite
         self.fuente = fuente
+        # score = self.fuente.render("Score: {0}".format(self.jugador.puntaje), True, "White")
+        self.items = items
 
 
     def update(self, lista_eventos):
         tiempo_actual = pygame.time.get_ticks()
         tiempo_transcurrido = tiempo_actual - self.time_inicial
-        texto = self.fuente.render(f"Time: {tiempo_transcurrido // 1000}", True, "White")
+        cronometro = self.fuente.render(f"Time: {tiempo_transcurrido // 1000}", True, "White")
 
         if tiempo_transcurrido >= self.time_limite:
             pygame.quit()
             sys.exit(0)
+
+        # if colision_con_item(self.items):
+        #     print("SI LLEGA")
+        #     jugador.puntaje += 10
+        
+        score = self.fuente.render("Score: {0}".format(self.jugador.puntaje), True, "White")
 
         for evento in lista_eventos:
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_TAB:
                     cambiar_modo()      
         self.leer_inputs()
-        self.actualizar_pantalla(texto)
+        self.actualizar_pantalla(cronometro, score)
         self.dibujar_rectangulos()
 
-    def actualizar_pantalla(self, texto):
+    def actualizar_pantalla(self, cronometro, score):
         self._slave.blit(self.img_fondo, (0,0))
-        self._slave.blit(texto, (10, 10))
+        self._slave.blit(cronometro, (10, 10))
         #self._slave.blit(mini_bot.imagenA, mini_bot.rect.topleft)
 
         for plataforma in self.plataformas:
             plataforma.draw(self._slave) #hacer arreglos con .draw definirlo en la clase Plataforma
+        
+        for item in self.items:
+            item.draw(self._slave)
 
-        self.jugador.update(self._slave, self.plataformas)
+        self.jugador.update(self._slave, self.plataformas, self.items)
 
+        self._slave.blit(score, (200, 10))
 
     def leer_inputs(self):
-    
+        #estado = "quieto"
         keys = pygame.key.get_pressed()
 
-        if(keys[pygame.K_RIGHT]):
-            #and self.jugador.rectangulo.x > self.jugador.velocidad
+        if(keys[pygame.K_RIGHT]) and self.jugador.rectangulo.x < self.ancho - self.jugador.velocidad - self.jugador.rectangulo.width:
             self.jugador.que_hace = "derecha"
-        elif(keys[pygame.K_LEFT]):
-            #and self.jugador.rectangulo.x < self._slave.width - self.jugador.ancho - 5
-            #verificar la logica para que el personaje no se salga de la pantalla
+        elif(keys[pygame.K_LEFT]) and self.jugador.rectangulo.x > 0:
             self.jugador.que_hace = "izquierda"
         elif(keys[pygame.K_UP]):
             self.jugador.que_hace = "salta"
         else:
             self.jugador.que_hace = "quieto"
+
+        # if self.jugador.que_hace == estado:
+        #     if estado == "izquierda":
+        #         # Hacer algo cuando el personaje se mueve a la izquierda
+        #         pygame.transform.flip(self.jugador.animaciones["quieto"], True, False)
+        #     elif estado == "derecha":
+        #         # Hacer algo cuando el personaje se mueve a la derecha
+        #         pass
+        #     elif estado == "quieto":
+        #         # Hacer algo cuando el personaje está quieto
+        #         pass
+        #     elif estado == "salta":
+        #         # Hacer algo cuando el personaje salta
+        #         pass
+        # else:
+        #     estado = self.jugador
 
     def dibujar_rectangulos(self):
         
@@ -66,4 +91,8 @@ class Nivel:
 
             for plataforma in self.plataformas:
                 for lado in plataforma.lados:
-                        pygame.draw.rect(self._slave, "Green", plataforma.lados[lado], 2)
+                    pygame.draw.rect(self._slave, "Green", plataforma.lados[lado], 2)
+
+            for item in self.items:
+                for lado in item.lados:
+                    pygame.draw.rect(self._slave, "Yellow", item.lados[lado], 2)

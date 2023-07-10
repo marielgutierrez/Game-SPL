@@ -1,7 +1,10 @@
-from niveles.configuraciones import *
+import pygame
+from pygame.locals import *
+from niveles.configuraciones import obtener_rectangulos, reescalar_imagenes
+
 
 class Personaje:
-    def __init__(self, tamaño, animaciones, posicion_inicial, velocidad) -> None:
+    def __init__(self, tamaño, animaciones, posicion_inicial, velocidad, puntaje) -> None:
         #TAMAÑO
         self.ancho = tamaño[0]
         self.alto = tamaño[1]
@@ -16,13 +19,21 @@ class Personaje:
         self.animaciones = animaciones
         self.reescalar_animaciones()
         #RECTANGULOS
-        rectangulo = self.animaciones["camina_derecha"][0].get_rect()
-        rectangulo.x = posicion_inicial[0]
-        rectangulo.y = posicion_inicial[1]
-        self.lados = obtener_rectangulos(rectangulo)
+        self.rectangulo = self.animaciones["camina_derecha"][0].get_rect()
+        self.rectangulo.x = posicion_inicial[0]
+        self.rectangulo.y = posicion_inicial[1]
+        self.lados = obtener_rectangulos(self.rectangulo)
         #MOVIMIENTO
         self.velocidad = velocidad
         self.desplazamiento_y = 0
+        #SCORE
+        self.puntaje = puntaje
+        #ESTADO
+        self.estado = "quieto"
+        #SPRITE
+        # self.rect = self.animaciones["camina_derecha"][0].get_rect()
+        # self.rect.topleft = posicion_inicial
+        # self.grupo_sprites = grupo_items
 
     def reescalar_animaciones(self):
         for clave in self.animaciones:
@@ -40,11 +51,11 @@ class Personaje:
         self.contador_pasos += 1
 
     def mover(self, velocidad):
-        #por cada lado de la lista de lados
+        #por cada lado de la lista de lados se aumenta la velocidad para que el rectangulo acompañe la imagen
         for lado in self.lados:
             self.lados[lado].x += velocidad
 
-    def update(self, pantalla, plataformas):
+    def update(self, pantalla, plataformas, items):
         match self.que_hace:
             case "derecha":
                 if not self.esta_saltando:
@@ -62,6 +73,7 @@ class Personaje:
                 if not self.esta_saltando:
                     self.animar(pantalla, "quieto")
 
+        self.colision_con_item(items)
         self.aplicar_gravedad(pantalla, plataformas)
 
     def aplicar_gravedad(self, pantalla, plataformas):
@@ -75,21 +87,46 @@ class Personaje:
             if self.desplazamiento_y + self.gravedad < self.limite_velocidad_caida:
                 self.desplazamiento_y += self.gravedad
         
-        # if self.lados["bottom"].colliderect(piso["top"]): #no funciona pq no aplique obtener_rectangulos en la clase plataforma
-        #     self.desplazamiento_y = 0
-        #     self.esta_saltando = False
-        #     self.lados["main"].bottom = piso["main"].top + 5
-        # else:
-        #     self.esta_saltando = True
-
         for plataforma in plataformas:
-            if self.lados["bottom"].colliderect(plataforma.lados["top"]): #no funciona pq no aplique obtener_rectangulos en la clase plataforma
+            if self.lados["bottom"].colliderect(plataforma.lados["top"]):
                 self.desplazamiento_y = 0
                 self.esta_saltando = False
                 self.lados["main"].bottom = plataforma.lados["main"].top + 5
                 break
             else:
                 self.esta_saltando = True
+
+    def colision_con_item(self, lista_items):
+        #items_eliminados = []
+
+        for item in lista_items:
+            if self.lados["bottom"].colliderect(item.lados["top"]):
+                self.puntaje += 10
+                #items_eliminados.append(item)
+        
+        # for item in items_eliminados:
+        #     item.remove(item)
+
+    # def actualizar_personaje(self, nuevo_estado):
+    #     if nuevo_estado == "izquierda":
+    #         if self.estado != "izquierda":
+    #             #self.modificar_superficie(PERSONAJE_MOVIENDOSE, TAMAÑO_PERSONAJE_X, TAMAÑO_PERSONAJE_Y)
+    #             self.girar_superficies(True,False)
+    #     elif nuevo_estado == "derecha":
+    #         if self.estado != "derecha":
+    #             self.estado = nuevo_estado
+    # #             self.modificar_superficie(PERSONAJE_MOVIENDOSE, TAMAÑO_PERSONAJE_X, TAMAÑO_PERSONAJE_Y)
+    #     elif nuevo_estado == "quieto":
+    #         if self.estado != "quieto":
+    #             self.contador_pasos = 0
+    # #             self.modificar_superficie(PERSONAJE_QUIETO, TAMAÑO_PERSONAJE_X, TAMAÑO_PERSONAJE_Y)
+    #             if self.estado == "izquierda":
+    #                 self.girar_superficies(True, False)
+    #             self.estado = "quieto"
+
+    # def girar_superficies(self):
+    #      = pygame.transform.flip(imagen_original, True, False)
+
 
 
 
