@@ -2,7 +2,7 @@ import pygame
 from niveles.configuraciones import *
 from niveles.class_personaje import Personaje
 
-class Item:
+class Item(pygame.sprite.Sprite):
     def __init__(self, image_path, width, height, coordinate, un_personaje:Personaje):
         #CARGA IMAGEN
         self.image = pygame.image.load(image_path)

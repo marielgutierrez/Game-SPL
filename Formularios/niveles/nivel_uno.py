@@ -32,11 +32,13 @@ class NivelUno(Nivel):
         diccionario_animaciones["camina_izquierda"] = personaje_camina_izquierda
         mi_personaje = Personaje(tamaño, diccionario_animaciones, posicion_inicial, 5, score)
 
-        #grupo_items = pygame.sprite.Group()  
-        #mini_bot = Enemigo((40,36),"mini-bot\\0.png", "mini-bot\\3.png",(450,350), 5)
-        #piso = pygame.Rect(0,0,W,20)
-        # piso.top = mi_personaje.lados["main"].bottom
-        # lados_piso = obtener_rectangulos(piso)
+        #grupo_items = pygame.sprite.Group()
+        # 
+        # ENEMIGOS  
+        #mini_bot = Enemigo((40,36),"mini-bot\\0.png", "mini-bot\\3.png",(450,350), 5, w/2)
+        #lista_enemigos = []
+        
+
 
         #ITEMS
         money = Item("Formularios\\recursos\\items\\money.png", 24, 20, (205,86), mi_personaje)

@@ -100,7 +100,7 @@ class Personaje:
         #items_eliminados = []
 
         for item in lista_items:
-            if self.lados["bottom"].colliderect(item.lados["top"]):
+            if self.lados["main"].colliderect(item.lados["main"]):
                 self.puntaje += 10
                 #items_eliminados.append(item)
         

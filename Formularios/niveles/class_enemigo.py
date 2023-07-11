@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 
 class Enemigo(object):
-    def __init__(self, tamaño, path_imagenA, path_imagenB, posicion_inicial, velocidad) -> None:
+    def __init__(self, tamaño, path_imagenA, path_imagenB, posicion_inicial, velocidad, limite) -> None:
         #TAMAÑO IMAGEN
         self.imagenA = pygame.image.load(path_imagenA)
         self.imagenB = pygame.image.load(path_imagenB)
@@ -20,24 +20,60 @@ class Enemigo(object):
         self.rect = self.imagenEnemigo.get_rect()
 
         self.listaDisparo = []
-        self.rect.top = posicion_inicial[1]
-        self.rect.left = posicion_inicial[0]
+        self.y = posicion_inicial[1]
+        self.x = posicion_inicial[0]
         # self.lados = obtener_rectangulos(rectangulo)
         #MOVIMIENTO
         self.velocidad = velocidad
         self.desplazamiento_y = 0
+        ###
+        self.va_izquierda = False
+        self.va_derecha = False
+        self.contador_pasos = 0
+        self.camino = [self.x, limite]
 
 
-        self.tiempoCambio = 1
 
-    def comportamiento(self, tiempo):
-        #Definimos el comportamiento de la animacion en un determinado tiempo 
-        if self.tiempoCambio == tiempo:
-            self.posImagen += 1
-            self.tiempoCambio += 1
+        # self.tiempoCambio = 1
 
-            if self.posImagen > len(self.listaImagenes)-1:
-                self.posImagen = 0
+    def animar(self, pantalla, que_animacion:str):
+        animacion = self.animaciones[que_animacion]
+        largo = len(animacion)
+
+        if self.contador_pasos >= largo:
+            #algo interno de la clase el contador de pasos, no por afuera
+            self.contador_pasos = 0
+        
+        pantalla.blit(animacion[self.contador_pasos], self.lados["main"])
+        self.contador_pasos += 1
+
+
+    def se_mueve_solo(self):
+        if self.velocidad > 0:
+            if self.x + self.velocidad < self.camino[1]:
+                self.x += self.velocidad 
+                self.va_derecha = True
+                self.va_izquierda = False
+            else:
+                self.velocidad = self.velocidad * -1
+                self.contador_pasos = 0
+        else:
+            if self.x - self.velocidad > self.camino[0]:
+                self.x += self.velocidad 
+                self.va_izquierda = True
+                self.va_derecha = False
+            else:
+                self.velocidad = self.velocidad * -1
+                self.contador_pasos = 0
+
+    # def comportamiento(self, tiempo):
+    #     #Definimos el comportamiento de la animacion en un determinado tiempo 
+    #     if self.tiempoCambio == tiempo:
+    #         self.posImagen += 1
+    #         self.tiempoCambio += 1
+
+    #         if self.posImagen > len(self.listaImagenes)-1:
+    #             self.posImagen = 0
 
     # def reescalar_animaciones(self):
     #     for clave in self.animaciones:
