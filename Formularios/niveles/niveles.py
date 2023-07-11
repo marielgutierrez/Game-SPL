@@ -11,6 +11,7 @@ class Nivel:
         self.time_inicial = time_inicial
         self.time_limite = time_limite
         self.fuente = fuente
+        # self.grupo_sprites = grupo_sprites
         # score = self.fuente.render("Score: {0}".format(self.jugador.puntaje), True, "White")
         self.items = items
 
@@ -23,10 +24,6 @@ class Nivel:
         if tiempo_transcurrido >= self.time_limite:
             pygame.quit()
             sys.exit(0)
-
-        # if colision_con_item(self.items):
-        #     print("SI LLEGA")
-        #     jugador.puntaje += 10
         
         score = self.fuente.render("Score: {0}".format(self.jugador.puntaje), True, "White")
 
@@ -42,12 +39,15 @@ class Nivel:
         self._slave.blit(self.img_fondo, (0,0))
         self._slave.blit(cronometro, (10, 10))
         #self._slave.blit(mini_bot.imagenA, mini_bot.rect.topleft)
-
-        for plataforma in self.plataformas:
-            plataforma.draw(self._slave) #hacer arreglos con .draw definirlo en la clase Plataforma
         
-        for item in self.items:
+        for plataforma in self.plataformas:
+            plataforma.draw(self._slave)
+        
+        for item in self.jugador.colision_con_item(self.items):
             item.draw(self._slave)
+
+        # for item in self.grupo_sprites:
+        #     item.draw(self._slave)
 
         self.jugador.update(self._slave, self.plataformas, self.items)
 

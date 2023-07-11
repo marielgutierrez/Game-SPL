@@ -18,9 +18,9 @@ class FormMenuScore(Form):
         self.margen_y = margen_y
 
         lbl_jugador = Label(self._slave, x=margen_x + 10, y=20, w=w/2-margen_x-10, h=50, text="Jugador",
-                    font="Verdana", font_size=30, font_color="White", path_image="Formularios\\recursos_form\\bar.png")
+                    font="Consolas", font_size=30, font_color="White", path_image="Formularios\\recursos_form\\bar.png")
         lbl_puntaje = Label(self._slave, x=margen_x + 10 +w/2-margen_x-10, y=20, w=w/2-margen_x-10, h=50, text="Puntaje",
-                    font="Verdana", font_size=30, font_color="White", path_image="Formularios\\recursos_form\\bar.png")
+                    font="Consolas", font_size=30, font_color="White", path_image="Formularios\\recursos_form\\bar.png")
         
         self.lista_widgets.append(lbl_jugador)
         self.lista_widgets.append(lbl_puntaje)

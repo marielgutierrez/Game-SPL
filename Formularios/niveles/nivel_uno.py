@@ -30,23 +30,22 @@ class NivelUno(Nivel):
         diccionario_animaciones["salta"] = personaje_salta
         diccionario_animaciones["camina_derecha"] = personaje_camina
         diccionario_animaciones["camina_izquierda"] = personaje_camina_izquierda
-        mi_personaje = Personaje(tamaño, diccionario_animaciones, posicion_inicial, 5, score)
-
         #grupo_items = pygame.sprite.Group()
-        # 
+        
         # ENEMIGOS  
         #mini_bot = Enemigo((40,36),"mini-bot\\0.png", "mini-bot\\3.png",(450,350), 5, w/2)
         #lista_enemigos = []
         
-
-
         #ITEMS
-        money = Item("Formularios\\recursos\\items\\money.png", 24, 20, (205,86), mi_personaje)
-        
-        lista_items = [money]
+        mi_personaje = Personaje(tamaño, diccionario_animaciones, posicion_inicial, 5, score)
 
-        # grupo_items.add(money)
-        # grupo_items.add(mi_personaje)
+        money = Item("Formularios\\recursos\\items\\money.png", 24, 20, (205,86))
+        money_2 = Item("Formularios\\recursos\\items\\money.png", 24, 20, (400,86))
+        
+        lista_items = [money, money_2]
+
+        #grupo_items.add(money)
+        #grupo_items.add(mi_personaje)
         
         #CRONOMETRO
         tiempo_inicial = pygame.time.get_ticks()

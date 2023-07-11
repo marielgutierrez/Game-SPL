@@ -33,7 +33,7 @@ class Personaje:
         #SPRITE
         # self.rect = self.animaciones["camina_derecha"][0].get_rect()
         # self.rect.topleft = posicion_inicial
-        # self.grupo_sprites = grupo_items
+        # self.grupo_sprites = group
 
     def reescalar_animaciones(self):
         for clave in self.animaciones:
@@ -97,15 +97,12 @@ class Personaje:
                 self.esta_saltando = True
 
     def colision_con_item(self, lista_items):
-        #items_eliminados = []
-
         for item in lista_items:
             if self.lados["main"].colliderect(item.lados["main"]):
                 self.puntaje += 10
-                #items_eliminados.append(item)
-        
-        # for item in items_eliminados:
-        #     item.remove(item)
+                lista_items.remove(item)
+
+        return lista_items    
 
     # def actualizar_personaje(self, nuevo_estado):
     #     if nuevo_estado == "izquierda":

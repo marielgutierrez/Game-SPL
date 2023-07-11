@@ -19,6 +19,11 @@ pygame.display.set_icon(icon)
 #FORMULARIO INICIO
 form_inicio = FormMenuInicio(pantalla, "backgrounds\\fondo_inicio.jpg")
 
+#MUSICA
+pygame.mixer.init()
+pygame.mixer.music.load("Formularios\\recursos\\music\\hero-80s-127027.mp3") #poner musica path
+pygame.mixer.music.play(-1)
+
 #FONDO DETRAS DEL MENU
 fondo_menu = pygame.image.load("backgrounds\\fondo_del_menu.jpg")
 fondo_menu = pygame.transform.scale(fondo_menu, (WIDTH, HEIGHT))
@@ -42,6 +47,7 @@ while True:
                 mouse_pos = pygame.mouse.get_pos()
                 mostrar_coordenadas(mouse_pos)
     
+    #pantalla.fill("Black")
     pantalla.blit(fondo_menu, (0,0))
     form_inicio.update(eventos)
 

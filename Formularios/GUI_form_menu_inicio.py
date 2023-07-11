@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from GUI_form_prueba import *
+from GUI_form_principal import *
 from GUI_form import *
 from GUI_button_image import *
 
@@ -39,14 +39,12 @@ class FormMenuInicio(Form):
             self.hijo.update(lista_eventos)
 
     def btn_start_click(self, param):
-        form_prueba = FormPrueba(self._master,
+        form_prueba = FormPrincipal(self._master,
                                 250, 
                                 25,
                                 500,
                                 550,
                                 "Blue",
-                                "Magenta",
-                                5,
                                 True,
-                                "Formularios\\recursos_form\\interfaz_user.jpg")
+                                "Formularios\\recursos_form\\menu.png")
         self.show_dialog(form_prueba)

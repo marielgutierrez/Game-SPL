@@ -3,17 +3,20 @@ from pygame.locals import *
 
 from GUI_form import *
 from GUI_button_image import *
+from GUI_picture_box import *
 from GUI_form_contenedor_nivel import *
 from niveles.manejador_niveles import Manejador_niveles
 
 
 class FormMenuPlay(Form):
-    def __init__(self, screen, x, y, w, h, color_background, path_image, color_border, active):
-        super().__init__(screen, x, y, w, h, color_background, color_border, active)
+    def __init__(self, screen, x, y, w, h, color_background, path_image, active):
+        super().__init__(screen, x, y, w, h, color_background, active)
         self.manejador_niveles = Manejador_niveles(self._master)
         aux_image = pygame.image.load(path_image)
         aux_image = pygame.transform.scale(aux_image,(w,h))
         self._slave = aux_image
+
+        self.picturebox = PictureBox(self._slave, 95, 2, 315, 70, "Formularios\\recursos_form\\titulo_levels.png" )
 
         self._btn_level_1 = Button_Image(screen=self._slave,
                             master_x = x,
@@ -51,7 +54,8 @@ class FormMenuPlay(Form):
                             font_size = 15,
                             font_color = (0,255,0),
                             path_image = "Formularios\\recursos_form\\home.png")
-        
+
+        self.lista_widgets.append(self.picturebox)
         self.lista_widgets.append(self._btn_home)
         self.lista_widgets.append(self._btn_level_1)
         self.lista_widgets.append(self._btn_level_2)
