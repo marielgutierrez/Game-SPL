@@ -19,7 +19,6 @@ class FormMenuOptions(Form):
         self.flag_play = True
 
         self.picturebox = PictureBox(self._slave, 90, 4, 320, 60, "Formularios\\recursos_form\\titulo_options.png")
-        # self.txtbox = TextBox(self._slave, x, y, 120, 60, 150, 30, "Gray", "White","Magenta", "Blue",2, font= "Consolas", font_size=15, font_color ="Black")
         self.subtitulo = PictureBox(self._slave, 175, 150, 200, 20, "Formularios\\recursos_form\\music_titulo.png")        
         self.btn_play = Button(self._slave, x, y, 190, 250, 100, 50, "Red", "Blue", self.btn_play_click, "Nombre", "Pausa", font = "Verdana", font_size=15,font_color="White")
         self.label_volumen = Label(self._slave, 370, 190, 100,50,"20%", "Comic Sans", 15,"White", "Formularios\\recursos_form\\Table.png")#FALTA imagen
@@ -62,7 +61,6 @@ class FormMenuOptions(Form):
                     widget.update(lista_eventos)
                 self.update_volumen(lista_eventos)
                 self.draw()
-                #self._master.blit(self._slave, (0,0))
         else:
             self.hijo.update(lista_eventos)
     

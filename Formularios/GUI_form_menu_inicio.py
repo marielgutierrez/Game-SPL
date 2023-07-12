@@ -12,8 +12,6 @@ class FormMenuInicio(Form):
         self._height = pantalla.get_height()
         imagen_aux = pygame.image.load(path_image)
         imagen_aux = pygame.transform.scale(imagen_aux, (self._width, self._height))
-        #497, 369)
-        #1280 x 533
         self._slave = imagen_aux
         self._btn_start = Button_Image(screen=self._slave, 
                             master_x = self._x,

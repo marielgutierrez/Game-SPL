@@ -46,14 +46,13 @@ class Personaje:
         largo = len(animacion)
 
         if self.contador_pasos >= largo:
-            #algo interno de la clase el contador de pasos, no por afuera
             self.contador_pasos = 0
         
         pantalla.blit(animacion[self.contador_pasos], self.lados["main"])
         self.contador_pasos += 1
 
     def mover(self, velocidad):
-        #por cada lado de la lista de lados se aumenta la velocidad para que el rectangulo acompañe la imagen
+        #por cada lado de la lista se aumenta la velocidad para que el rectangulo acompañe la imagen
         for lado in self.lados:
             self.lados[lado].x += velocidad
 
@@ -87,7 +86,6 @@ class Personaje:
             for lado in self.lados:
                 self.lados[lado].y += self.desplazamiento_y
             
-            #mientras que esa suma sea menor al limite velocidad caida
             if self.desplazamiento_y + self.gravedad < self.limite_velocidad_caida:
                 self.desplazamiento_y += self.gravedad
         
@@ -121,44 +119,6 @@ class Personaje:
 
     #     else:
     #         self.esta_saltando = True
-
-    
-
-    # def actualizar_personaje(self, nuevo_estado):
-    #     if nuevo_estado == "izquierda":
-    #         if self.estado != "izquierda":
-    #             #self.modificar_superficie(PERSONAJE_MOVIENDOSE, TAMAÑO_PERSONAJE_X, TAMAÑO_PERSONAJE_Y)
-    #             self.girar_superficies(True,False)
-    #     elif nuevo_estado == "derecha":
-    #         if self.estado != "derecha":
-    #             self.estado = nuevo_estado
-    # #             self.modificar_superficie(PERSONAJE_MOVIENDOSE, TAMAÑO_PERSONAJE_X, TAMAÑO_PERSONAJE_Y)
-    #     elif nuevo_estado == "quieto":
-    #         if self.estado != "quieto":
-    #             self.contador_pasos = 0
-    # #             self.modificar_superficie(PERSONAJE_QUIETO, TAMAÑO_PERSONAJE_X, TAMAÑO_PERSONAJE_Y)
-    #             if self.estado == "izquierda":
-    #                 self.girar_superficies(True, False)
-    #             self.estado = "quieto"
-
-    # def girar_superficies(self):
-    #      = pygame.transform.flip(imagen_original, True, False)
-
-
-
-
-        #ACA ESTA EL ERROR DE PQ NO SALTA######################################################################
-        #Estoy intentando que el lado de abajo (bottom) del personaje colisione con el top del cada plataforma
-        #cuando ejecuto este for el personaje no puede saltar, si lo comento este puede saltar pero no colisiona con los rectangulos de las plataformas
-        # for plataforma in plataformas:
-        #     for rect in plataforma:
-        #         if self.lados["bottom"].colliderect(rect["top"]):
-        #             self.desplazamiento_y = 0
-        #             self.esta_saltando = False
-        #             self.lados["main"].bottom = rect["main"].top + 5
-        #             break
-        #         else:
-        #             self.esta_saltando = True
 
 
 

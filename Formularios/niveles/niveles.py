@@ -11,8 +11,6 @@ class Nivel:
         self.time_inicial = time_inicial
         self.time_limite = time_limite
         self.fuente = fuente
-        # self.grupo_sprites = grupo_sprites
-        # score = self.fuente.render("Score: {0}".format(self.jugador.puntaje), True, "White")
         self.items = items
         self.traps = traps
 
@@ -53,8 +51,6 @@ class Nivel:
         for trap in self.traps:
             trap.draw(self._slave)
 
-        # for item in self.grupo_sprites:
-        #     item.draw(self._slave)
 
         self.jugador.update(self._slave, self.plataformas, self.traps)
 
@@ -72,22 +68,6 @@ class Nivel:
             self.jugador.que_hace = "salta"
         else:
             self.jugador.que_hace = "quieto"
-
-        # if self.jugador.que_hace == estado:
-        #     if estado == "izquierda":
-        #         # Hacer algo cuando el personaje se mueve a la izquierda
-        #         pygame.transform.flip(self.jugador.animaciones["quieto"], True, False)
-        #     elif estado == "derecha":
-        #         # Hacer algo cuando el personaje se mueve a la derecha
-        #         pass
-        #     elif estado == "quieto":
-        #         # Hacer algo cuando el personaje está quieto
-        #         pass
-        #     elif estado == "salta":
-        #         # Hacer algo cuando el personaje salta
-        #         pass
-        # else:
-        #     estado = self.jugador
 
     def dibujar_rectangulos(self):
         
