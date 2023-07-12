@@ -19,7 +19,9 @@ class NivelUno(Nivel):
 
         #SCORE
         score = 0
-
+        #VIDAS
+        vidas = 3
+        
         #PERSONAJE
         #posicion_inicial = (h/2 - 180, 444)
         posicion_inicial = (28,55)
@@ -30,23 +32,29 @@ class NivelUno(Nivel):
         diccionario_animaciones["salta"] = personaje_salta
         diccionario_animaciones["camina_derecha"] = personaje_camina
         diccionario_animaciones["camina_izquierda"] = personaje_camina_izquierda
-        #grupo_items = pygame.sprite.Group()
         
+        mi_personaje = Personaje(tamaño, diccionario_animaciones, posicion_inicial, 5, score, vidas)
         # ENEMIGOS  
         #mini_bot = Enemigo((40,36),"mini-bot\\0.png", "mini-bot\\3.png",(450,350), 5, w/2)
         #lista_enemigos = []
         
         #ITEMS
-        mi_personaje = Personaje(tamaño, diccionario_animaciones, posicion_inicial, 5, score)
 
         money = Item("Formularios\\recursos\\items\\money.png", 24, 20, (205,86))
         money_2 = Item("Formularios\\recursos\\items\\money.png", 24, 20, (400,86))
-        
-        lista_items = [money, money_2]
+        money_3 = Item("Formularios\\recursos\\items\\money.png", 24, 20, (600,86))
+        money_4 = Item("Formularios\\recursos\\items\\money.png", 24, 20, (502,220))
+        money_5 = Item("Formularios\\recursos\\items\\money.png", 24, 20, (129,221))
 
-        #grupo_items.add(money)
-        #grupo_items.add(mi_personaje)
-        
+        lista_items = [money, money_2, money_3, money_4, money_5]
+
+        #TRAMPAS
+
+        pinches_1 = Item("Formularios\\recursos\\items\\pinche.png", 90,28, (500, 90))
+        pinches_2 = Item("Formularios\\recursos\\items\\pinche.png", 90,28, (263, 91))
+        pinches_3 = Item("Formularios\\recursos\\items\\pinche.png", 90,28, (287, 232))
+
+        lista_traps = [pinches_1, pinches_2, pinches_3]
         #CRONOMETRO
         tiempo_inicial = pygame.time.get_ticks()
         tiempo_limite = 600000
@@ -54,15 +62,8 @@ class NivelUno(Nivel):
 
         #PISO
         piso = Plataforma("Formularios\\recursos\\vacio-png.png", w, 200, (0,490))
-        #mi_personaje.lados["main"].bottom
+
         #PLATAFORMAS
-        '''
-        Coordenadas: (132, 106)
-        Coordenadas: (127, 90)
-
-
-        Coordenadas: (363, 118)
-        '''
         plataformas_1 = Plataforma("Formularios\\recursos\\plataforma.png", 180, 50, (820, 111))
         plataformas_3 = Plataforma("Formularios\\recursos\\plataforma.png", 180, 50, (0, 111))
         plataformas_4 = Plataforma("Formularios\\recursos\\plataforma.png", 180, 50, (180, 111))
@@ -80,4 +81,4 @@ class NivelUno(Nivel):
         lista_plataformas = [piso, plataformas_1, plataformas_2, plataformas_3, plataformas_4, plataformas_5, plataformas_6,
                             plataformas_7, plataformas_8, plataformas_9, plataformas_10]
 
-        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, fondo, tiempo_inicial, tiempo_limite, fuente, lista_items)
+        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, fondo, tiempo_inicial, tiempo_limite, fuente, lista_items, lista_traps)

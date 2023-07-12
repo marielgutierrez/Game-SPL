@@ -18,9 +18,10 @@ class FormMenuOptions(Form):
         self.volumen = 0.3
         self.flag_play = True
 
-        self.picturebox = PictureBox(self._slave, 90, 4, 320, 60, "Formularios\\recursos_form\\titulo_options.png" )
-        self.txtbox = TextBox(self._slave, x, y, 120, 60, 150, 30, "Gray", "White","Magenta", "Blue",2, font= "Consolas", font_size=15, font_color ="Black" )
-        self.btn_play = Button(self._slave, x, y, 100, 100, 100, 50, "Red", "Blue", self.btn_play_click, "Nombre", "Pausa", font = "Verdana", font_size=15,font_color="White")
+        self.picturebox = PictureBox(self._slave, 90, 4, 320, 60, "Formularios\\recursos_form\\titulo_options.png")
+        # self.txtbox = TextBox(self._slave, x, y, 120, 60, 150, 30, "Gray", "White","Magenta", "Blue",2, font= "Consolas", font_size=15, font_color ="Black")
+        self.subtitulo = PictureBox(self._slave, 175, 150, 200, 20, "Formularios\\recursos_form\\music_titulo.png")        
+        self.btn_play = Button(self._slave, x, y, 190, 250, 100, 50, "Red", "Blue", self.btn_play_click, "Nombre", "Pausa", font = "Verdana", font_size=15,font_color="White")
         self.label_volumen = Label(self._slave, 370, 190, 100,50,"20%", "Comic Sans", 15,"White", "Formularios\\recursos_form\\Table.png")#FALTA imagen
         self.slider_volumen = Slider(self._slave, x, y,100,200,250,12,self.volumen,"Violet","White")
         
@@ -45,7 +46,7 @@ class FormMenuOptions(Form):
 
         self.lista_widgets.append(self.picturebox)
         self.lista_widgets.append(self._btn_home)
-        self.lista_widgets.append(self.txtbox)
+        self.lista_widgets.append(self.subtitulo)
         self.lista_widgets.append(self.btn_play)
         self.lista_widgets.append(self.label_volumen)        
         self.lista_widgets.append(self.slider_volumen)        

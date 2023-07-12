@@ -2,7 +2,7 @@ import pygame, sys
 from niveles.modo import *
 
 class Nivel:
-    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, imagen_fondo, time_inicial, time_limite, fuente, items) -> None:
+    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, imagen_fondo, time_inicial, time_limite, fuente, items, traps) -> None:
         self._slave = pantalla
         self.ancho = w
         self.jugador = personaje_principal
@@ -14,6 +14,7 @@ class Nivel:
         # self.grupo_sprites = grupo_sprites
         # score = self.fuente.render("Score: {0}".format(self.jugador.puntaje), True, "White")
         self.items = items
+        self.traps = traps
 
 
     def update(self, lista_eventos):
@@ -26,18 +27,21 @@ class Nivel:
             sys.exit(0)
         
         score = self.fuente.render("Score: {0}".format(self.jugador.puntaje), True, "White")
+        vidas = self.fuente.render("Vidas: {0}".format(self.jugador.vidas), True, "White")
 
         for evento in lista_eventos:
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_TAB:
                     cambiar_modo()      
         self.leer_inputs()
-        self.actualizar_pantalla(cronometro, score)
+        self.actualizar_pantalla(cronometro, score, vidas)
         self.dibujar_rectangulos()
 
-    def actualizar_pantalla(self, cronometro, score):
+    def actualizar_pantalla(self, cronometro, score, vidas):
         self._slave.blit(self.img_fondo, (0,0))
         self._slave.blit(cronometro, (10, 10))
+        self._slave.blit(vidas, (400, 10))
+        
         #self._slave.blit(mini_bot.imagenA, mini_bot.rect.topleft)
         
         for plataforma in self.plataformas:
@@ -46,10 +50,13 @@ class Nivel:
         for item in self.jugador.colision_con_item(self.items):
             item.draw(self._slave)
 
+        for trap in self.traps:
+            trap.draw(self._slave)
+
         # for item in self.grupo_sprites:
         #     item.draw(self._slave)
 
-        self.jugador.update(self._slave, self.plataformas, self.items)
+        self.jugador.update(self._slave, self.plataformas, self.traps)
 
         self._slave.blit(score, (200, 10))
 
@@ -96,3 +103,8 @@ class Nivel:
             for item in self.items:
                 for lado in item.lados:
                     pygame.draw.rect(self._slave, "Yellow", item.lados[lado], 2)
+            
+            for trap in self.traps:
+                for lado in trap.lados:
+                    pygame.draw.rect(self._slave, "Orange", trap.lados[lado], 2)
+

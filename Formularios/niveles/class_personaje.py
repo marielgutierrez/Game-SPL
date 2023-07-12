@@ -4,7 +4,7 @@ from niveles.configuraciones import obtener_rectangulos, reescalar_imagenes
 
 
 class Personaje:
-    def __init__(self, tamaño, animaciones, posicion_inicial, velocidad, puntaje) -> None:
+    def __init__(self, tamaño, animaciones, posicion_inicial, velocidad, puntaje, vidas) -> None:
         #TAMAÑO
         self.ancho = tamaño[0]
         self.alto = tamaño[1]
@@ -30,6 +30,8 @@ class Personaje:
         self.puntaje = puntaje
         #ESTADO
         self.estado = "quieto"
+        #VIDAS
+        self.vidas = vidas
         #SPRITE
         # self.rect = self.animaciones["camina_derecha"][0].get_rect()
         # self.rect.topleft = posicion_inicial
@@ -55,7 +57,7 @@ class Personaje:
         for lado in self.lados:
             self.lados[lado].x += velocidad
 
-    def update(self, pantalla, plataformas, items):
+    def update(self, pantalla, plataformas, traps):
         match self.que_hace:
             case "derecha":
                 if not self.esta_saltando:
@@ -73,8 +75,10 @@ class Personaje:
                 if not self.esta_saltando:
                     self.animar(pantalla, "quieto")
 
-        self.colision_con_item(items)
+        self.colision_trampa(traps)
         self.aplicar_gravedad(pantalla, plataformas)
+        #self.colision_plataformas(plataformas)
+
 
     def aplicar_gravedad(self, pantalla, plataformas):
 
@@ -99,10 +103,26 @@ class Personaje:
     def colision_con_item(self, lista_items):
         for item in lista_items:
             if self.lados["main"].colliderect(item.lados["main"]):
-                self.puntaje += 10
+                self.puntaje += 100
                 lista_items.remove(item)
 
-        return lista_items    
+        return lista_items
+    
+    def colision_trampa(self, traps):
+        for trap in traps:
+            if self.lados["bottom"].colliderect(trap.lados["top"]):
+                self.vidas -= 1
+
+
+    # def colision_plataformas(self, plataformas):
+    #     for plataforma in plataformas:
+    #         if self.lados["main"].colliderect(plataforma.lados["main"]):
+    #             pass
+
+    #     else:
+    #         self.esta_saltando = True
+
+    
 
     # def actualizar_personaje(self, nuevo_estado):
     #     if nuevo_estado == "izquierda":

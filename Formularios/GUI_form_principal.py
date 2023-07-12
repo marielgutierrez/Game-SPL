@@ -22,10 +22,10 @@ class FormPrincipal(Form):
         self._slave = imagen_aux
         # pygame.mixer.init()
         ### CONTROLES
-        self.picturebox = PictureBox(self._slave, 85, 2, 320, 75, "Formularios\\recursos_form\\titulo_menu.png" )
+        self.picturebox = PictureBox(self._slave, 85, 2, 320, 75, "Formularios\\recursos_form\\titulo_menu.png")
+        self.btn_jugar = Button_Image(self._slave, x, y, 185, 150, 150, 60, "Formularios\\recursos_form\\boton_play.png", self.btn_jugar_click, "a" )
         self.btn_config = Button_Image(self._slave, x, y, 185,250,150,60,"Formularios\\recursos_form\\boton_opciones.png",self.btn_config_click, "lalal")
         self.btn_tabla = Button_Image(self._slave, x, y, 185,350,150,60,"Formularios\\recursos_form\\boton_rank.png",self.btn_tabla_click, "lalal")
-        self.btn_jugar = Button_Image(self._slave, x, y, 185, 150, 150, 60, "Formularios\\recursos_form\\boton_play.png", self.btn_jugar_click, "a" )
         ###################
         #PARA SALIR DEL MENU PRINCIPAL E IR AL INICIO
         self._btn_home = Button_Image(screen=self._slave, 

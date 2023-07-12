@@ -5,6 +5,7 @@ from GUI_form import *
 from GUI_button_image import *
 from GUI_picture_box import *
 from GUI_form_contenedor_nivel import *
+from GUI_textbox import *
 from niveles.manejador_niveles import Manejador_niveles
 
 
@@ -16,7 +17,10 @@ class FormMenuPlay(Form):
         aux_image = pygame.transform.scale(aux_image,(w,h))
         self._slave = aux_image
 
-        self.picturebox = PictureBox(self._slave, 95, 2, 315, 70, "Formularios\\recursos_form\\titulo_levels.png" )
+        self.picturebox = PictureBox(self._slave, 95, 2, 315, 70, "Formularios\\recursos_form\\titulo_levels.png")
+        self.subtitulo = PictureBox(self._slave, 150, 300, 200, 20, "Formularios\\recursos_form\\name_titulo.png")        
+        self.txtbox = TextBox(self._slave, x, y, 185,350, 150, 30, "Gray", "White","Magenta", "Blue",2, font= "Consolas", font_size=15, font_color ="Black" )
+
 
         self._btn_level_1 = Button_Image(screen=self._slave,
                             master_x = x,
@@ -56,9 +60,11 @@ class FormMenuPlay(Form):
                             path_image = "Formularios\\recursos_form\\home.png")
 
         self.lista_widgets.append(self.picturebox)
-        self.lista_widgets.append(self._btn_home)
+        self.lista_widgets.append(self.subtitulo)
+        self.lista_widgets.append(self.txtbox)
         self.lista_widgets.append(self._btn_level_1)
         self.lista_widgets.append(self._btn_level_2)
+        self.lista_widgets.append(self._btn_home)
 
     def on(self, parametro):
         print("hola", parametro)
