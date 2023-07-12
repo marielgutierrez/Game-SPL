@@ -29,8 +29,8 @@ fondo_menu = pygame.image.load("backgrounds\\fondo_del_menu.jpg")
 fondo_menu = pygame.transform.scale(fondo_menu, (WIDTH, HEIGHT))
 
 
-def mostrar_coordenadas(pos):
-    print("Coordenadas: ({}, {})".format(pos[0], pos[1]))
+# def mostrar_coordenadas(pos):
+#     print("Coordenadas: ({}, {})".format(pos[0], pos[1]))
 
 while True:
     reloj.tick(FPS)
@@ -40,14 +40,13 @@ while True:
             pygame.quit()
             sys.exit()
     
-    mouse_pos = pygame.mouse.get_pos()
+    #mouse_pos = pygame.mouse.get_pos()
     
-    # Verifica si el mouse ha tocado los lados de la ventana
-    if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                mostrar_coordenadas(mouse_pos)
+    #Verificar si el mouse ha tocado los lados de la ventana
+    # if event.type == pygame.MOUSEBUTTONDOWN:
+    #             mouse_pos = pygame.mouse.get_pos()
+    #             #mostrar_coordenadas(mouse_pos)
     
-    #pantalla.fill("Black")
     pantalla.blit(fondo_menu, (0,0))
     form_inicio.update(eventos)
 
