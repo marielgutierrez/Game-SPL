@@ -32,10 +32,6 @@ class Personaje:
         self.estado = "quieto"
         #VIDAS
         self.vidas = vidas
-        #SPRITE
-        # self.rect = self.animaciones["camina_derecha"][0].get_rect()
-        # self.rect.topleft = posicion_inicial
-        # self.grupo_sprites = group
 
     def reescalar_animaciones(self):
         for clave in self.animaciones:
@@ -52,11 +48,17 @@ class Personaje:
         self.contador_pasos += 1
 
     def mover(self, velocidad):
-        #por cada lado de la lista se aumenta la velocidad para que el rectangulo acompañe la imagen
+        '''
+        brief: Desplaza al personaje en el eje horizontal según la velocidad
+        '''
         for lado in self.lados:
             self.lados[lado].x += velocidad
 
     def update(self, pantalla, plataformas, traps):
+        '''
+        brief: Actualiza el estado del personaje según la acción actual se muestra
+        la animación que corresponda y se realiza el desplazamiento
+        '''
         match self.que_hace:
             case "derecha":
                 if not self.esta_saltando:
@@ -80,7 +82,10 @@ class Personaje:
 
 
     def aplicar_gravedad(self, pantalla, plataformas):
-
+        '''
+        brief: Aplica la gravedad al personaje permitiendo que caiga
+        si no está en contacto con alguna plataforma
+        '''
         if self.esta_saltando:
             self.animar(pantalla, "salta")
             for lado in self.lados:
@@ -99,6 +104,9 @@ class Personaje:
                 self.esta_saltando = True
 
     def colision_con_item(self, lista_items):
+        '''
+        brief: Se encarga de la colision del personaje con cada item
+        '''
         for item in lista_items:
             if self.lados["main"].colliderect(item.lados["main"]):
                 self.puntaje += 100
@@ -107,6 +115,9 @@ class Personaje:
         return lista_items
     
     def colision_trampa(self, traps):
+        '''
+        brief: Se encarga de la colision del personaje con cada trampa
+        '''
         for trap in traps:
             if self.lados["bottom"].colliderect(trap.lados["top"]):
                 self.vidas -= 1
