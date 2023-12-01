@@ -7,10 +7,6 @@ def girar_imagenes(lista_original, flip_x, flip_y):
 
     return lista_girada
 
-def reescalar_imagenes(lista_animaciones, tamaño):
-        for i in range(len(lista_animaciones)):
-            imagen = lista_animaciones[i]
-            lista_animaciones[i] = pygame.transform.scale(imagen, tamaño)
 
 def obtener_rectangulos(principal: pygame.Rect):
     '''
@@ -53,8 +49,27 @@ personaje_salta = [
     pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_salta\\3.png"),]
 
 personaje_camina_izquierda = girar_imagenes(personaje_camina, True, False)
-
 personaje_quieto_izquierda = girar_imagenes(personaje_quieto, True, False)
+personaje_salta_i = girar_imagenes(personaje_salta, True, False)
 
 
+diccionario_animaciones = {}
+diccionario_animaciones["quieto"] = personaje_quieto
+diccionario_animaciones["quieto_i"] = personaje_quieto_izquierda
+diccionario_animaciones["salta"] = personaje_salta
+diccionario_animaciones["salta_i"] = personaje_salta_i
+diccionario_animaciones["camina_derecha"] = personaje_camina
+diccionario_animaciones["camina_izquierda"] = personaje_camina_izquierda
 
+
+dolar_cargando = pygame.image.load("Formularios\\recursos\\items\\money.png")
+dolar_escalado = pygame.transform.scale(dolar_cargando, (24,20))
+item_dolar = [dolar_escalado]
+
+pinche_cargando = pygame.image.load("Formularios\\recursos\\items\\pinche.png")
+pinche_escalado = pygame.transform.scale(pinche_cargando, (90,28))
+item_pinche = [pinche_escalado]
+
+piso_surface = pygame.image.load("Formularios\\recursos\\vacio-png.png")
+plataforma_surface = pygame.image.load("Formularios\\recursos\\plataforma.png")
+miniplataforma_surface = pygame.image.load("Formularios\\recursos\\0.png")

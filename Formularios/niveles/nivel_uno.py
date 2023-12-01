@@ -26,33 +26,27 @@ class NivelUno(Nivel):
         #posicion_inicial = (h/2 - 180, 444)
         posicion_inicial = (28,55)
         tamaño = (25,50)
-
-        diccionario_animaciones = {}
-        diccionario_animaciones["quieto"] = personaje_quieto
-        diccionario_animaciones["salta"] = personaje_salta
-        diccionario_animaciones["camina_derecha"] = personaje_camina
-        diccionario_animaciones["camina_izquierda"] = personaje_camina_izquierda
         
-        mi_personaje = Personaje(tamaño, diccionario_animaciones, posicion_inicial, 5, score, vidas)
+        mi_personaje = Personaje(tamaño, diccionario_animaciones["quieto"][0], diccionario_animaciones, posicion_inicial, 5, score, vidas)
         # ENEMIGOS  
         #mini_bot = Enemigo((40,36),"mini-bot\\0.png", "mini-bot\\3.png",(450,350), 5, w/2)
         #lista_enemigos = []
         
         #ITEMS
 
-        money = Item("Formularios\\recursos\\items\\money.png", 24, 20, (205,86))
-        money_2 = Item("Formularios\\recursos\\items\\money.png", 24, 20, (400,86))
-        money_3 = Item("Formularios\\recursos\\items\\money.png", 24, 20, (600,86))
-        money_4 = Item("Formularios\\recursos\\items\\money.png", 24, 20, (502,220))
-        money_5 = Item("Formularios\\recursos\\items\\money.png", 24, 20, (129,221))
+        money = Item((24,20), item_dolar[0], {"quieto":item_dolar}, (205,86))
+        money_2 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (400,86))
+        money_3 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (600,86))
+        money_4 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (502,220))
+        money_5 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (129,221))
 
         lista_items = [money, money_2, money_3, money_4, money_5]
 
         #TRAMPAS
 
-        pinches_1 = Item("Formularios\\recursos\\items\\pinche.png", 90,28, (500, 90))
-        pinches_2 = Item("Formularios\\recursos\\items\\pinche.png", 90,28, (263, 91))
-        pinches_3 = Item("Formularios\\recursos\\items\\pinche.png", 90,28, (287, 232))
+        pinches_1 = Item((90,28),item_pinche[0], {"quieto":item_pinche}, (500, 90))
+        pinches_2 = Item((90,28),item_pinche[0], {"quieto":item_pinche}, (263, 91))
+        pinches_3 = Item((90,28),item_pinche[0], {"quieto":item_pinche}, (287, 232))
 
         lista_traps = [pinches_1, pinches_2, pinches_3]
         #CRONOMETRO
@@ -61,24 +55,30 @@ class NivelUno(Nivel):
         fuente = pygame.font.SysFont("Consolas",20)
 
         #PISO
-        piso = Plataforma("Formularios\\recursos\\vacio-png.png", w, 200, (0,490))
+        piso = Plataforma((w, 200), piso_surface, (0,490))
 
         #PLATAFORMAS
-        plataformas_1 = Plataforma("Formularios\\recursos\\plataforma.png", 180, 50, (820, 111))
-        plataformas_3 = Plataforma("Formularios\\recursos\\plataforma.png", 180, 50, (0, 111))
-        plataformas_4 = Plataforma("Formularios\\recursos\\plataforma.png", 180, 50, (180, 111))
-        plataformas_5 = Plataforma("Formularios\\recursos\\plataforma.png", 180, 50, (360, 111))
-        plataformas_6 = Plataforma("Formularios\\recursos\\plataforma.png", 180, 50, (540, 111))
+        plataformas_1 = Plataforma((180,50), plataforma_surface, (820, 111))
+        plataformas_3 = Plataforma((180,50), plataforma_surface, (0, 111))
+        plataformas_4 = Plataforma((180,50), plataforma_surface, (180, 111))
+        plataformas_5 = Plataforma((180,50), plataforma_surface, (360, 111))
+        plataformas_6 = Plataforma((180,50), plataforma_surface, (540, 111))
 
-        plataformas_2 = Plataforma("Formularios\\recursos\\0.png", 50, 50, (490, 250))
-        plataformas_7 = Plataforma("Formularios\\recursos\\plataforma.png", 180, 50, (640, 250))
-        plataformas_8 = Plataforma("Formularios\\recursos\\plataforma.png", 180, 50, (820, 250))
-        plataformas_9 = Plataforma("Formularios\\recursos\\plataforma.png", 180, 50, (250, 250))
-        plataformas_10 = Plataforma("Formularios\\recursos\\0.png", 50, 50, (120, 250))
+        plataformas_2 = Plataforma((50,50), miniplataforma_surface, (490, 250))
+        plataformas_7 = Plataforma((180,50), plataforma_surface, (640, 250))
+        plataformas_8 = Plataforma((180,50), plataforma_surface, (820, 250))
+        plataformas_9 = Plataforma((180,50), plataforma_surface, (250, 250))
+        plataformas_10 = Plataforma((50,50), miniplataforma_surface, (120, 250))
 
         #plataformas_3 = Plataforma("Formularios\\recursos\\suelo.png", 210, 210, (750, 150))
 
         lista_plataformas = [piso, plataformas_1, plataformas_2, plataformas_3, plataformas_4, plataformas_5, plataformas_6,
                             plataformas_7, plataformas_8, plataformas_9, plataformas_10]
 
-        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, fondo, tiempo_inicial, tiempo_limite, fuente, lista_items, lista_traps)
+        lista_plataformas_rect = [piso.lados_rectangulo, plataformas_1.lados_rectangulo, plataformas_2.lados_rectangulo,
+                                plataformas_3.lados_rectangulo, plataformas_4.lados_rectangulo, plataformas_5.lados_rectangulo, plataformas_6.lados_rectangulo,
+                                plataformas_7.lados_rectangulo, plataformas_8.lados_rectangulo, plataformas_9.lados_rectangulo, plataformas_10.lados_rectangulo] #techo.lados_rectangulo, index 1
+
+
+
+        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, tiempo_inicial, tiempo_limite, fuente, lista_items, lista_traps)

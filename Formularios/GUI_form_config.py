@@ -15,7 +15,7 @@ class FormMenuOptions(Form):
         aux_image = pygame.transform.scale(aux_image,(w,h))
         self._slave = aux_image
 
-        self.volumen = 0.3
+        self.volumen = 0.1
         self.flag_play = True
 
         self.picturebox = PictureBox(self._slave, 90, 4, 320, 60, "Formularios\\recursos_form\\titulo_options.png")

@@ -1,13 +1,11 @@
 import pygame
 from pygame.locals import *
-from niveles.configuraciones import obtener_rectangulos, reescalar_imagenes
+from niveles.configuraciones import obtener_rectangulos
+from niveles.class_objeto_juego import Objeto_Juego
 
-
-class Personaje:
-    def __init__(self, tamaño, animaciones, posicion_inicial, velocidad, puntaje, vidas) -> None:
-        #TAMAÑO
-        self.ancho = tamaño[0]
-        self.alto = tamaño[1]
+class Personaje(Objeto_Juego):
+    def __init__(self, tamaño:tuple, imagen, animaciones, posicion_inicial:tuple, velocidad, puntaje, vidas) -> None:
+        super().__init__(tamaño, imagen, posicion_inicial)
         #GRAVEDAD
         self.gravedad = 1
         self.potencia_salto = -15
@@ -15,14 +13,16 @@ class Personaje:
         self.esta_saltando = False
         #ANIMACIONES
         self.contador_pasos = 0
+        self.direccion = 1
         self.que_hace = "quieto"
+        self.estado_normal = False
         self.animaciones = animaciones
         self.reescalar_animaciones()
         #RECTANGULOS
         self.rectangulo = self.animaciones["camina_derecha"][0].get_rect()
         self.rectangulo.x = posicion_inicial[0]
         self.rectangulo.y = posicion_inicial[1]
-        self.lados = obtener_rectangulos(self.rectangulo)
+        #self.lados = obtener_rectangulos(self.rectangulo)
         #MOVIMIENTO
         self.velocidad = velocidad
         self.desplazamiento_y = 0
@@ -34,9 +34,18 @@ class Personaje:
         self.vidas = vidas
 
     def reescalar_animaciones(self):
-        for clave in self.animaciones:
-            reescalar_imagenes(self.animaciones[clave], (self.ancho, self.alto))
+        '''
+        brief: se encarga de escalar las animaciones
+        '''
+        for clave, lista in self.animaciones.items():
+            for i in range(len(lista)):
+                lista[i] = self.reescalar_imagen(lista[i])
 
+    # def reescalar_animaciones(self):
+    #     for clave in self.animaciones:
+    #         reescalar_imagenes(self.animaciones[clave], (self.ancho, self.alto))
+
+    ##esta bien
     def animar(self, pantalla, que_animacion:str):
         animacion = self.animaciones[que_animacion]
         largo = len(animacion)
@@ -44,62 +53,95 @@ class Personaje:
         if self.contador_pasos >= largo:
             self.contador_pasos = 0
         
-        pantalla.blit(animacion[self.contador_pasos], self.lados["main"])
+        pantalla.blit(animacion[self.contador_pasos], self.lados_rectangulo["main"])
         self.contador_pasos += 1
-
+    
+    
     def mover(self, velocidad):
         '''
         brief: Desplaza al personaje en el eje horizontal según la velocidad
         '''
-        for lado in self.lados:
-            self.lados[lado].x += velocidad
+        for lado in self.lados_rectangulo:
+            self.lados_rectangulo[lado].x += velocidad
+        #super().mover(velocidad)
+        # for lado in self.lados:
+        #     self.lados[lado].x += velocidad
 
-    def update(self, pantalla, plataformas, traps):
+    def update(self, pantalla, plataformas_rect, traps):
         '''
         brief: Actualiza el estado del personaje según la acción actual se muestra
         la animación que corresponda y se realiza el desplazamiento
         '''
         match self.que_hace:
             case "derecha":
+                colision = False
                 if not self.esta_saltando:
                     self.animar(pantalla, "camina_derecha")
-                self.mover(self.velocidad)
+
+                for rect_plataforma in plataformas_rect:
+                    if self.lados_rectangulo["right"].colliderect(rect_plataforma["left"]):
+                        colision = True
+                if not colision:
+                    self.mover(self.velocidad)    
+                #self.mover(self.velocidad)
             case "izquierda":
+                colision = False
                 if not self.esta_saltando:
                     self.animar(pantalla, "camina_izquierda")
-                self.mover(self.velocidad * - 1)
+                self.mover(self.velocidad * - 1) ##por alguna razon hace vaya mas rapido
+
+                for rect_plataforma in plataformas_rect:
+                    if self.lados_rectangulo["left"].colliderect(rect_plataforma["right"]):
+                        colision = True
+                if not colision:
+                    self.mover(self.velocidad * -1)
             case "salta":
-                if not self.esta_saltando:
-                    self.esta_saltando = True
-                    self.desplazamiento_y = self.potencia_salto
+                colision = False
+                for rect_plataforma in plataformas_rect:
+                    if self.lados_rectangulo["top"].colliderect(rect_plataforma["bottom"]):
+                        colision = True
+                if not colision:        
+                    if not self.esta_saltando:
+                        self.esta_saltando = True
+                        self.desplazamiento_y = self.potencia_salto
             case "quieto":
                 if not self.esta_saltando:
-                    self.animar(pantalla, "quieto")
+                    if self.direccion == 1:
+                        self.animar(pantalla, "quieto")
+                    else:
+                        self.animar(pantalla, "quieto_i")
 
         self.colision_trampa(traps)
-        self.aplicar_gravedad(pantalla, plataformas)
+        self.aplicar_gravedad(pantalla, plataformas_rect)
         #self.colision_plataformas(plataformas)
 
 
-    def aplicar_gravedad(self, pantalla, plataformas):
+    def aplicar_gravedad(self, pantalla, plataformas_rect):
         '''
         brief: Aplica la gravedad al personaje permitiendo que caiga
         si no está en contacto con alguna plataforma
         '''
         if self.esta_saltando:
             self.animar(pantalla, "salta")
-            for lado in self.lados:
-                self.lados[lado].y += self.desplazamiento_y
+            for lado in self.lados_rectangulo:
+                self.lados_rectangulo[lado].y += self.desplazamiento_y
             
             if self.desplazamiento_y + self.gravedad < self.limite_velocidad_caida:
                 self.desplazamiento_y += self.gravedad
         
-        for plataforma in plataformas:
-            if self.lados["bottom"].colliderect(plataforma.lados["top"]):
-                self.desplazamiento_y = 0
+        for piso in plataformas_rect:
+            if self.lados_rectangulo["bottom"].colliderect(piso["top"]):
                 self.esta_saltando = False
-                self.lados["main"].bottom = plataforma.lados["main"].top + 5
+                self.desplazamiento_y = 0
+                self.lados_rectangulo["main"].bottom = piso["main"].top
                 break
+
+        # for plataforma in plataformas:
+        #     if self.lados["bottom"].colliderect(plataforma.lados["top"]):
+        #         self.desplazamiento_y = 0
+        #         self.esta_saltando = False
+        #         self.lados["main"].bottom = plataforma.lados["main"].top + 5
+        #         break
             else:
                 self.esta_saltando = True
 
@@ -108,7 +150,7 @@ class Personaje:
         brief: Se encarga de la colision del personaje con cada item
         '''
         for item in lista_items:
-            if self.lados["main"].colliderect(item.lados["main"]):
+            if self.lados_rectangulo["main"].colliderect(item.lados_rectangulo["main"]):
                 self.puntaje += 100
                 lista_items.remove(item)
 
@@ -119,8 +161,16 @@ class Personaje:
         brief: Se encarga de la colision del personaje con cada trampa
         '''
         for trap in traps:
-            if self.lados["bottom"].colliderect(trap.lados["top"]):
+            if self.lados_rectangulo["bottom"].colliderect(trap.lados_rectangulo["top"]):
                 self.vidas -= 1
+
+    def efecto_sonido_auch(self):
+        '''
+        se encarga de reproducir un sonido de dolor
+        '''
+        auch = pygame.mixer.Sound("sonidos_personaje/sonido_auch.mp3")
+        auch.set_volume(0.3)
+        auch.play(1)
 
 
     # def colision_plataformas(self, plataformas):

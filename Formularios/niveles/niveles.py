@@ -1,19 +1,19 @@
-import pygame, sys
+import pygame, sys, json
 from niveles.modo import *
 
 class Nivel:
-    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, imagen_fondo, time_inicial, time_limite, fuente, items, traps) -> None:
+    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, time_inicial, time_limite, fuente, items, traps) -> None:
         self._slave = pantalla
         self.ancho = w
         self.jugador = personaje_principal
         self.plataformas = lista_plataformas
+        self.plataformas_rect = lista_plataformas_rect
         self.img_fondo = imagen_fondo
         self.time_inicial = time_inicial
         self.time_limite = time_limite
         self.fuente = fuente
         self.items = items
         self.traps = traps
-
 
     def update(self, lista_eventos):
         tiempo_actual = pygame.time.get_ticks()
@@ -52,7 +52,7 @@ class Nivel:
             trap.draw(self._slave)
 
 
-        self.jugador.update(self._slave, self.plataformas, self.traps)
+        self.jugador.update(self._slave, self.plataformas_rect, self.traps)
 
         self._slave.blit(score, (200, 10))
 
@@ -73,18 +73,37 @@ class Nivel:
         
         if get_mode():
             #pygame.draw.rect(self._slave, "Blue", piso, 2)
-            for lado in self.jugador.lados: 
-                pygame.draw.rect(self._slave, "Red", self.jugador.lados[lado] , 2)
+            for lado in self.jugador.lados_rectangulo: 
+                pygame.draw.rect(self._slave, "Red", self.jugador.lados_rectangulo[lado] , 2)
 
             for plataforma in self.plataformas:
-                for lado in plataforma.lados:
-                    pygame.draw.rect(self._slave, "Green", plataforma.lados[lado], 2)
+                for lado in plataforma.lados_rectangulo:
+                    pygame.draw.rect(self._slave, "Green", plataforma.lados_rectangulo[lado], 2)
 
             for item in self.items:
-                for lado in item.lados:
-                    pygame.draw.rect(self._slave, "Yellow", item.lados[lado], 2)
+                for lado in item.lados_rectangulo:
+                    pygame.draw.rect(self._slave, "Yellow", item.lados_rectangulo[lado], 2)
             
             for trap in self.traps:
-                for lado in trap.lados:
-                    pygame.draw.rect(self._slave, "Orange", trap.lados[lado], 2)
+                for lado in trap.lados_rectangulo:
+                    pygame.draw.rect(self._slave, "Orange", trap.lados_rectangulo[lado], 2)
 
+    def guardar_datos_nivel(self):
+        '''
+        funcion que guarda los datos del nivel en un JSON y desbloquea el siguiente
+        '''
+        try:
+            with open('desbloqueo_niveles.json', 'r') as archivo:
+                datos_niveles = json.load(archivo)
+            
+            for nivel in datos_niveles["niveles"]:
+                if nivel["nivel"] == self.nivel_actual + 1:
+                    nivel['desbloqueado'] = True
+                    break
+                nivel["puntaje"] = self.jugador.puntaje
+            with open('desbloqueo_niveles.json', 'w') as archivo:
+                json.dump(datos_niveles, archivo)
+        except FileNotFoundError:
+            print("No se encontró el archivo 'desbloqueo_niveles.json'")
+        except json.JSONDecodeError:
+            print("Error al decodificar el archivo JSON")
