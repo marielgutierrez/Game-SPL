@@ -2,42 +2,57 @@ import pygame, sys, json
 from niveles.modo import *
 
 class Nivel:
-    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, time_inicial, time_limite, fuente, items, traps) -> None:
+    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, fuente, items, traps) -> None:
         self._slave = pantalla
         self.ancho = w
         self.jugador = personaje_principal
         self.plataformas = lista_plataformas
         self.plataformas_rect = lista_plataformas_rect
         self.img_fondo = imagen_fondo
-        self.time_inicial = time_inicial
-        self.time_limite = time_limite
         self.fuente = fuente
         self.items = items
         self.traps = traps
 
+        ### vidas
+        img_corazon = pygame.image.load("Formularios/recursos/corazon.png")
+        self.img_corazon = pygame.transform.scale(img_corazon, (20,20))
+        self.rect_corazon = self.img_corazon.get_rect()
+        self.rect_corazon.x = 470
+        self.rect_corazon.y = 10
+
+        ### tiempo
+        self.pausado = False
+        self.tiempo_limite = 60000
+        self.tiempo_pausado = 0
+        self.tiempo_inicio = pygame.time.get_ticks()
+
+        ##formularios
+        self.game_over = False
+
     def update(self, lista_eventos):
-        tiempo_actual = pygame.time.get_ticks()
-        tiempo_transcurrido = tiempo_actual - self.time_inicial
-        cronometro = self.fuente.render(f"Time: {tiempo_transcurrido // 1000}", True, "White")
 
-        if tiempo_transcurrido >= self.time_limite:
-            pygame.quit()
-            sys.exit(0)
+        # if tiempo_transcurrido >= self.time_limite:
+        #     pygame.quit()
+        #     sys.exit(0)
         
-        score = self.fuente.render("Score: {0}".format(self.jugador.puntaje), True, "White")
-        vidas = self.fuente.render("Vidas: {0}".format(self.jugador.vidas), True, "White")
+        #score = self.fuente.render("Score: {0}".format(self.jugador.puntaje), True, "White")
+        vidas = self.fuente.render("VIDAS:", True, "White")
 
-        for evento in lista_eventos:
-            if evento.type == pygame.KEYDOWN:
-                if evento.key == pygame.K_TAB:
-                    cambiar_modo()      
+        if not self.pausado:
+            self.tiempo_pausado = pygame.time.get_ticks() - self.tiempo_inicio
+            if not self.jugador.ganaste and not self.jugador.perdiste:
+                for evento in lista_eventos:
+                    if evento.type == pygame.KEYDOWN:
+                        if evento.key == pygame.K_d:
+                            cambiar_modo()      
         self.leer_inputs()
-        self.actualizar_pantalla(cronometro, score, vidas)
+        self.actualizar_pantalla(vidas)
         self.dibujar_rectangulos()
+        self.dibujar_vidas_score()
 
-    def actualizar_pantalla(self, cronometro, score, vidas):
+    def actualizar_pantalla(self, vidas):
         self._slave.blit(self.img_fondo, (0,0))
-        self._slave.blit(cronometro, (10, 10))
+        #self._slave.blit(cronometro, (10, 10))
         self._slave.blit(vidas, (400, 10))
         
         #self._slave.blit(mini_bot.imagenA, mini_bot.rect.topleft)
@@ -54,20 +69,47 @@ class Nivel:
 
         self.jugador.update(self._slave, self.plataformas_rect, self.traps)
 
-        self._slave.blit(score, (200, 10))
+        #self._slave.blit(score, (200, 10))
 
     def leer_inputs(self):
         #estado = "quieto"
         keys = pygame.key.get_pressed()
 
         if(keys[pygame.K_RIGHT]) and self.jugador.rectangulo.x < self.ancho - self.jugador.velocidad - self.jugador.rectangulo.width:
-            self.jugador.que_hace = "derecha"
+            for plataforma_rect in self.plataformas_rect:
+                if not self.jugador.lados_rectangulo["right"].colliderect(plataforma_rect["left"]):
+                    self.jugador.que_hace = "derecha"
         elif(keys[pygame.K_LEFT]) and self.jugador.rectangulo.x > 0:
             self.jugador.que_hace = "izquierda"
         elif(keys[pygame.K_UP]):
             self.jugador.que_hace = "salta"
         else:
             self.jugador.que_hace = "quieto"
+
+    def dibujar_vidas_score(self):
+        '''
+        funcion que blitea el tiempo, las vidas y puntaje del jugador en pantalla
+        '''
+        texto_puntaje = self.fuente.render("SCORE: {0}".format(self.jugador.puntaje), True, "White")
+        self._slave.blit(texto_puntaje, (200,10))
+
+        # texto_proyectiles = fuente.render("PROYECTILES: {0}".format(self.jugador.proyectiles), True, "White")
+        # self.pantalla.blit(texto_proyectiles, (1000,10))
+
+        rectangulo = self.rect_corazon.copy()
+        for vida in range(self.jugador.vidas):
+            self._slave.blit(self.img_corazon, (rectangulo.x, rectangulo.y))
+            rectangulo.x += self.img_corazon.get_width() + 10
+
+        if not self.pausado:
+            tiempo_actual = pygame.time.get_ticks() 
+            tiempo_transcurrido = tiempo_actual - self.tiempo_inicio
+            self.tiempo_restante = self.tiempo_limite - tiempo_transcurrido 
+        if self.tiempo_restante < 0:
+            self.game_over = True
+            self.pausado = True
+        texto_cronometro = self.fuente.render(f"TIEMPO 00:{self.tiempo_restante // 1000}", True, "White")
+        self._slave.blit(texto_cronometro, (10, 10))
 
     def dibujar_rectangulos(self):
         

@@ -20,7 +20,7 @@ class FormMenuInicio(Form):
                             y = 369,
                             w = 120,
                             h = 50,
-                            path_image = "Formularios\\recursos_form\\start_boton.png",
+                            path_image = "Formularios/recursos_form/start_boton.png",
                             onclick= self.btn_start_click,
                             onclick_param = "")
         

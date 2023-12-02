@@ -4,7 +4,7 @@ from niveles.configuraciones import obtener_rectangulos
 from niveles.class_objeto_juego import Objeto_Juego
 
 class Personaje(Objeto_Juego):
-    def __init__(self, tamaño:tuple, imagen, animaciones, posicion_inicial:tuple, velocidad, puntaje, vidas) -> None:
+    def __init__(self, tamaño:tuple, imagen, animaciones, posicion_inicial:tuple, velocidad) -> None:
         super().__init__(tamaño, imagen, posicion_inicial)
         #GRAVEDAD
         self.gravedad = 1
@@ -12,26 +12,45 @@ class Personaje(Objeto_Juego):
         self.limite_velocidad_caida = 15
         self.esta_saltando = False
         #ANIMACIONES
-        self.contador_pasos = 0
-        self.direccion = 1
+        self.fotograma_actual = 0
         self.que_hace = "quieto"
-        self.estado_normal = False
+        self.direccion = 1
+        self.contador_pasos = 0
+        self.estado_normal = True
         self.animaciones = animaciones
         self.reescalar_animaciones()
         #RECTANGULOS
         self.rectangulo = self.animaciones["camina_derecha"][0].get_rect()
         self.rectangulo.x = posicion_inicial[0]
         self.rectangulo.y = posicion_inicial[1]
-        #self.lados = obtener_rectangulos(self.rectangulo)
+        # #self.lados = obtener_rectangulos(self.rectangulo)
         #MOVIMIENTO
         self.velocidad = velocidad
         self.desplazamiento_y = 0
+        self.tengo_llave = False
         #SCORE
-        self.puntaje = puntaje
+        self.puntaje = 0
         #ESTADO
-        self.estado = "quieto"
+        #self.estado = "quieto"
         #VIDAS
-        self.vidas = vidas
+        self.vidas = 3
+        #PARTIDA
+        self.ganaste = False
+        self.perdiste = False
+
+        ## PROYECTILES
+        # self.proyectiles = 0
+        # self.lista_proyectiles = []
+        # self.img_proyectil = img_proyectil
+        # self.puede_disparar = True#False
+        # self.tiempo_ultimo_disparo = 0
+        # self.tiempo_entre_disparos = 1000
+
+        # self.puede_colisionar = True
+
+        # #tiempo
+        # self.tiempo_colision = 0
+        # self.tiempo_espera_colision = 1000
 
     def reescalar_animaciones(self):
         '''
@@ -76,7 +95,11 @@ class Personaje(Objeto_Juego):
             case "derecha":
                 colision = False
                 if not self.esta_saltando:
-                    self.animar(pantalla, "camina_derecha")
+                    if self.estado_normal:
+                        self.animar(pantalla, "camina_derecha")
+                    else:
+                        self.animar(pantalla, "camina_d_muerte")
+                self.direccion = 1
 
                 for rect_plataforma in plataformas_rect:
                     if self.lados_rectangulo["right"].colliderect(rect_plataforma["left"]):
@@ -87,8 +110,12 @@ class Personaje(Objeto_Juego):
             case "izquierda":
                 colision = False
                 if not self.esta_saltando:
-                    self.animar(pantalla, "camina_izquierda")
-                self.mover(self.velocidad * - 1) ##por alguna razon hace vaya mas rapido
+                    if self.estado_normal:
+                        self.animar(pantalla, "camina_izquierda")
+                    else:
+                        self.animar(pantalla, "camina_i_muerte")
+                self.direccion = -1
+                #self.mover(self.velocidad * - 1) ##por alguna razon hace vaya mas rapido
 
                 for rect_plataforma in plataformas_rect:
                     if self.lados_rectangulo["left"].colliderect(rect_plataforma["right"]):
@@ -107,9 +134,15 @@ class Personaje(Objeto_Juego):
             case "quieto":
                 if not self.esta_saltando:
                     if self.direccion == 1:
-                        self.animar(pantalla, "quieto")
+                        if self.estado_normal:
+                            self.animar(pantalla, "quieto")
+                        else:
+                            self.animar(pantalla, "quieto_d_muerte")
                     else:
-                        self.animar(pantalla, "quieto_i")
+                        if self.estado_normal:
+                            self.animar(pantalla, "quieto_i")
+                        else:
+                            self.animar(pantalla, "quieto_i_muerte")
 
         self.colision_trampa(traps)
         self.aplicar_gravedad(pantalla, plataformas_rect)
@@ -121,11 +154,23 @@ class Personaje(Objeto_Juego):
         brief: Aplica la gravedad al personaje permitiendo que caiga
         si no está en contacto con alguna plataforma
         '''
+        # if self.esta_saltando:
+        #     self.animar(pantalla, "salta")
         if self.esta_saltando:
-            self.animar(pantalla, "salta")
+            if self.direccion == 1:
+                if self.estado_normal:
+                    self.animar(pantalla, "salta")
+                else:
+                    self.animar(pantalla, "salta_d_muerte")
+            else:
+                if self.estado_normal:
+                    self.animar(pantalla, "salta_i")
+                else:
+                    self.animar(pantalla, "salta_i_muerte")
+
             for lado in self.lados_rectangulo:
                 self.lados_rectangulo[lado].y += self.desplazamiento_y
-            
+
             if self.desplazamiento_y + self.gravedad < self.limite_velocidad_caida:
                 self.desplazamiento_y += self.gravedad
         
@@ -135,6 +180,8 @@ class Personaje(Objeto_Juego):
                 self.desplazamiento_y = 0
                 self.lados_rectangulo["main"].bottom = piso["main"].top
                 break
+            else:
+                self.esta_saltando = True
 
         # for plataforma in plataformas:
         #     if self.lados["bottom"].colliderect(plataforma.lados["top"]):
@@ -142,8 +189,6 @@ class Personaje(Objeto_Juego):
         #         self.esta_saltando = False
         #         self.lados["main"].bottom = plataforma.lados["main"].top + 5
         #         break
-            else:
-                self.esta_saltando = True
 
     def colision_con_item(self, lista_items):
         '''

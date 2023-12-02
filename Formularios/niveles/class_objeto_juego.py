@@ -1,5 +1,4 @@
 import pygame
-from niveles.configuraciones import obtener_rectangulos
 
 class Objeto_Juego:
     def __init__(self, tamaño:tuple, imagen:pygame.Surface, posicion_inicial) -> None:
@@ -14,7 +13,6 @@ class Objeto_Juego:
             rectangulo.x = posicion_inicial[0]
             rectangulo.y = posicion_inicial[1]
             self.lados_rectangulo = self.obtener_rectangulos(rectangulo)
-        
         
         # self.velocidad = [0, 0]
         # self.indice_animacion = 0  # Índice para animar movimientos

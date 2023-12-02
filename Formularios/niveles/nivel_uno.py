@@ -14,20 +14,15 @@ class NivelUno(Nivel):
         h = pantalla.get_height()
 
         #FONDO
-        fondo = pygame.image.load("backgrounds\\nuevo-fondo.jpeg")
+        fondo = pygame.image.load("backgrounds/nuevo-fondo.jpeg")
         fondo = pygame.transform.scale(fondo, (w, h))
 
-        #SCORE
-        score = 0
-        #VIDAS
-        vidas = 3
-        
         #PERSONAJE
         #posicion_inicial = (h/2 - 180, 444)
         posicion_inicial = (28,55)
         tamaño = (25,50)
         
-        mi_personaje = Personaje(tamaño, diccionario_animaciones["quieto"][0], diccionario_animaciones, posicion_inicial, 5, score, vidas)
+        mi_personaje = Personaje(tamaño, diccionario_animaciones["quieto"][0], diccionario_animaciones, posicion_inicial, 5)
         # ENEMIGOS  
         #mini_bot = Enemigo((40,36),"mini-bot\\0.png", "mini-bot\\3.png",(450,350), 5, w/2)
         #lista_enemigos = []
@@ -49,9 +44,8 @@ class NivelUno(Nivel):
         pinches_3 = Item((90,28),item_pinche[0], {"quieto":item_pinche}, (287, 232))
 
         lista_traps = [pinches_1, pinches_2, pinches_3]
-        #CRONOMETRO
-        tiempo_inicial = pygame.time.get_ticks()
-        tiempo_limite = 600000
+        
+        #FUENTE
         fuente = pygame.font.SysFont("Consolas",20)
 
         #PISO
@@ -81,4 +75,4 @@ class NivelUno(Nivel):
 
 
 
-        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, tiempo_inicial, tiempo_limite, fuente, lista_items, lista_traps)
+        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, fuente, lista_items, lista_traps)
