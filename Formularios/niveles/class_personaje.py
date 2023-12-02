@@ -86,7 +86,7 @@ class Personaje(Objeto_Juego):
         # for lado in self.lados:
         #     self.lados[lado].x += velocidad
 
-    def update(self, pantalla, plataformas_rect, traps):
+    def update(self, pantalla, plataformas_rect, traps, llave, portal):
         '''
         brief: Actualiza el estado del personaje según la acción actual se muestra
         la animación que corresponda y se realiza el desplazamiento
@@ -146,6 +146,7 @@ class Personaje(Objeto_Juego):
 
         self.colision_trampa(traps)
         self.aplicar_gravedad(pantalla, plataformas_rect)
+        self.ganar_nivel(portal, llave, pantalla)
         #self.colision_plataformas(plataformas)
 
 
@@ -213,11 +214,21 @@ class Personaje(Objeto_Juego):
         '''
         se encarga de reproducir un sonido de dolor
         '''
-        auch = pygame.mixer.Sound("sonidos_personaje/sonido_auch.mp3")
+        auch = pygame.mixer.Sound("Formularios/niveles/sonidos_personaje/sonido_auch.mp3")
         auch.set_volume(0.3)
         auch.play(1)
 
-
+    def ganar_nivel(self, portal, llave, pantalla):
+        '''
+        verifica si posee la llave, si es asi, verifica si colisiona con la puerta para ganar el nivel.
+        '''
+        if self.lados_rectangulo["main"].colliderect(llave.rectangulo):
+            self.tengo_llave = True
+            sonido_llave = pygame.mixer.Sound("Formularios/recursos/music/key_catch.wav")
+            sonido_llave.play()
+        if self.tengo_llave and not self.perdiste:
+            if self.lados_rectangulo["main"].colliderect(portal.lados_rectangulo["main"]):
+                self.ganaste = True
     # def colision_plataformas(self, plataformas):
     #     for plataforma in plataformas:
     #         if self.lados["main"].colliderect(plataforma.lados["main"]):

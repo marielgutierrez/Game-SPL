@@ -27,26 +27,26 @@ def obtener_rectangulos(principal: pygame.Rect):
 
 #set de imagenes del personaje
 personaje_quieto = [
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_quieto\\0.png"),
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_quieto\\1.png"),
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_quieto\\2.png"),
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_quieto\\3.png")    
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_quieto/0.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_quieto/1.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_quieto/2.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_quieto/3.png")    
 ]
 
 personaje_camina = [
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\0.png"),
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\1.png"),
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\2.png"),
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\3.png"),
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\4.png"),
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_camina\\5.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_camina/0.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_camina/1.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_camina/2.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_camina/3.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_camina/4.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_camina/5.png"),
 ]
 
 personaje_salta = [
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_salta\\0.png"),
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_salta\\1.png"),
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_salta\\2.png"),
-    pygame.image.load("Formularios\\niveles\\main-character\\punk\\punk_salta\\3.png"),]
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_salta/0.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_salta/1.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_salta/2.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_salta/3.png"),]
 
 personaje_camina_izquierda = girar_imagenes(personaje_camina, True, False)
 personaje_quieto_izquierda = girar_imagenes(personaje_quieto, True, False)
@@ -61,15 +61,28 @@ diccionario_animaciones["salta_i"] = personaje_salta_i
 diccionario_animaciones["camina_derecha"] = personaje_camina
 diccionario_animaciones["camina_izquierda"] = personaje_camina_izquierda
 
+item_s = [pygame.image.load("Formularios/recursos/llaves/0.png"),
+                    pygame.image.load("Formularios/recursos/llaves/1.png"),
+                    pygame.image.load("Formularios/recursos/llaves/2.png"),
+                    pygame.image.load("Formularios/recursos/llaves/3.png"),
+                    pygame.image.load("Formularios/recursos/llaves/4.png"),
+                    pygame.image.load("Formularios/recursos/llaves/5.png"),
+                    pygame.image.load("Formularios/recursos/llaves/6.png"),
+                    pygame.image.load("Formularios/recursos/llaves/7.png"),
+                    pygame.image.load("Formularios/recursos/llaves/8.png"),
+                    pygame.image.load("Formularios/recursos/llaves/9.png"),
+                    pygame.image.load("Formularios/recursos/llaves/10.png")]
 
-dolar_cargando = pygame.image.load("Formularios\\recursos\\items\\money.png")
+portal_s = pygame.image.load("Formularios/recursos/miportal.png")
+
+dolar_cargando = pygame.image.load("Formularios/recursos/items/money.png")
 dolar_escalado = pygame.transform.scale(dolar_cargando, (24,20))
 item_dolar = [dolar_escalado]
 
-pinche_cargando = pygame.image.load("Formularios\\recursos\\items\\pinche.png")
+pinche_cargando = pygame.image.load("Formularios/recursos/items/pinche.png")
 pinche_escalado = pygame.transform.scale(pinche_cargando, (90,28))
 item_pinche = [pinche_escalado]
 
-piso_surface = pygame.image.load("Formularios\\recursos\\vacio-png.png")
-plataforma_surface = pygame.image.load("Formularios\\recursos\\plataforma.png")
-miniplataforma_surface = pygame.image.load("Formularios\\recursos\\0.png")
+piso_surface = pygame.image.load("Formularios/recursos/vacio-png.png")
+plataforma_surface = pygame.image.load("Formularios/recursos/plataforma.png")
+miniplataforma_surface = pygame.image.load("Formularios/recursos/0.png")

@@ -2,7 +2,7 @@ import pygame, sys, json
 from niveles.modo import *
 
 class Nivel:
-    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, fuente, items, traps) -> None:
+    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, fuente, items, traps, llave, portal) -> None:
         self._slave = pantalla
         self.ancho = w
         self.jugador = personaje_principal
@@ -12,7 +12,8 @@ class Nivel:
         self.fuente = fuente
         self.items = items
         self.traps = traps
-
+        self.llave = llave
+        self.portal = portal
         ### vidas
         img_corazon = pygame.image.load("Formularios/recursos/corazon.png")
         self.img_corazon = pygame.transform.scale(img_corazon, (20,20))
@@ -49,6 +50,7 @@ class Nivel:
         self.actualizar_pantalla(vidas)
         self.dibujar_rectangulos()
         self.dibujar_vidas_score()
+        
 
     def actualizar_pantalla(self, vidas):
         self._slave.blit(self.img_fondo, (0,0))
@@ -66,8 +68,10 @@ class Nivel:
         for trap in self.traps:
             trap.draw(self._slave)
 
+        self.portal.draw(self._slave)
+        self.llave.draw(self._slave)
 
-        self.jugador.update(self._slave, self.plataformas_rect, self.traps)
+        self.jugador.update(self._slave, self.plataformas_rect, self.traps, self.llave, self.portal)
 
         #self._slave.blit(score, (200, 10))
 

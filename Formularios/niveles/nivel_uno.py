@@ -6,6 +6,7 @@ from niveles.class_personaje import Personaje
 from niveles.class_plataforma import Plataforma
 from niveles.class_enemigo import Enemigo
 from niveles.class_item import Item
+from niveles.class_objeto_juego import Objeto_Juego
 
 class NivelUno(Nivel):
     def __init__(self, pantalla: pygame.Surface) -> None:
@@ -28,28 +29,32 @@ class NivelUno(Nivel):
         #lista_enemigos = []
         
         #ITEMS
-
-        money = Item((24,20), item_dolar[0], {"quieto":item_dolar}, (205,86))
-        money_2 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (400,86))
-        money_3 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (600,86))
-        money_4 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (502,220))
-        money_5 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (129,221))
+        money = Item((24,20), item_dolar[0], {"quieto":item_dolar}, (205,86), False)
+        money_2 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (400,86), False)
+        money_3 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (600,86), False)
+        money_4 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (502,220), False)
+        money_5 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (129,221), False)
 
         lista_items = [money, money_2, money_3, money_4, money_5]
 
         #TRAMPAS
-
-        pinches_1 = Item((90,28),item_pinche[0], {"quieto":item_pinche}, (500, 90))
-        pinches_2 = Item((90,28),item_pinche[0], {"quieto":item_pinche}, (263, 91))
-        pinches_3 = Item((90,28),item_pinche[0], {"quieto":item_pinche}, (287, 232))
+        pinches_1 = Item((90,28),item_pinche[0], {"quieto":item_pinche}, (500, 90), False)
+        pinches_2 = Item((90,28),item_pinche[0], {"quieto":item_pinche}, (263, 91), False)
+        pinches_3 = Item((90,28),item_pinche[0], {"quieto":item_pinche}, (287, 232), False)
 
         lista_traps = [pinches_1, pinches_2, pinches_3]
         
         #FUENTE
         fuente = pygame.font.SysFont("Consolas",20)
 
+        #LLAVE
+        llave = Item((10,20), item_s[0], {"quieto": item_s}, (180,105), True)
+
+        #PORTAL
+        portal = Objeto_Juego((80,70), portal_s, (918, 437))
+
         #PISO
-        piso = Plataforma((w, 200), piso_surface, (0,490))
+        piso = Plataforma((w, 210), piso_surface, (0,490))
 
         #PLATAFORMAS
         plataformas_1 = Plataforma((180,50), plataforma_surface, (820, 111))
@@ -75,4 +80,4 @@ class NivelUno(Nivel):
 
 
 
-        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, fuente, lista_items, lista_traps)
+        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, fuente, lista_items, lista_traps, llave, portal)
