@@ -23,7 +23,7 @@ class NivelUno(Nivel):
         posicion_inicial = (28,55)
         tamaño = (25,50)
         
-        mi_personaje = Personaje(tamaño, diccionario_animaciones["quieto"][0], diccionario_animaciones, posicion_inicial, 5)
+        mi_personaje = Personaje(tamaño, diccionario_animaciones["quieto"][0], diccionario_animaciones, posicion_inicial, 5, proyectil_surface)
         # ENEMIGOS  
         #mini_bot = Enemigo((40,36),"mini-bot\\0.png", "mini-bot\\3.png",(450,350), 5, w/2)
         #lista_enemigos = []
@@ -49,12 +49,13 @@ class NivelUno(Nivel):
 
         #LLAVE
         llave = Item((10,20), item_s[0], {"quieto": item_s}, (180,105), True)
+        lista_elemento = [llave]
 
         #PORTAL
-        portal = Objeto_Juego((80,70), portal_s, (918, 437))
+        portal = Objeto_Juego((90,80), portal_s, (895, 419))
 
         #PISO
-        piso = Plataforma((w, 210), piso_surface, (0,490))
+        piso = Plataforma((w, 210), piso_surface, (0,496))#490
 
         #PLATAFORMAS
         plataformas_1 = Plataforma((180,50), plataforma_surface, (820, 111))
@@ -80,4 +81,4 @@ class NivelUno(Nivel):
 
 
 
-        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, fuente, lista_items, lista_traps, llave, portal)
+        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, fuente, lista_items, lista_traps, llave, lista_elemento, portal)

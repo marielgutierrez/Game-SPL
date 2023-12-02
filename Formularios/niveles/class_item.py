@@ -31,10 +31,10 @@ class Item(Objeto_Juego):
         lista_imagenes = self.animaciones[que_animacion]
         if self.fotograma_actual >= len(lista_imagenes):
             self.fotograma_actual = 0
-        pantalla.blit(lista_imagenes[self.fotograma_actual], self.lados_rectangulo)
+        pantalla.blit(lista_imagenes[self.fotograma_actual], (self.rectangulo.x, self.rectangulo.y))
         self.fotograma_actual += 1
 
-    def acumular_vidrios(self, pantalla, jugador):
+    def acumular_armas(self, pantalla, jugador):
         if self.puede_colisionar:
             if not self.rectangulo.colliderect(jugador.lados_rectangulo["main"]):
                 #self.dibujar_en_pantalla(pantalla)

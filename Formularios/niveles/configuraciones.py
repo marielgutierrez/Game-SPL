@@ -75,6 +75,8 @@ item_s = [pygame.image.load("Formularios/recursos/llaves/0.png"),
 
 portal_s = pygame.image.load("Formularios/recursos/miportal.png")
 
+proyectil_surface = pygame.image.load("Formularios/recursos/items/bala.png")
+
 dolar_cargando = pygame.image.load("Formularios/recursos/items/money.png")
 dolar_escalado = pygame.transform.scale(dolar_cargando, (24,20))
 item_dolar = [dolar_escalado]

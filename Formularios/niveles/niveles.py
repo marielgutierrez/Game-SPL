@@ -2,7 +2,7 @@ import pygame, sys, json
 from niveles.modo import *
 
 class Nivel:
-    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, fuente, items, traps, llave, portal) -> None:
+    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, fuente, items, traps, llave, lista_armas, portal) -> None:
         self._slave = pantalla
         self.ancho = w
         self.jugador = personaje_principal
@@ -11,6 +11,7 @@ class Nivel:
         self.img_fondo = imagen_fondo
         self.fuente = fuente
         self.items = items
+        self.lista_armas = lista_armas
         self.traps = traps
         self.llave = llave
         self.portal = portal
@@ -54,9 +55,7 @@ class Nivel:
 
     def actualizar_pantalla(self, vidas):
         self._slave.blit(self.img_fondo, (0,0))
-        #self._slave.blit(cronometro, (10, 10))
         self._slave.blit(vidas, (400, 10))
-        
         #self._slave.blit(mini_bot.imagenA, mini_bot.rect.topleft)
         
         for plataforma in self.plataformas:
@@ -68,9 +67,11 @@ class Nivel:
         for trap in self.traps:
             trap.draw(self._slave)
 
-        self.portal.draw(self._slave)
-        self.llave.draw(self._slave)
+        for arma in self.lista_armas:
+            arma.acumular_armas(self._slave, self.jugador)
 
+        self.portal.draw(self._slave)
+        #self.llave.draw(self._slave)
         self.jugador.update(self._slave, self.plataformas_rect, self.traps, self.llave, self.portal)
 
         #self._slave.blit(score, (200, 10))

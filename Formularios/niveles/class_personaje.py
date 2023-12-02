@@ -4,7 +4,7 @@ from niveles.configuraciones import obtener_rectangulos
 from niveles.class_objeto_juego import Objeto_Juego
 
 class Personaje(Objeto_Juego):
-    def __init__(self, tamaño:tuple, imagen, animaciones, posicion_inicial:tuple, velocidad) -> None:
+    def __init__(self, tamaño:tuple, imagen, animaciones, posicion_inicial:tuple, velocidad, img_proyectil) -> None:
         super().__init__(tamaño, imagen, posicion_inicial)
         #GRAVEDAD
         self.gravedad = 1
@@ -39,18 +39,18 @@ class Personaje(Objeto_Juego):
         self.perdiste = False
 
         ## PROYECTILES
-        # self.proyectiles = 0
-        # self.lista_proyectiles = []
-        # self.img_proyectil = img_proyectil
-        # self.puede_disparar = True#False
-        # self.tiempo_ultimo_disparo = 0
-        # self.tiempo_entre_disparos = 1000
+        self.proyectiles = 0
+        self.lista_proyectiles = []
+        self.img_proyectil = img_proyectil
+        self.puede_disparar = True#False
+        self.tiempo_ultimo_disparo = 0
+        self.tiempo_entre_disparos = 1000
 
-        # self.puede_colisionar = True
+        self.puede_colisionar = True
 
         # #tiempo
-        # self.tiempo_colision = 0
-        # self.tiempo_espera_colision = 1000
+        self.tiempo_colision = 0
+        self.tiempo_espera_colision = 1000
 
     def reescalar_animaciones(self):
         '''
@@ -115,7 +115,7 @@ class Personaje(Objeto_Juego):
                     else:
                         self.animar(pantalla, "camina_i_muerte")
                 self.direccion = -1
-                #self.mover(self.velocidad * - 1) ##por alguna razon hace vaya mas rapido
+                #self.mover(self.velocidad * - 1) ##esto hace vaya mas rapido
 
                 for rect_plataforma in plataformas_rect:
                     if self.lados_rectangulo["left"].colliderect(rect_plataforma["right"]):
