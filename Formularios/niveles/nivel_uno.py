@@ -81,4 +81,4 @@ class NivelUno(Nivel):
 
 
 
-        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, fuente, lista_items, lista_traps, llave, lista_elemento, portal)
+        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, fuente, lista_items, lista_traps, llave, lista_elemento, portal, 1, False)

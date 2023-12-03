@@ -21,7 +21,7 @@ class FormContenedorNivel(Form):
                             y = self._h - 100,
                             w = 50,
                             h = 50,
-                            path_image = "Formularios\\recursos_form\\home.png",
+                            path_image = "Formularios/recursos_form/home.png",
                             onclick= self.btn_home_click,
                             onclick_param = "")
         
@@ -34,10 +34,12 @@ class FormContenedorNivel(Form):
     def update(self, lista_eventos):
         if self.verificar_dialog_result():
             self.nivel.update(lista_eventos) 
-            #self.nivel.update(lista_eventos)
             for widget in self.lista_widgets:
                 widget.update(lista_eventos)
-            self.draw()
+            self.draw() 
+            self.game_over() #PROBANDO
+        else:
+            self.hijo.update(lista_eventos)#NO SE SI FUNCIONA
 
     def game_over(self):
         if self.nivel.verificar_victoria_game_over():

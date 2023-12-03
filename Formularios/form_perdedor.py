@@ -9,19 +9,19 @@ class FormPerdedor(Form):
         super().__init__(screen, x, y, w, h, color_background, color_border, border_size, active)
 
         #self.manejador_niveles = ManejadorNiveles(self._master)#self._master
-        path_image = "recursos_forms/cartel_lose.jpg"
+        path_image = "Fomrularios/recursos_forms/cartel_lose.jpg"
         aux_image = pygame.image.load(path_image)
         aux_image = pygame.transform.scale(aux_image, (w/2,h/2))
         self._slave = aux_image
 
-        self.btn_ranking = Button_Image(self._slave, x, y, w/2-75, 500, 200, 70, "recursos_form/BOTONES/3.png", self.btn_tabla_click, "lalala", "RANKING", font = "Consolas", font_size=30, font_color="White")
-        self.btn_niveles = Button_Image(self._slave, x, y, w/2-75, 400, 200, 70, "recursos_form/home.png", self.btn_niveles_click, "Nombre", "NIVELES", font = "Consolas", font_size=30, font_color="White")
+        #self.btn_ranking = Button_Image(self._slave, x, y, w/2-75, 500, 200, 70, "recursos_form/BOTONES/3.png", self.btn_tabla_click, "lalala", "RANKING", font = "Consolas", font_size=30, font_color="White")
+        #self.btn_niveles = Button_Image(self._slave, x, y, w/2-75, 400, 200, 70, "recursos_form/home.png", self.btn_niveles_click, "Nombre", "NIVELES", font = "Consolas", font_size=30, font_color="White")
         #self.lista_widgets.append(self.btn_ranking)
         #self.lista_widgets.append(self.btn_niveles)
         #pygame.mixer.init()
-        efecto_sonid = pygame.mixer.Sound("recursos/music/sonido_loser.mp3")
-        efecto_sonid.set_volume(0.6)
-        efecto_sonid.play()
+        efecto_sonid = pygame.mixer.Sound("Formularios/recursos/music/sonido_loser.mp3")
+        efecto_sonid.set_volume(0.3)
+        efecto_sonid.play(1)
 
     def update(self, lista_eventos):
         if self.verificar_dialog_result():

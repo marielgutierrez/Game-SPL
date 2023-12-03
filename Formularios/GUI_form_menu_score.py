@@ -18,12 +18,15 @@ class FormMenuScore(Form):
         self.margen_y = margen_y
 
         lbl_jugador = Label(self._slave, x=margen_x + 10, y=20, w=w/2-margen_x-10, h=50, text="Jugador",
-                    font="Consolas", font_size=30, font_color="White", path_image="Formularios\\recursos_form\\bar.png")
+                    font="Consolas", font_size=30, font_color="White", path_image="Formularios/recursos_form/bar.png")
         lbl_puntaje = Label(self._slave, x=margen_x + 10 +w/2-margen_x-10, y=20, w=w/2-margen_x-10, h=50, text="Puntaje",
-                    font="Consolas", font_size=30, font_color="White", path_image="Formularios\\recursos_form\\bar.png")
+                    font="Consolas", font_size=30, font_color="White", path_image="Formularios/recursos_form/bar.png")
+        lbl_nivel = Label(self._slave, x=margen_x + 10 +w/2-margen_x-10, y=20, w=w/2-margen_x-10, h=50, text="Nivel",
+                    font="Consolas", font_size=30, font_color="White", path_image="Formularios/recursos_form/bar.png")
         
         self.lista_widgets.append(lbl_jugador)
         self.lista_widgets.append(lbl_puntaje)
+        self.lista_widgets.append(lbl_nivel)
 
         pos_inicial_y = margen_y
 
@@ -33,7 +36,7 @@ class FormMenuScore(Form):
                 cadena = ""
                 cadena = f"{s}"
                 jugador = Label(self._slave, pos_inicial_x, pos_inicial_y, w/2-margen_x, 100, cadena, "Verdana",
-                                30, "White", "Formularios\\recursos_form\\Table.png")
+                                30, "White", "Formularios/recursos_form/Table.png")
                 self.lista_widgets.append(jugador)
                 pos_inicial_x += w/2 - margen_x
             pos_inicial_y += 100 + espacio
@@ -53,7 +56,7 @@ class FormMenuScore(Form):
                                     font = "Verdana",
                                     font_size = 15,
                                     font_color = (0,255,0),
-                                    path_image = "Formularios\\recursos_form\\home.png")
+                                    path_image = "Formularios/recursos_form/home.png")
         self.lista_widgets.append(self._btn_home)
 
     def btn_home_click(self, param):
