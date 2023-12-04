@@ -52,6 +52,12 @@ personaje_camina_izquierda = girar_imagenes(personaje_camina, True, False)
 personaje_quieto_izquierda = girar_imagenes(personaje_quieto, True, False)
 personaje_salta_i = girar_imagenes(personaje_salta, True, False)
 
+personaje_dispara = [
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_armado/1.png")
+]
+
+personaje_dispara_i = girar_imagenes(personaje_dispara, True, False)
+
 
 diccionario_animaciones = {}
 diccionario_animaciones["quieto"] = personaje_quieto
@@ -60,6 +66,8 @@ diccionario_animaciones["salta"] = personaje_salta
 diccionario_animaciones["salta_i"] = personaje_salta_i
 diccionario_animaciones["camina_derecha"] = personaje_camina
 diccionario_animaciones["camina_izquierda"] = personaje_camina_izquierda
+diccionario_animaciones["dispara"] = personaje_dispara
+diccionario_animaciones["dispara_i"] = personaje_dispara_i
 
 item_s = [pygame.image.load("Formularios/recursos/llaves/0.png"),
                     pygame.image.load("Formularios/recursos/llaves/1.png"),

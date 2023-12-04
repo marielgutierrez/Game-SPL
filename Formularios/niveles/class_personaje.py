@@ -48,9 +48,14 @@ class Personaje(Objeto_Juego):
 
         self.puede_colisionar = True
 
+        self.esta_disparando = False
+        self.tiempo_disparando = 1000
+        self.tiempo_anterior = 0
+        self.direccion_dispara = ""
         # #tiempo
         self.tiempo_colision = 0
         self.tiempo_espera_colision = 1000
+        self.nuevo_tamaño = False
 
     def reescalar_animaciones(self):
         '''
@@ -91,62 +96,77 @@ class Personaje(Objeto_Juego):
         brief: Actualiza el estado del personaje según la acción actual se muestra
         la animación que corresponda y se realiza el desplazamiento
         '''
-        match self.que_hace:
-            case "derecha":
-                colision = False
-                if not self.esta_saltando:
-                    if self.estado_normal:
-                        self.animar(pantalla, "camina_derecha")
-                    else:
-                        self.animar(pantalla, "camina_d_muerte")
-                self.direccion = 1
+        tiempo_actual = pygame.time.get_ticks()
 
-                for rect_plataforma in plataformas_rect:
-                    if self.lados_rectangulo["right"].colliderect(rect_plataforma["left"]):
-                        colision = True
-                if not colision:
-                    self.mover(self.velocidad)    
-                #self.mover(self.velocidad)
-            case "izquierda":
-                colision = False
-                if not self.esta_saltando:
-                    if self.estado_normal:
-                        self.animar(pantalla, "camina_izquierda")
-                    else:
-                        self.animar(pantalla, "camina_i_muerte")
-                self.direccion = -1
-                #self.mover(self.velocidad * - 1) ##esto hace vaya mas rapido
+        if tiempo_actual > self.tiempo_anterior + self.tiempo_disparando:
+            self.esta_disparando = False
 
-                for rect_plataforma in plataformas_rect:
-                    if self.lados_rectangulo["left"].colliderect(rect_plataforma["right"]):
-                        colision = True
-                if not colision:
-                    self.mover(self.velocidad * -1)
-            case "salta":
-                colision = False
-                for rect_plataforma in plataformas_rect:
-                    if self.lados_rectangulo["top"].colliderect(rect_plataforma["bottom"]):
-                        colision = True
-                if not colision:        
+        if self.esta_disparando:
+            self.nuevo_tamaño = True
+            #print("Entro a esta disparando")
+            if self.direccion == 1:
+                self.animar(pantalla, "dispara")
+                #print("dispara DERECHA")
+            else:
+                self.animar(pantalla, "dispara_i")
+                #print("dispara IZQUIERDA")
+        else:
+            match self.que_hace:
+                case "derecha":
+                    colision = False
                     if not self.esta_saltando:
-                        self.esta_saltando = True
-                        self.desplazamiento_y = self.potencia_salto
-            case "quieto":
-                if not self.esta_saltando:
-                    if self.direccion == 1:
                         if self.estado_normal:
-                            self.animar(pantalla, "quieto")
+                            self.animar(pantalla, "camina_derecha")
                         else:
-                            self.animar(pantalla, "quieto_d_muerte")
-                    else:
-                        if self.estado_normal:
-                            self.animar(pantalla, "quieto_i")
-                        else:
-                            self.animar(pantalla, "quieto_i_muerte")
+                            self.animar(pantalla, "camina_d_muerte")
+                    self.direccion = 1
 
-        self.colision_trampa(traps)
-        self.aplicar_gravedad(pantalla, plataformas_rect)
-        self.ganar_nivel(portal, llave, pantalla)
+                    for rect_plataforma in plataformas_rect:
+                        if self.lados_rectangulo["right"].colliderect(rect_plataforma["left"]):
+                            colision = True
+                    if not colision:
+                        self.mover(self.velocidad)    
+                    #self.mover(self.velocidad)
+                case "izquierda":
+                    colision = False
+                    if not self.esta_saltando:
+                        if self.estado_normal:
+                            self.animar(pantalla, "camina_izquierda")
+                        else:
+                            self.animar(pantalla, "camina_i_muerte")
+                    self.direccion = -1
+                    #self.mover(self.velocidad * - 1) ##esto hace vaya mas rapido
+
+                    for rect_plataforma in plataformas_rect:
+                        if self.lados_rectangulo["left"].colliderect(rect_plataforma["right"]):
+                            colision = True
+                    if not colision:
+                        self.mover(self.velocidad * -1)
+                case "salta":
+                    colision = False
+                    for rect_plataforma in plataformas_rect:
+                        if self.lados_rectangulo["top"].colliderect(rect_plataforma["bottom"]):
+                            colision = True
+                    if not colision:        
+                        if not self.esta_saltando:
+                            self.esta_saltando = True
+                            self.desplazamiento_y = self.potencia_salto
+                case "quieto":
+                    if not self.esta_saltando:
+                        if self.direccion == 1:
+                            if self.estado_normal:
+                                self.animar(pantalla, "quieto")
+                            else:
+                                self.animar(pantalla, "quieto_d_muerte")
+                        else:
+                            if self.estado_normal:
+                                self.animar(pantalla, "quieto_i")
+                            else:
+                                self.animar(pantalla, "quieto_i_muerte")
+            
+            self.colision_trampa(traps)
+            self.aplicar_gravedad(pantalla, plataformas_rect)
+            self.ganar_nivel(portal, llave, pantalla)
         #self.colision_plataformas(plataformas)
 
 
@@ -179,7 +199,7 @@ class Personaje(Objeto_Juego):
             if self.lados_rectangulo["top"].colliderect(plataforma["bottom"]):
                 self.esta_saltando = False
                 self.desplazamiento_y = 1
-                print("COLISION: top del jugador con bottom de la plataforma")
+                #print("COLISION: top del jugador con bottom de la plataforma")
                 break  # Salir del bucle si se detecta una colisión para evitar comprobar otras plataformas
         else:
             self.esta_saltando = True
@@ -194,13 +214,6 @@ class Personaje(Objeto_Juego):
             else:
                 #print("Sin colision")
                 self.esta_saltando = True
-
-        # for plataforma in plataformas:
-        #     if self.lados["bottom"].colliderect(plataforma.lados["top"]):
-        #         self.desplazamiento_y = 0
-        #         self.esta_saltando = False
-        #         self.lados["main"].bottom = plataforma.lados["main"].top + 5
-        #         break
 
     def colision_con_item(self, lista_items):
         '''
@@ -237,6 +250,8 @@ class Personaje(Objeto_Juego):
         
         if self.proyectiles > 0:
             if self.puede_disparar:
+                self.tiempo_anterior = pygame.time.get_ticks()
+                self.esta_disparando = True
                 proyectil = Proyectil((8,10), self.img_proyectil, {"quieto":[self.img_proyectil]}, posicion_actual, False, self.direccion)
                 self.lista_proyectiles.append(proyectil)
                 self.tiempo_ultimo_disparo = pygame.time.get_ticks()

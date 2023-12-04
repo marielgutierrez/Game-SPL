@@ -128,6 +128,11 @@ class Nivel:
         elif(keys[pygame.K_UP]):
             self.jugador.que_hace = "salta"
         elif(keys[pygame.K_SPACE]):
+            # match self.jugador.que_hace:
+            #     case "derecha":
+            #         self.jugador.direccion_dispara = "derecha"
+            #     case "izquierda":
+            #         self.jugador.direccion_dispara = "izquierda"
             self.jugador.disparar(self._slave)
         else:
             self.jugador.que_hace = "quieto"
@@ -151,7 +156,7 @@ class Nivel:
             tiempo_actual = pygame.time.get_ticks() 
             tiempo_transcurrido = tiempo_actual - self.tiempo_inicio
             self.tiempo_restante = self.tiempo_limite - tiempo_transcurrido 
-        if self.tiempo_restante <= 0:
+        if self.tiempo_restante < 0:
             self.game_over = True
             self.pausado = True
         texto_cronometro = self.fuente.render(f"TIEMPO 00:{self.tiempo_restante // 1000}", True, "White")

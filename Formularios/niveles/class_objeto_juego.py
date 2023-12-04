@@ -6,7 +6,7 @@ class Objeto_Juego:
         self.alto = tamaño[1]
         self.imagen = self.reescalar_imagen(imagen)
         #self.imagen = pygame.image.load(imagen)
-
+        self.nuevo_tamaño = False
         self.posicion_inicial = posicion_inicial
         if posicion_inicial is not None:
             rectangulo = self.imagen.get_rect()
@@ -29,6 +29,10 @@ class Objeto_Juego:
     
     def reescalar_imagen(self, imagen:pygame.Surface):
         imagen = pygame.transform.scale(imagen, (self.ancho, self.alto))
+
+        # if self.nuevo_tamaño:
+        #     imagen = pygame.transform.scale(imagen, (100,55))
+
         return imagen
         
     def draw(self, screen):
