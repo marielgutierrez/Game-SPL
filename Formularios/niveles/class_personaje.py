@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
-from niveles.configuraciones import obtener_rectangulos
 from niveles.class_objeto_juego import Objeto_Juego
+from niveles.class_proyectil import Proyectil
 
 class Personaje(Objeto_Juego):
     def __init__(self, tamaño:tuple, imagen, animaciones, posicion_inicial:tuple, velocidad, img_proyectil) -> None:
@@ -20,9 +20,9 @@ class Personaje(Objeto_Juego):
         self.animaciones = animaciones
         self.reescalar_animaciones()
         #RECTANGULOS
-        self.rectangulo = self.animaciones["camina_derecha"][0].get_rect()
-        self.rectangulo.x = posicion_inicial[0]
-        self.rectangulo.y = posicion_inicial[1]
+        # self.rectangulo = self.animaciones["camina_derecha"][0].get_rect()
+        # self.rectangulo.x = posicion_inicial[0]
+        # self.rectangulo.y = posicion_inicial[1]
         # #self.lados = obtener_rectangulos(self.rectangulo)
         #MOVIMIENTO
         self.velocidad = velocidad
@@ -175,13 +175,24 @@ class Personaje(Objeto_Juego):
             if self.desplazamiento_y + self.gravedad < self.limite_velocidad_caida:
                 self.desplazamiento_y += self.gravedad
         
-        for piso in plataformas_rect:
-            if self.lados_rectangulo["bottom"].colliderect(piso["top"]):
+        for plataforma in plataformas_rect:
+            if self.lados_rectangulo["top"].colliderect(plataforma["bottom"]):
+                self.esta_saltando = False
+                self.desplazamiento_y = 1
+                print("COLISION: top del jugador con bottom de la plataforma")
+                break  # Salir del bucle si se detecta una colisión para evitar comprobar otras plataformas
+        else:
+            self.esta_saltando = True
+
+        for plataforma in plataformas_rect:
+            if self.lados_rectangulo["bottom"].colliderect(plataforma["top"]):
                 self.esta_saltando = False
                 self.desplazamiento_y = 0
-                self.lados_rectangulo["main"].bottom = piso["main"].top
+                self.lados_rectangulo["main"].bottom = plataforma["main"].top
+                #print("Colisión del bottom jugador con el top plataforma")
                 break
             else:
+                #print("Sin colision")
                 self.esta_saltando = True
 
         # for plataforma in plataformas:
@@ -218,9 +229,26 @@ class Personaje(Objeto_Juego):
         auch.set_volume(0.3)
         auch.play(1)
 
+    def disparar(self, pantalla):
+        '''
+        Se encarga de verificar si el personaje tiene proyectiles, los crea sumandolos a una lista y los resta de la lista cuando los dispara
+        '''
+        posicion_actual = (self.lados_rectangulo["main"].x, self.lados_rectangulo["main"].y + 20) #40
+        
+        if self.proyectiles > 0:
+            if self.puede_disparar:
+                proyectil = Proyectil((8,10), self.img_proyectil, {"quieto":[self.img_proyectil]}, posicion_actual, False, self.direccion)
+                self.lista_proyectiles.append(proyectil)
+                self.tiempo_ultimo_disparo = pygame.time.get_ticks()
+                self.puede_disparar = False
+            tiempo_actual = pygame.time.get_ticks()
+            if not self.puede_disparar and tiempo_actual - self.tiempo_ultimo_disparo >= self.tiempo_entre_disparos:
+                self.puede_disparar = True
+                self.proyectiles -= 1
+
     def ganar_nivel(self, portal, llave, pantalla):
         '''
-        verifica si posee la llave, si es asi, verifica si colisiona con la puerta para ganar el nivel.
+        Se encarga de verificar si posee la llave, si es asi, verifica si colisiona con la puerta para ganar el nivel.
         '''
         if self.lados_rectangulo["main"].colliderect(llave.rectangulo):
             self.tengo_llave = True

@@ -4,12 +4,13 @@ from form_ganador import FormGanador
 from form_perdedor import FormPerdedor
 
 class Nivel:
-    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, fuente, items, traps, llave, lista_armas, portal, nivel_actual:int, aparece:bool) -> None:
+    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, fuente, items, traps, llave, lista_armas, portal, nivel_actual:int, aparece:bool, lista_enemigos, boss, lista_paredes_rect) -> None:
         self._slave = pantalla
         self.ancho = w
         self.jugador = personaje_principal
         self.plataformas = lista_plataformas
         self.plataformas_rect = lista_plataformas_rect
+        self.lista_paredes_rect = lista_paredes_rect
         self.img_fondo = imagen_fondo
         self.fuente = fuente
         self.items = items
@@ -17,6 +18,8 @@ class Nivel:
         self.traps = traps
         self.llave = llave
         self.portal = portal
+        self.enemigos = lista_enemigos
+        self.boss_final = boss
         self.aparece = aparece
         self.nivel_actual = nivel_actual
         self.nivel_puntaje = 0
@@ -26,7 +29,10 @@ class Nivel:
         self.rect_corazon = self.img_corazon.get_rect()
         self.rect_corazon.x = 470
         self.rect_corazon.y = 10
-
+        ### proyectiles
+        self.lista_proyectiles_eliminar = []
+        self.lista_enemigos_eliminar = []
+        self.lista_proyectilesboss_eliminar = []
         ### tiempo
         self.pausado = False
         self.tiempo_limite = 60000
@@ -49,7 +55,7 @@ class Nivel:
             if not self.jugador.ganaste and not self.jugador.perdiste:
                 for evento in lista_eventos:
                     if evento.type == pygame.KEYDOWN:
-                        if evento.key == pygame.K_d:
+                        if evento.key == pygame.K_TAB:
                             cambiar_modo()      
                 self.leer_inputs()
                 self.actualizar_pantalla(vidas)
@@ -62,10 +68,15 @@ class Nivel:
     
 
     def actualizar_pantalla(self, vidas):
-        '''Se encarga de blitear y actualizar los objetos del juego'''
+        '''
+        Se encarga de blitear y actualizar los objetos del juego
+        '''
         self._slave.blit(self.img_fondo, (0,0))
         self._slave.blit(vidas, (400, 10))
         #self._slave.blit(mini_bot.imagenA, mini_bot.rect.topleft)
+        self.portal.draw(self._slave)
+        #self.llave.draw(self._slave)
+        self.jugador.update(self._slave, self.plataformas_rect, self.traps, self.llave, self.portal)
         
         for plataforma in self.plataformas:
             plataforma.draw(self._slave)
@@ -78,26 +89,46 @@ class Nivel:
 
         for arma in self.lista_armas:
             arma.acumular_armas(self._slave, self.jugador)
+            if self.nivel_actual == 1:
+                arma.mostrar_mensaje(self._slave)
 
-        self.portal.draw(self._slave)
-        #self.llave.draw(self._slave)
-        self.jugador.update(self._slave, self.plataformas_rect, self.traps, self.llave, self.portal)
+
+        for proyectil in self.jugador.lista_proyectiles:
+            proyectil.update(self._slave)
+            for enemigo in self.enemigos:
+                if proyectil.colisionar_enemigo(enemigo):
+                    self.lista_proyectiles_eliminar.append(proyectil)
+                    enemigo.morir()
+                    self.jugador.puntaje += 100
+                    break
+                elif proyectil.rectangulo.x >= 1400 or proyectil.rectangulo.x < 0:
+                    self.lista_proyectiles_eliminar.append(proyectil)
+                    break
+        for proyectil in self.lista_proyectiles_eliminar:
+            self.jugador.lista_proyectiles.remove(proyectil)
+        self.lista_proyectiles_eliminar.clear()
+        for proyectil in self.lista_proyectiles_eliminar:
+            pass
+        self.lista_proyectilesboss_eliminar.clear()
 
         #self._slave.blit(score, (200, 10))
 
     def leer_inputs(self):
-        ''' Se encarga de leer las teclas apretadas'''
-        #estado = "quieto"
+        '''
+        Se encarga de leer las teclas apretadas
+        '''
         keys = pygame.key.get_pressed()
 
-        if(keys[pygame.K_RIGHT]) and self.jugador.rectangulo.x < self.ancho - self.jugador.velocidad - self.jugador.rectangulo.width:
+        if(keys[pygame.K_RIGHT]): #and self.jugador.rectangulo.x < self.ancho - self.jugador.velocidad - self.jugador.rectangulo.width:
             for plataforma_rect in self.plataformas_rect:
                 if not self.jugador.lados_rectangulo["right"].colliderect(plataforma_rect["left"]):
                     self.jugador.que_hace = "derecha"
-        elif(keys[pygame.K_LEFT]) and self.jugador.rectangulo.x > 0:
+        elif(keys[pygame.K_LEFT]): #and self.jugador.rectangulo.x > 0:
             self.jugador.que_hace = "izquierda"
         elif(keys[pygame.K_UP]):
             self.jugador.que_hace = "salta"
+        elif(keys[pygame.K_SPACE]):
+            self.jugador.disparar(self._slave)
         else:
             self.jugador.que_hace = "quieto"
 
@@ -108,8 +139,8 @@ class Nivel:
         texto_puntaje = self.fuente.render("SCORE: {0}".format(self.jugador.puntaje), True, "White")
         self._slave.blit(texto_puntaje, (200,10))
 
-        # texto_proyectiles = fuente.render("PROYECTILES: {0}".format(self.jugador.proyectiles), True, "White")
-        # self.pantalla.blit(texto_proyectiles, (1000,10))
+        texto_proyectiles = self.fuente.render("PROYECTILES: {0}".format(self.jugador.proyectiles), True, "White")
+        self._slave.blit(texto_proyectiles, (580,10))
 
         rectangulo = self.rect_corazon.copy()
         for vida in range(self.jugador.vidas):
@@ -128,7 +159,7 @@ class Nivel:
 
     def mostrar_mensaje(self, lista_eventos):
         '''
-        funcion que muestra un formulario si ganaste o perdiste
+        Se encarga de mostrar un formulario si ganaste o perdiste
         '''
         if self.jugador.ganaste:
             form = FormGanador(self._slave, 250,100,1000, 600, "Black", "Black", 1, True)
@@ -139,7 +170,7 @@ class Nivel:
 
     def mostrar_pausado(self):
         '''
-        blitea en pantalla cuando se pausa el juego
+        Se encarga de blitear en pantalla cuando se pausa el juego
         '''
         fuente = pygame.font.SysFont("Consolas", 100)
         resultado = fuente.render("PAUSA", True, "White")
@@ -148,7 +179,7 @@ class Nivel:
 
     def verificar_victoria_game_over(self)-> bool :
         '''
-        verifica si ganaste o perdiste. Si ganaste, guarda los datos en un JSON.
+        Se encarga de verificar si ganaste o perdiste. Si ganaste, guarda los datos en un JSON.
         Devuelve un bool
         '''
         if self.jugador.ganaste:
@@ -164,21 +195,26 @@ class Nivel:
     def dibujar_rectangulos(self):
         
         if get_mode():
-            #pygame.draw.rect(self._slave, "Blue", piso, 2)
-            for lado in self.jugador.lados_rectangulo: 
-                pygame.draw.rect(self._slave, "Red", self.jugador.lados_rectangulo[lado] , 2)
-
+            for lado in self.jugador.lados_rectangulo:
+                pygame.draw.rect(self._slave, "Green", self.jugador.lados_rectangulo[lado], 2)
             for plataforma in self.plataformas:
                 for lado in plataforma.lados_rectangulo:
-                    pygame.draw.rect(self._slave, "Green", plataforma.lados_rectangulo[lado], 2)
+                    pygame.draw.rect(self._slave, "Red", plataforma.lados_rectangulo[lado], 2)
+            #pygame.draw.rect(self._slave, "Blue", piso, 2)
+            # for lado in self.jugador.lados_rectangulo: 
+            #     pygame.draw.rect(self._slave, "Red", self.jugador.lados_rectangulo[lado] , 2)
 
-            for item in self.items:
-                for lado in item.lados_rectangulo:
-                    pygame.draw.rect(self._slave, "Yellow", item.lados_rectangulo[lado], 2)
+            # for plataforma in self.plataformas:
+            #     for lado in plataforma.lados_rectangulo:
+            #         pygame.draw.rect(self._slave, "Green", plataforma.lados_rectangulo[lado], 2)
+
+            # for item in self.items:
+            #     for lado in item.lados_rectangulo:
+            #         pygame.draw.rect(self._slave, "Yellow", item.lados_rectangulo[lado], 2)
             
-            for trap in self.traps:
-                for lado in trap.lados_rectangulo:
-                    pygame.draw.rect(self._slave, "Orange", trap.lados_rectangulo[lado], 2)
+            # for trap in self.traps:
+            #     for lado in trap.lados_rectangulo:
+            #         pygame.draw.rect(self._slave, "Orange", trap.lados_rectangulo[lado], 2)
 
     def guardar_datos_nivel(self):
         '''

@@ -1,6 +1,5 @@
 import pygame
 from niveles.configuraciones import *
-from niveles.class_personaje import Personaje
 from niveles.class_objeto_juego import Objeto_Juego
 
 class Item(Objeto_Juego):
@@ -46,6 +45,14 @@ class Item(Objeto_Juego):
                 else:
                     jugador.puntaje += 50
                     jugador.proyectiles += 1
+
+    def mostrar_mensaje(self, pantalla):
+        fuente = pygame.font.SysFont("Consolas", 15)
+        mensaje = "Utiliza las balas de fuego para defenderte!"
+        resultado = fuente.render(mensaje, True, "White")
+        duracion_mensaje = 5000
+        if pygame.time.get_ticks() - self.tiempo_inicio < duracion_mensaje:
+            pantalla.blit(resultado, (50, 400))
 
     def update(self):
         pass

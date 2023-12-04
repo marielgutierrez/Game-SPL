@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 
-class Enemigo(object):
+class Enemy(object):
     def __init__(self, tamaño, path_imagenA, path_imagenB, posicion_inicial, velocidad, limite) -> None:
         #TAMAÑO IMAGEN
         self.imagenA = pygame.image.load(path_imagenA)

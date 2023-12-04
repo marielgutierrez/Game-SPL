@@ -29,7 +29,7 @@ class FormMenuPlay(Form):
         self._btn_level_1 = Button_Image(screen=self._slave,
                             master_x = x,
                             master_y = y,
-                            x = 100,
+                            x = 80,
                             y = 100,
                             w = 100,
                             h = 150,
@@ -39,13 +39,23 @@ class FormMenuPlay(Form):
         self._btn_level_2 = Button_Image(screen=self._slave,
                             master_x = x,
                             master_y = y,
-                            x = 250,
+                            x = 195,
                             y = 100,
                             w = 100,
                             h = 150,
                             path_image = "Formularios/recursos_form/NIVELES/nivel_2.png",
                             onclick = self.entrar_nivel,
                             onclick_param = "nivel_dos")
+        self._btn_level_3 = Button_Image(screen=self._slave,
+                            master_x = x,
+                            master_y = y,
+                            x = 308,
+                            y = 100,
+                            w = 100,
+                            h = 150,
+                            path_image = "Formularios/recursos_form/NIVELES/nivel_3.png",
+                            onclick = self.entrar_nivel,
+                            onclick_param = "nivel_tres")
         self._btn_home = Button_Image(screen=self._slave, 
                             master_x = x,
                             master_y = y,
@@ -84,6 +94,7 @@ class FormMenuPlay(Form):
         self.lista_widgets.append(self.txtbox)
         self.lista_widgets.append(self._btn_level_1)
         self.lista_widgets.append(self._btn_level_2)
+        self.lista_widgets.append(self._btn_level_3)
         self.lista_widgets.append(self._btn_home)
         self.lista_widgets.append(self._btn_guardar)
 
