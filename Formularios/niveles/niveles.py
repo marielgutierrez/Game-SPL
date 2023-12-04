@@ -37,7 +37,7 @@ class Nivel:
         self.game_over = False
 
     def update(self, lista_eventos):
-
+        '''Se encargar de actualizar el juego'''
         # if tiempo_transcurrido >= self.time_limite:
         #     pygame.quit()
         #     sys.exit(0)
@@ -62,6 +62,7 @@ class Nivel:
     
 
     def actualizar_pantalla(self, vidas):
+        '''Se encarga de blitear y actualizar los objetos del juego'''
         self._slave.blit(self.img_fondo, (0,0))
         self._slave.blit(vidas, (400, 10))
         #self._slave.blit(mini_bot.imagenA, mini_bot.rect.topleft)
@@ -85,6 +86,7 @@ class Nivel:
         #self._slave.blit(score, (200, 10))
 
     def leer_inputs(self):
+        ''' Se encarga de leer las teclas apretadas'''
         #estado = "quieto"
         keys = pygame.key.get_pressed()
 
@@ -101,7 +103,7 @@ class Nivel:
 
     def dibujar_vidas_score(self):
         '''
-        funcion que blitea el tiempo, las vidas y puntaje del jugador en pantalla
+        Se encarga de blitear el tiempo, las vidas y puntaje del jugador en pantalla
         '''
         texto_puntaje = self.fuente.render("SCORE: {0}".format(self.jugador.puntaje), True, "White")
         self._slave.blit(texto_puntaje, (200,10))
@@ -118,7 +120,7 @@ class Nivel:
             tiempo_actual = pygame.time.get_ticks() 
             tiempo_transcurrido = tiempo_actual - self.tiempo_inicio
             self.tiempo_restante = self.tiempo_limite - tiempo_transcurrido 
-        if self.tiempo_restante < 0:
+        if self.tiempo_restante <= 0:
             self.game_over = True
             self.pausado = True
         texto_cronometro = self.fuente.render(f"TIEMPO 00:{self.tiempo_restante // 1000}", True, "White")
@@ -180,7 +182,7 @@ class Nivel:
 
     def guardar_datos_nivel(self):
         '''
-        funcion que guarda los datos del nivel en un JSON y desbloquea el siguiente
+        Se encarga de guardar los datos del nivel en un JSON y desbloquea el siguiente
         '''
         try:
             with open('Formularios/desbloqueo_niveles.json', 'r') as archivo:

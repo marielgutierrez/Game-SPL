@@ -13,12 +13,13 @@ class BaseDeDatos:
                             (
                                 id integer primary key autoincrement,
                                 nombre text,
-                                puntaje integer
+                                puntaje integer,
+                                nivel integer
                             )
                             """'''
                 conexion.execute("insert into Ranking(nombre, puntaje, nivel) values (?,?,?)", (nombre, puntaje, nivel))
                 conexion.commit()
-                print("INSERTADO CON ÉXITO")
+                print("Tabla creada CON ÉXITO")
             except:
                 print("ERROR! NO se insertaron los datos correctamente")
 

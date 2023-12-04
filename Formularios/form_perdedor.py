@@ -9,7 +9,7 @@ class FormPerdedor(Form):
         super().__init__(screen, x, y, w, h, color_background, color_border, border_size, active)
 
         #self.manejador_niveles = ManejadorNiveles(self._master)#self._master
-        path_image = "Fomrularios/recursos_forms/cartel_lose.jpg"
+        path_image = "Formularios/recursos_forms/cartel_lose.jpg"
         aux_image = pygame.image.load(path_image)
         aux_image = pygame.transform.scale(aux_image, (w/2,h/2))
         self._slave = aux_image

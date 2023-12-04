@@ -17,11 +17,17 @@ class FormPrincipal(Form):
         imagen_aux = pygame.transform.scale(imagen_aux, (w,h))
 
         self._slave = imagen_aux
+        self.database = BaseDeDatos()
+        self.diccionario_ranking = [{"jugador": "h", "score": 1000},
+                    {"jugador": "x", "score": 900},
+                    {"jugador": "z", "score": 750}]
+
+
         ### CONTROLES
-        self.picturebox = PictureBox(self._slave, 85, 2, 320, 75, "Formularios\\recursos_form\\titulo_menu.png")
-        self.btn_jugar = Button_Image(self._slave, x, y, 185, 150, 150, 60, "Formularios\\recursos_form\\boton_play.png", self.btn_jugar_click, "a" )
-        self.btn_config = Button_Image(self._slave, x, y, 185,250,150,60,"Formularios\\recursos_form\\boton_opciones.png",self.btn_config_click, "lalal")
-        self.btn_tabla = Button_Image(self._slave, x, y, 185,350,150,60,"Formularios\\recursos_form\\boton_rank.png",self.btn_tabla_click, "lalal")
+        self.picturebox = PictureBox(self._slave, 85, 2, 320, 75, "Formularios/recursos_form/titulo_menu.png")
+        self.btn_jugar = Button_Image(self._slave, x, y, 185, 150, 150, 60, "Formularios/recursos_form/boton_play.png", self.btn_jugar_click, "a" )
+        self.btn_config = Button_Image(self._slave, x, y, 185,250,150,60,"Formularios/recursos_form/boton_opciones.png",self.btn_config_click, "lalal")
+        self.btn_tabla = Button_Image(self._slave, x, y, 185,350,150,60,"Formularios/recursos_form/boton_rank.png",self.btn_tabla_click, "lalal")
         ###################
         #PARA SALIR DEL MENU PRINCIPAL E IR AL INICIO
         self._btn_home = Button_Image(screen=self._slave, 
@@ -39,7 +45,7 @@ class FormPrincipal(Form):
                                     font = "Verdana",
                                     font_size = 15,
                                     font_color = (0,255,0),
-                                    path_image = "Formularios\\recursos_form\\home.png")
+                                    path_image = "Formularios/recursos_form/home.png")
         self.lista_widgets.append(self._btn_home)
 
 
@@ -69,7 +75,7 @@ class FormPrincipal(Form):
                                 w = 500,
                                 h = 550,
                                 color_background = (220,0,220),
-                                path_image="Formularios\\recursos_form\\menu.png",
+                                path_image="Formularios/recursos_form/menu.png",
                                 active= True)
         self.show_dialog(frm_jugar)
 
@@ -80,16 +86,16 @@ class FormPrincipal(Form):
                                 w = 500,
                                 h = 550,
                                 color_background = (220,0,220),
-                                path_image="Formularios\\recursos_form\\menu.png",
+                                path_image="Formularios/recursos_form/menu.png",
                                 active= True)
         self.show_dialog(frm_config)
 
     def btn_tabla_click(self, texto):
-        dict_score = [{"Jugador": "Gio", "Score": 1000},
-                    {"Jugador": "Fausto", "Score": 990},
-                    {"Jugador": "Gonza", "Score": 800}                       
-                    ]
-        
+        self.diccionario_ranking = self.database.traer_datos()
+        # dict_score = [{"Jugador": "Gio", "Score": 1000},
+        #             {"Jugador": "Fausto", "Score": 990},
+        #             {"Jugador": "Gonza", "Score": 800}                       
+        #             ]
         form_puntaje = FormMenuScore(self._master,
                                     250,
                                     25,
@@ -98,8 +104,8 @@ class FormPrincipal(Form):
                                     (220,0,220),
                                     "White",
                                     True,
-                                    "Formularios\\recursos_form\\menu.png",
-                                    dict_score,
+                                    "Formularios/recursos_form/menu.png",
+                                    self.diccionario_ranking,
                                     100,
                                     10,
                                     10)
@@ -109,6 +115,8 @@ class FormPrincipal(Form):
     def btn_home_click(self, param):
         self.end_dialog()
 
+    def mostrar_datos_db(self):
+        self.diccionario_ranking = self.database.traer_datos()
         #formularios
         #crear controles
         #agregarlo a la lista de controles
