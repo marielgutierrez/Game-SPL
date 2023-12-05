@@ -66,7 +66,8 @@ class NivelDos(Nivel):
         bala2 = Item((25,14), bala_item[0], {"quieto":bala_item}, (330, 486), False)
         bala3 = Item((25,14), bala_item[0], {"quieto":bala_item}, (31, 377), False)
         bala4 = Item((25,14), bala_item[0], {"quieto":bala_item}, (99, 377), False)
-        lista_elemento = [llave, bala1, bala2,bala3,bala4]
+        bala5 = Item((25,14), bala_item[0], {"quieto":bala_item}, (120, 377), False)
+        lista_elemento = [llave, bala1, bala2,bala3,bala4, bala5]
 
         #PISO Y TECHO
         piso = Plataforma((w, 210), vacio_surface, (0,510))#490
@@ -87,5 +88,8 @@ class NivelDos(Nivel):
                         plataformas_3.lados_rectangulo, plataformas_4.lados_rectangulo, plataformas_5.lados_rectangulo]
 
         lista_paredes_rect = [piso.lados_rectangulo, techo.lados_rectangulo, pared_d.lados_rectangulo, pared_i.lados_rectangulo]
+        lista_cajas = []
 
-        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, fuente, lista_items, lista_traps, llave, lista_elemento, portal, 2, False, lista_enemigos, boss, lista_paredes_rect)
+        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, 
+                        fuente, lista_items, lista_traps, llave, lista_elemento, portal, 2, False,
+                        lista_enemigos, boss, lista_paredes_rect, lista_cajas)

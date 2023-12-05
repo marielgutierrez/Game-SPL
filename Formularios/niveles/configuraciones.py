@@ -129,13 +129,13 @@ pinche_cargando = pygame.image.load("Formularios/recursos/items/pinche.png")
 pinche_escalado = pygame.transform.scale(pinche_cargando, (90,28))
 item_pinche = [pinche_escalado]
 
-boss_final = [ pygame.image.load("Formularios/recursos/boss/nuevo_boss_izq.png")]
-boss_final_dolor = [pygame.image.load("Formularios/recursos/boss/nuevo_boss_dolor.png")]
-boss_final_muerte = [pygame.image.load("Formularios/recursos/boss/nuevo_boss_muerte.png")]
+boss_final = [ pygame.image.load("Formularios/recursos/boss/1.png"),
+            pygame.image.load("Formularios/recursos/boss/3.png")]
 
-boss_final_der = girar_imagenes(boss_final, True, False)
-boss_final_dolor_der = girar_imagenes(boss_final_dolor, True, False)
-boss_final_muerte_der = girar_imagenes(boss_final_muerte, True, False)
+boss_muerte = [pygame.image.load("Formularios/recursos/boss/1.png"),
+            pygame.image.load("Formularios/recursos/boss/3.png"),
+            pygame.image.load("Formularios/recursos/boss/4.png")]
+
 
 flybot_d = [ pygame.image.load("Formularios/recursos/flybot/0.png"),
             pygame.image.load("Formularios/recursos/flybot/1.png"),
@@ -170,3 +170,10 @@ pared.fill("Black")
 vacio_surface = pygame.image.load("Formularios/recursos/vacio-png.png")
 plataforma_surface = pygame.image.load("Formularios/recursos/plataforma.png")
 miniplataforma_surface = pygame.image.load("Formularios/recursos/0.png")
+plataforma_final = pygame.image.load("Formularios/recursos/pisos_2/plataforma-final.png")
+
+plataforma3_s = pygame.image.load("Formularios/recursos/pisos_2/1.png")
+miniplataforma3_s = pygame.image.load("Formularios/recursos/pisos_2/2.png")
+
+
+caja_s = pygame.image.load("Formularios/recursos/cajita_3.png")

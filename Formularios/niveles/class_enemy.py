@@ -106,7 +106,7 @@ class FlyBot(Enemigos):
 class BossFinal(Enemigos):
     def __init__(self, tamaño: tuple, imagen, animaciones: dict, posicion_inicial, velocidad, img_proyectil) -> None:
         super().__init__(tamaño, imagen, animaciones, posicion_inicial, velocidad, img_proyectil)
-        self.barra_de_vida = BarraDeVida((250, 10), 100, 20)
+        self.barra_de_vida = BarraDeVida((850, 10), 100, 20)
         self.direccion = 1
         self.vida_actual = 100
         self.en_movimiento = False
@@ -180,7 +180,7 @@ class BossFinal(Enemigos):
         
     def efecto_sonido(self):
         if self.sonido:
-            efecto = pygame.mixer.Sound("musica/ruido.wav")
+            efecto = pygame.mixer.Sound("Formularios/recursos/music/ruido.wav")
             efecto.play(1)
             self.sonido = False    
     

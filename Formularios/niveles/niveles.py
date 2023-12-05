@@ -4,7 +4,8 @@ from form_ganador import FormGanador
 from form_perdedor import FormPerdedor
 
 class Nivel:
-    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, fuente, items, traps, llave, lista_armas, portal, nivel_actual:int, aparece:bool, lista_enemigos, boss, lista_paredes_rect) -> None:
+    def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, fuente, items, traps, llave, 
+                lista_armas, portal, nivel_actual:int, aparece:bool, lista_enemigos, boss, lista_paredes_rect, lista_cajas) -> None:
         self._slave = pantalla
         self.ancho = w
         self.jugador = personaje_principal
@@ -18,6 +19,7 @@ class Nivel:
         self.traps = traps
         self.llave = llave
         self.portal = portal
+        self.lista_cajas = lista_cajas
         self.enemigos = lista_enemigos
         self.boss_final = boss
         self.aparece = aparece
@@ -85,7 +87,8 @@ class Nivel:
         #self._slave.blit(mini_bot.imagenA, mini_bot.rect.topleft)
         self.portal.draw(self._slave)
         #self.llave.draw(self._slave)
-        self.jugador.update(self._slave, self.plataformas_rect, self.traps, self.llave, self.portal, self.enemigos, self.boss_final )
+        self.jugador.update(self._slave, self.plataformas_rect, self.traps, self.llave, 
+                            self.portal, self.enemigos, self.boss_final, self.traps, self.aparece)
         #FALTA CAJAS
         for plataforma in self.plataformas:
             plataforma.draw(self._slave)
@@ -120,7 +123,7 @@ class Nivel:
         self.lista_proyectiles_eliminar.clear()
 
         for proyectil in self.boss_final.lista_proyectiles:
-            proyectil.mover_proyectil_boss(self.pantalla)
+            proyectil.mover_proyectil_boss(self._slave)
             if proyectil.colisionar_enemigo(self.jugador):
                 self.lista_proyectilesboss_eliminar.append(proyectil)
                 break
@@ -131,18 +134,18 @@ class Nivel:
             pass
         self.lista_proyectilesboss_eliminar.clear()
 
-        # for caja in self.lista_cajas:
-        #     caja.update_caja(self.pantalla, self.jugador, self.plataformas)
-        #     if caja.colisionar_boss(self.boss_final):
-        #         auch_boss = pygame.mixer.Sound("musica/auch_monster.wav")
-        #         auch_boss.set_volume(0.3)
-        #         auch_boss.play(1)
-        #         self.lista_cajas.remove(caja)
-        #         self.boss_final.recibir_daño(35)
-        #         self.jugador.puntaje += 10000
-        # if self.aparece:
-        #     self.boss_final.update_enemigo(self.pantalla, self.plataformas_rect, self.plataformas_rect[1]["bottom"], self.paredes_rect, self.jugador, 200)
-        
+        for caja in self.lista_cajas:
+            caja.update_caja(self._slave, self.jugador, self.plataformas)
+            if caja.colisionar_boss(self.boss_final):
+                auch_boss = pygame.mixer.Sound("Formularios/recursos/music/auch_robot.wav")
+                auch_boss.set_volume(0.3)
+                auch_boss.play(1)
+                self.lista_cajas.remove(caja)
+                self.boss_final.recibir_daño(35)
+                self.jugador.puntaje += 500
+        if self.aparece:
+            self.boss_final.update_enemigo(self._slave, self.plataformas_rect, 
+                                        self.plataformas_rect[1]["bottom"], self.lista_paredes_rect, self.jugador, 200)
         #self._slave.blit(score, (200, 10))
 
     def leer_inputs(self):
@@ -224,7 +227,7 @@ class Nivel:
         '''
         if self.jugador.ganaste:
             self.pausado = True
-            puntos_extra = self.tiempo_restante//100
+            puntos_extra = self.tiempo_restante//10
             self.jugador.puntaje += puntos_extra
             self.nivel_puntaje = self.jugador.puntaje
             self.guardar_datos_nivel()

@@ -73,7 +73,7 @@ class NivelUno(Nivel):
         plataformas_5 = Plataforma((180,50), plataforma_surface, (360, 111))
         plataformas_6 = Plataforma((180,50), plataforma_surface, (540, 111))
 
-        plataformas_2 = Plataforma((50,50), miniplataforma_surface, (490, 270))
+        plataformas_2 = Plataforma((50,50), miniplataforma_surface, (513, 266))
         plataformas_7 = Plataforma((180,50), plataforma_surface, (640, 270))
         plataformas_8 = Plataforma((180,50), plataforma_surface, (820, 270))
         plataformas_9 = Plataforma((180,50), plataforma_surface, (250, 270))
@@ -89,5 +89,8 @@ class NivelUno(Nivel):
                                 plataformas_7.lados_rectangulo, plataformas_8.lados_rectangulo, plataformas_9.lados_rectangulo, plataformas_10.lados_rectangulo] #techo.lados_rectangulo, index 1
 
         lista_paredes_rect = [piso.lados_rectangulo, techo.lados_rectangulo]
+        lista_cajas = []
 
-        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, fuente, lista_items, lista_traps, llave, lista_elemento, portal, 1, False, lista_enemigos, boss, lista_paredes_rect)
+        super().__init__(pantalla, w, h, mi_personaje, lista_plataformas, lista_plataformas_rect, fondo, 
+                        fuente, lista_items, lista_traps, llave, lista_elemento, portal, 1, False, lista_enemigos, boss, 
+                        lista_paredes_rect, lista_cajas)

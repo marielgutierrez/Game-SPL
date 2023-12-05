@@ -47,7 +47,7 @@ class Personaje(Objeto_Juego):
         self.tiempo_entre_disparos = 1000
 
         self.puede_colisionar = True
-
+        self.aparece_boss = True
         self.esta_disparando = False
         self.tiempo_disparando = 1000
         self.tiempo_anterior = 0
@@ -91,7 +91,7 @@ class Personaje(Objeto_Juego):
         # for lado in self.lados:
         #     self.lados[lado].x += velocidad
 
-    def update(self, pantalla, plataformas_rect, traps, llave, portal, lista_enemigos, boss):
+    def update(self, pantalla, plataformas_rect, traps, llave, portal, lista_enemigos, boss,lista_trampas, aparece):
         '''
         brief: Actualiza el estado del personaje según la acción actual se muestra
         la animación que corresponda y se realiza el desplazamiento
@@ -169,9 +169,10 @@ class Personaje(Objeto_Juego):
             self.aplicar_gravedad(pantalla, plataformas_rect)
             self.ganar_nivel(portal, llave, pantalla)
             self.colisiones_enemigos(lista_enemigos)
-            # for trampa in lista_trampas:
-            #     self.colisionar_boss(trampa)
-            #self.colisionar_boss(boss)
+            if aparece:
+                self.colisionar_boss(boss)
+                for trampa in lista_trampas:
+                    self.colisionar_boss(trampa)
 
         #self.colision_plataformas(plataformas)
 
@@ -241,7 +242,7 @@ class Personaje(Objeto_Juego):
                 elif self.lados_rectangulo["bottom"].colliderect(enemigo.lados_rectangulo["top"]):
                     enemigo.morir()
                     self.puede_colisionar = False
-                    self.vidas += 1
+                    #self.vidas += 1
                     self.tiempo_colision = pygame.time.get_ticks()
         tiempo_actual = pygame.time.get_ticks()
         if not self.puede_colisionar and tiempo_actual - self.tiempo_colision >= self.tiempo_espera_colision:
