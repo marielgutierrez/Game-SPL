@@ -91,7 +91,7 @@ class Personaje(Objeto_Juego):
         # for lado in self.lados:
         #     self.lados[lado].x += velocidad
 
-    def update(self, pantalla, plataformas_rect, traps, llave, portal):
+    def update(self, pantalla, plataformas_rect, traps, llave, portal, lista_enemigos, boss):
         '''
         brief: Actualiza el estado del personaje según la acción actual se muestra
         la animación que corresponda y se realiza el desplazamiento
@@ -104,11 +104,12 @@ class Personaje(Objeto_Juego):
         if self.esta_disparando:
             self.nuevo_tamaño = True
             #print("Entro a esta disparando")
-            if self.direccion == 1:
-                self.animar(pantalla, "dispara")
-                #print("dispara DERECHA")
-            else:
-                self.animar(pantalla, "dispara_i")
+            if not self.esta_saltando: #PROBANDOO
+                if self.direccion == 1:
+                    self.animar(pantalla, "dispara")
+                    #print("dispara DERECHA")
+                else:
+                    self.animar(pantalla, "dispara_i")
                 #print("dispara IZQUIERDA")
         else:
             match self.que_hace:
@@ -167,6 +168,11 @@ class Personaje(Objeto_Juego):
             self.colision_trampa(traps)
             self.aplicar_gravedad(pantalla, plataformas_rect)
             self.ganar_nivel(portal, llave, pantalla)
+            self.colisiones_enemigos(lista_enemigos)
+            # for trampa in lista_trampas:
+            #     self.colisionar_boss(trampa)
+            #self.colisionar_boss(boss)
+
         #self.colision_plataformas(plataformas)
 
 
@@ -222,6 +228,7 @@ class Personaje(Objeto_Juego):
         if self.puede_colisionar:
             for enemigo in enemigos:
                 if self.lados_rectangulo["right"].colliderect(enemigo.lados_rectangulo["left"]) or self.lados_rectangulo["left"].colliderect(enemigo.lados_rectangulo["right"]) or self.lados_rectangulo["top"].colliderect(enemigo.lados_rectangulo["bottom"]):
+                    print("Colisiono con el enemigo")
                     self.puede_colisionar = False
                     self.vidas -= 1
                     self.tiempo_colision = pygame.time.get_ticks()
@@ -252,6 +259,24 @@ class Personaje(Objeto_Juego):
 
         return lista_items
     
+    def colisionar_boss(self, boss):
+        '''
+        Se encarga de verificar las colisiones con el boss y resta vidas
+        '''
+        if self.puede_colisionar:
+            if self.lados_rectangulo["right"].colliderect(boss.lados_rectangulo["main"]):
+                self.puede_colisionar = False
+                self.vidas -= 1
+                self.tiempo_colision = pygame.time.get_ticks()
+                self.estado_normal = False
+                self.efecto_sonido_auch()
+                if self.vidas == 0:
+                    self.perdiste = True
+        timepo_actual = pygame.time.get_ticks()
+        if not self.puede_colisionar and timepo_actual - self.tiempo_colision >= self.tiempo_espera_colision:
+            self.puede_colisionar = True
+            self.estado_normal = True
+
     def colision_trampa(self, traps):
         '''
         brief: Se encarga de la colision del personaje con cada trampa
@@ -259,6 +284,8 @@ class Personaje(Objeto_Juego):
         for trap in traps:
             if self.lados_rectangulo["bottom"].colliderect(trap.lados_rectangulo["top"]):
                 self.vidas -= 1
+                sonido_auch = pygame.mixer.Sound("Formularios/niveles/sonidos_personaje/sonido_auch.mp3")
+                sonido_auch.play()
                 if self.vidas == 0:
                     self.perdiste = True
 

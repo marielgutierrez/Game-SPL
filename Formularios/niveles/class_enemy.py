@@ -20,7 +20,7 @@ class Enemigos(Personaje):
 
     def morir(self):
         self.vivo = False
-        muerte = pygame.mixer.Sound("musica/matar_araña.wav")
+        muerte = pygame.mixer.Sound("Formularios/recursos/music/auch_robot.wav")
         muerte.set_volume(0.3)
         muerte.play(1)
 

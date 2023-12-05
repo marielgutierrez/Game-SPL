@@ -43,7 +43,9 @@ class Nivel:
         self.game_over = False
 
     def update(self, lista_eventos):
-        '''Se encargar de actualizar el juego'''
+        '''
+        Se encarga de actualizar el juego
+        '''
         # if tiempo_transcurrido >= self.time_limite:
         #     pygame.quit()
         #     sys.exit(0)
@@ -76,8 +78,8 @@ class Nivel:
         #self._slave.blit(mini_bot.imagenA, mini_bot.rect.topleft)
         self.portal.draw(self._slave)
         #self.llave.draw(self._slave)
-        self.jugador.update(self._slave, self.plataformas_rect, self.traps, self.llave, self.portal)
-        
+        self.jugador.update(self._slave, self.plataformas_rect, self.traps, self.llave, self.portal, self.enemigos, self.boss_final )
+        #FALTA CAJAS
         for plataforma in self.plataformas:
             plataforma.draw(self._slave)
         
@@ -92,6 +94,8 @@ class Nivel:
             if self.nivel_actual == 1:
                 arma.mostrar_mensaje(self._slave)
 
+        for enemigo in self.enemigos: 
+            enemigo.update_enemigo(self._slave, self.plataformas_rect, self.plataformas_rect[1]["bottom"], self.lista_paredes_rect, self.jugador, 500, 100)#self, pantalla, lista_lados_de_pisos, techo_lados_rect, paredes_lados_rect, jugador, distancia_minima, cantidad_daño
 
         for proyectil in self.jugador.lista_proyectiles:
             proyectil.update(self._slave)
@@ -101,16 +105,37 @@ class Nivel:
                     enemigo.morir()
                     self.jugador.puntaje += 100
                     break
-                elif proyectil.rectangulo.x >= 1400 or proyectil.rectangulo.x < 0:
+                elif proyectil.rectangulo.x >= 1400 or proyectil.rectangulo.x < 0: ##OJO ACA 1400
                     self.lista_proyectiles_eliminar.append(proyectil)
                     break
         for proyectil in self.lista_proyectiles_eliminar:
             self.jugador.lista_proyectiles.remove(proyectil)
         self.lista_proyectiles_eliminar.clear()
+
+        for proyectil in self.boss_final.lista_proyectiles:
+            proyectil.mover_proyectil_boss(self.pantalla)
+            if proyectil.colisionar_enemigo(self.jugador):
+                self.lista_proyectilesboss_eliminar.append(proyectil)
+                break
+            elif proyectil.rectangulo.y >= 900 or proyectil.rectangulo.y < 0:
+                    self.lista_proyectilesboss_eliminar.append(proyectil)
+                    break
         for proyectil in self.lista_proyectiles_eliminar:
             pass
         self.lista_proyectilesboss_eliminar.clear()
 
+        # for caja in self.lista_cajas:
+        #     caja.update_caja(self.pantalla, self.jugador, self.plataformas)
+        #     if caja.colisionar_boss(self.boss_final):
+        #         auch_boss = pygame.mixer.Sound("musica/auch_monster.wav")
+        #         auch_boss.set_volume(0.3)
+        #         auch_boss.play(1)
+        #         self.lista_cajas.remove(caja)
+        #         self.boss_final.recibir_daño(35)
+        #         self.jugador.puntaje += 10000
+        # if self.aparece:
+        #     self.boss_final.update_enemigo(self.pantalla, self.plataformas_rect, self.plataformas_rect[1]["bottom"], self.paredes_rect, self.jugador, 200)
+        
         #self._slave.blit(score, (200, 10))
 
     def leer_inputs(self):
@@ -144,7 +169,7 @@ class Nivel:
         texto_puntaje = self.fuente.render("SCORE: {0}".format(self.jugador.puntaje), True, "White")
         self._slave.blit(texto_puntaje, (200,10))
 
-        texto_proyectiles = self.fuente.render("PROYECTILES: {0}".format(self.jugador.proyectiles), True, "White")
+        texto_proyectiles = self.fuente.render("PROYECTILES: {0}X".format(self.jugador.proyectiles), True, "White")
         self._slave.blit(texto_proyectiles, (580,10))
 
         rectangulo = self.rect_corazon.copy()
@@ -195,15 +220,18 @@ class Nivel:
             self.jugador.puntaje += puntos_extra
             self.nivel_puntaje = self.jugador.puntaje
             self.guardar_datos_nivel()
-            #print("Se guardaron datos partida ganada")
+            print("Se guardaron datos partida ganada")
             return True
         elif self.jugador.perdiste or self.game_over:
-            #print("perdio")
+            print("perdio")
             return False
 
     def dibujar_rectangulos(self):
         
         if get_mode():
+            for pared in self.lista_paredes_rect:
+                for lado in pared:
+                    pygame.draw.rect(self._slave, "Yellow", pared[lado], 5)
             for lado in self.jugador.lados_rectangulo:
                 pygame.draw.rect(self._slave, "Green", self.jugador.lados_rectangulo[lado], 2)
             for plataforma in self.plataformas:
