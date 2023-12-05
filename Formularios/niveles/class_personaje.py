@@ -255,6 +255,8 @@ class Personaje(Objeto_Juego):
         for item in lista_items:
             if self.lados_rectangulo["main"].colliderect(item.lados_rectangulo["main"]):
                 self.puntaje += 100
+                sonido_money = pygame.mixer.Sound("Formularios/recursos/music/sonido_cash.mp3")
+                sonido_money.play()
                 lista_items.remove(item)
 
         return lista_items

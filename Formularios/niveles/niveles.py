@@ -38,7 +38,7 @@ class Nivel:
         self.tiempo_limite = 60000
         self.tiempo_pausado = 0
         self.tiempo_inicio = pygame.time.get_ticks()
-
+        self.tiempo_transcurrido = 0
         ##formularios
         self.game_over = False
 
@@ -52,6 +52,12 @@ class Nivel:
         #score = self.fuente.render("Score: {0}".format(self.jugador.puntaje), True, "White")
         vidas = self.fuente.render("VIDAS:", True, "White")
 
+        if self.tiempo_transcurrido >= self.tiempo_limite:
+            self.jugador.perdiste = True
+            print("tiempo acabado 1")
+        # if self.tiempo_restante < 0:
+        #     self.jugador.perdiste = True  # Marcar el jugador como perdedor
+        #     print("tiempo acabado")
         if not self.pausado:
             self.tiempo_pausado = pygame.time.get_ticks() - self.tiempo_inicio
             if not self.jugador.ganaste and not self.jugador.perdiste:
@@ -65,6 +71,7 @@ class Nivel:
                 self.dibujar_vidas_score()
             else:
                 self.mostrar_mensaje(lista_eventos)
+                print("el jugador perdio o ganó, muestra msj")
         else:
             self.tiempo_pausado = pygame.time.get_ticks()
     
@@ -179,11 +186,12 @@ class Nivel:
 
         if not self.pausado:
             tiempo_actual = pygame.time.get_ticks() 
-            tiempo_transcurrido = tiempo_actual - self.tiempo_inicio
-            self.tiempo_restante = self.tiempo_limite - tiempo_transcurrido 
+            self.tiempo_transcurrido = tiempo_actual - self.tiempo_inicio
+            self.tiempo_restante = self.tiempo_limite - self.tiempo_transcurrido 
         if self.tiempo_restante < 0:
             self.game_over = True
-            self.pausado = True
+            #self.pausado = True
+            self.jugador.perdiste = True
         texto_cronometro = self.fuente.render(f"TIEMPO 00:{self.tiempo_restante // 1000}", True, "White")
         self._slave.blit(texto_cronometro, (10, 10))
 
@@ -195,7 +203,7 @@ class Nivel:
             print("EL JUGADOR GANO")
             form = FormGanador(self._slave, 250,100,1000, 600, "Black", "Black", 1, True)
             form.update(lista_eventos) ##1400 900
-        elif self.jugador.perdiste:
+        elif self.jugador.perdiste or (self.tiempo_restante < 0):
             print("EL JUGADOR PERDIO")
             form = FormPerdedor(self._slave, 250,100,1000, 600, "Black", "Black", 1, True)
             form.update(lista_eventos)
@@ -222,7 +230,8 @@ class Nivel:
             self.guardar_datos_nivel()
             print("Se guardaron datos partida ganada")
             return True
-        elif self.jugador.perdiste or self.game_over:
+        elif self.jugador.perdiste or self.game_over or (self.tiempo_restante < 0):
+            self.pausado = True
             print("perdio")
             return False
 

@@ -33,14 +33,14 @@ class NivelDos(Nivel):
         minibot_techo_2 = MiniBot((40,60), minibot_techo, {"quieto_d":[minibot_techo]}, (760,232), 5, False, proyectil_surface)
         minibot_techo_3 = MiniBot((40,60), minibot_techo, {"quieto_d":[minibot_techo]}, (500,30), 5, False, proyectil_surface)
         robot_caminante_1 = MiniBot((40,42), robot_camina[0], {"camina_d":robot_camina_d, "camina_i":robot_camina}, (533, 222), 2, True, proyectil_surface)
-        robot_caminante_2 = MiniBot((40,42), robot_camina[0], {"camina_d":robot_camina_d, "camina_i":robot_camina}, (710, 525), 2, True, proyectil_surface)
-        robot_caminante_3 = MiniBot((40,42), robot_camina[0], {"camina_d":robot_camina_d, "camina_i":robot_camina}, (861, 190), 2, True, proyectil_surface)
+        robot_caminante_2 = MiniBot((40,42), robot_camina[0], {"camina_d":robot_camina_d, "camina_i":robot_camina}, (324, 324), 2, True, proyectil_surface)
+        robot_caminante_3 = MiniBot((40,42), robot_camina[0], {"camina_d":robot_camina_d, "camina_i":robot_camina}, (527, 256), 2, True, proyectil_surface)
         
         lista_enemigos = [robot_caminante_1, robot_caminante_2, robot_caminante_3, minibot_techo_1, minibot_techo_2, minibot_techo_3]
         #ITEM
         money = Item((24,20), item_dolar[0], {"quieto":item_dolar}, (205,250), False)
         money_2 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (400,300), False)
-        money_3 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (600,350), False)
+        money_3 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (400,220), False)
         money_4 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (502,220), False)
         money_5 = Item((24,20),item_dolar[0], {"quieto":item_dolar}, (129,221), False)
 
@@ -65,8 +65,8 @@ class NivelDos(Nivel):
         bala1 = Item((25,14), bala_item[0], {"quieto":bala_item}, (292, 486), False)
         bala2 = Item((25,14), bala_item[0], {"quieto":bala_item}, (330, 486), False)
         bala3 = Item((25,14), bala_item[0], {"quieto":bala_item}, (31, 377), False)
-
-        lista_elemento = [llave, bala1, bala2,bala3]
+        bala4 = Item((25,14), bala_item[0], {"quieto":bala_item}, (99, 377), False)
+        lista_elemento = [llave, bala1, bala2,bala3,bala4]
 
         #PISO Y TECHO
         piso = Plataforma((w, 210), vacio_surface, (0,510))#490

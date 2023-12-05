@@ -9,7 +9,7 @@ class Manejador_niveles:
     '''Instanciar los niveles al momento de usar la interfaz grafica'''
     def __init__(self, pantalla) -> None:
         self._slave = pantalla
-        self.niveles = {"nivel_uno":  NivelUno, "nivel_dos": NivelDos}
+        self.niveles = {"nivel_uno":  NivelUno, "nivel_dos": NivelDos} #FALTA EL TRES
         self.datos_niveles = self.leer_archivo()
 
     def get_nivel(self, nombre_nivel):
