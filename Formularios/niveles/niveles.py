@@ -167,9 +167,11 @@ class Nivel:
         Se encarga de mostrar un formulario si ganaste o perdiste
         '''
         if self.jugador.ganaste:
+            print("EL JUGADOR GANO")
             form = FormGanador(self._slave, 250,100,1000, 600, "Black", "Black", 1, True)
             form.update(lista_eventos) ##1400 900
         elif self.jugador.perdiste:
+            print("EL JUGADOR PERDIO")
             form = FormPerdedor(self._slave, 250,100,1000, 600, "Black", "Black", 1, True)
             form.update(lista_eventos)
 
@@ -189,12 +191,14 @@ class Nivel:
         '''
         if self.jugador.ganaste:
             self.pausado = True
-            puntos_extra = self.tiempo_restante//1000
+            puntos_extra = self.tiempo_restante//100
             self.jugador.puntaje += puntos_extra
             self.nivel_puntaje = self.jugador.puntaje
             self.guardar_datos_nivel()
+            #print("Se guardaron datos partida ganada")
             return True
         elif self.jugador.perdiste or self.game_over:
+            #print("perdio")
             return False
 
     def dibujar_rectangulos(self):

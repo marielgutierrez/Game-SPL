@@ -215,6 +215,32 @@ class Personaje(Objeto_Juego):
                 #print("Sin colision")
                 self.esta_saltando = True
 
+    def colisiones_enemigos(self, enemigos):
+        '''
+        verifica las colisiones contra enemigos. Resta vidas o mata a los enemigos.
+        '''
+        if self.puede_colisionar:
+            for enemigo in enemigos:
+                if self.lados_rectangulo["right"].colliderect(enemigo.lados_rectangulo["left"]) or self.lados_rectangulo["left"].colliderect(enemigo.lados_rectangulo["right"]) or self.lados_rectangulo["top"].colliderect(enemigo.lados_rectangulo["bottom"]):
+                    self.puede_colisionar = False
+                    self.vidas -= 1
+                    self.tiempo_colision = pygame.time.get_ticks()
+                    self.estado_normal = False
+                    auch = pygame.mixer.Sound("Formularios/niveles/sonidos_personaje/sonido_auch.mp3")
+                    auch.set_volume(0.3)
+                    auch.play(1)
+                    if self.vidas == 0:
+                        self.perdiste = True
+                elif self.lados_rectangulo["bottom"].colliderect(enemigo.lados_rectangulo["top"]):
+                    enemigo.morir()
+                    self.puede_colisionar = False
+                    self.vidas += 1
+                    self.tiempo_colision = pygame.time.get_ticks()
+        tiempo_actual = pygame.time.get_ticks()
+        if not self.puede_colisionar and tiempo_actual - self.tiempo_colision >= self.tiempo_espera_colision:
+            self.puede_colisionar = True
+            self.estado_normal = True
+
     def colision_con_item(self, lista_items):
         '''
         brief: Se encarga de la colision del personaje con cada item
@@ -233,6 +259,8 @@ class Personaje(Objeto_Juego):
         for trap in traps:
             if self.lados_rectangulo["bottom"].colliderect(trap.lados_rectangulo["top"]):
                 self.vidas -= 1
+                if self.vidas == 0:
+                    self.perdiste = True
 
     def efecto_sonido_auch(self):
         '''

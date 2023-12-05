@@ -40,12 +40,12 @@ while True:
             pygame.quit()
             sys.exit()
     
-    # mouse_pos = pygame.mouse.get_pos()
+    mouse_pos = pygame.mouse.get_pos()
     
-    # #Verificar si el mouse ha tocado los lados de la ventana
-    # if event.type == pygame.MOUSEBUTTONDOWN:
-    #             mouse_pos = pygame.mouse.get_pos()
-    #             mostrar_coordenadas(mouse_pos)
+    #Verificar si el mouse ha tocado los lados de la ventana
+    if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                mostrar_coordenadas(mouse_pos)
     
     pantalla.blit(fondo_menu, (0,0))
     form_inicio.update(eventos)

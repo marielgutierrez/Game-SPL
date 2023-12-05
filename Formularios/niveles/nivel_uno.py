@@ -60,8 +60,6 @@ class NivelUno(Nivel):
 
         lista_elemento = [llave, bala1, bala2]
 
-
-
         #PORTAL
         portal = Objeto_Juego((90,80), portal_s, (895, 419))
 
