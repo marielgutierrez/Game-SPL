@@ -10,6 +10,9 @@ from niveles.class_objeto_juego import ObjetoJuego
 
 
 class NivelUno(Nivel):
+    '''
+    Clase derivada, declara los elementos necesarios para el nivel 1 del juego.
+    '''
     def __init__(self, pantalla: pygame.Surface) -> None:
         #TAMAÑO PANTALLA
         w = pantalla.get_width()

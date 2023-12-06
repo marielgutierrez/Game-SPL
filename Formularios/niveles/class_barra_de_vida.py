@@ -1,6 +1,7 @@
 import pygame
 
 class BarraDeVida:
+    '''Clase que representa la barra de vida del robot boss'''
     def __init__(self, posicion, largo, alto) -> None:
         self.posicion = posicion
         self.largo = largo

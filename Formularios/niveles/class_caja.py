@@ -2,6 +2,7 @@ import pygame
 from niveles.class_objeto_juego import ObjetoJuego
 
 class Caja(ObjetoJuego):
+    '''Clase derivada, representa a una caja dentro del juego, sirven para matar al boss'''
     def __init__(self, tamaño: tuple, imagen: pygame.Surface, posicion_inicial) -> None:
         super().__init__(tamaño, imagen, posicion_inicial)
         self.velocidad_caida = 1

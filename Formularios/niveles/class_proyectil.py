@@ -3,6 +3,9 @@ from pygame.locals import *
 from niveles.class_item import Item
 
 class Proyectil(Item):
+    '''
+    Clase que representa al proyectil/bala dentro del juego, maneja sus funciones.
+    '''
     def __init__(self, tamaño: tuple, imagen: pygame.Surface, animaciones: dict, posicion_inicial: tuple, es_llave, direccion) -> None:
         super().__init__(tamaño, imagen, animaciones, posicion_inicial, es_llave)
         #self.cargas = jugador.proyectiles

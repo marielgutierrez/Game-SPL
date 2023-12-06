@@ -5,6 +5,9 @@ from niveles.class_barra_de_vida import BarraDeVida
 from niveles.class_proyectil import Proyectil
 
 class Enemigos(Personaje):
+    '''
+    Clase que representa a los enemigos dentro del juego, maneja las funciones necesarias.
+    '''
     tipo = "enemigos varios"
     def __init__(self, tamaño: tuple, imagen, animaciones: dict, posicion_inicial, velocidad, img_proyectil) -> None: 
         super().__init__(tamaño, imagen, animaciones, posicion_inicial, velocidad, img_proyectil) 
@@ -32,6 +35,7 @@ class Enemigos(Personaje):
 
 
 class MiniBot(Enemigos):
+    '''Clase derivada, maneja las funciones necesarias para el robot que camina o solo vuela'''
     def __init__(self, tamaño: tuple, imagen, animaciones: dict, posicion_inicial, velocidad, es_caminante: bool, img_proyectil) -> None:
         super().__init__(tamaño, imagen, animaciones, posicion_inicial, velocidad, img_proyectil)
         self.es_caminante = es_caminante
@@ -71,6 +75,7 @@ class MiniBot(Enemigos):
 
 
 class FlyBot(Enemigos):
+    '''Clase derivada, maneja las funciones necesarias para el robot que vuela en direcciones aleatorias'''
     def __init__(self, tamaño: tuple, imagen, animaciones: dict, posicion_inicial, velocidad, img_proyectil):
         super().__init__(tamaño, imagen, animaciones, posicion_inicial, velocidad, img_proyectil)
 
@@ -104,6 +109,7 @@ class FlyBot(Enemigos):
             self.muerte(pantalla)
 
 class BossFinal(Enemigos):
+    '''Clase derivada, maneja las funciones necesarias para el robot jefe final'''
     def __init__(self, tamaño: tuple, imagen, animaciones: dict, posicion_inicial, velocidad, img_proyectil) -> None:
         super().__init__(tamaño, imagen, animaciones, posicion_inicial, velocidad, img_proyectil)
         self.barra_de_vida = BarraDeVida((850, 10), 100, 20)
@@ -123,6 +129,7 @@ class BossFinal(Enemigos):
             self.desactivar_movimiento()
 
     def seguir_personaje(self, jugador, pantalla, paredes_lados_rect):
+        ''' Se encarga de seguir al personaje traido por parametro, maneja las animaciones necesarias y colisiones'''
         if self.en_movimiento:
             desplazamiento_x = self.velocidad * self.direccion
             for lado in self.lados_rectangulo:

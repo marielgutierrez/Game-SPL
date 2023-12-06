@@ -85,6 +85,14 @@ personaje_dispara = [
 
 personaje_dispara_i = girar_imagenes(personaje_dispara, True, False)
 
+personaje_salta_dispara = [
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_salta_dispara/0.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_salta_dispara/1.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_salta_dispara/2.png"),
+    pygame.image.load("Formularios/niveles/main-character/punk/punk_salta_dispara/3.png")
+]
+
+personaje_salta_dispara_i = girar_imagenes(personaje_salta_dispara, True, False)
 
 diccionario_animaciones = {}
 diccionario_animaciones["quieto"] = personaje_quieto
@@ -101,6 +109,8 @@ diccionario_animaciones["salta_d_muerte"] = personaje_salta_muerto
 diccionario_animaciones["salta_i_muerte"] = personaje_salta_muerto_i
 diccionario_animaciones["dispara"] = personaje_dispara
 diccionario_animaciones["dispara_i"] = personaje_dispara_i
+diccionario_animaciones["dispara_salta"] = personaje_salta_dispara
+diccionario_animaciones["dispara_salta_i"] = personaje_salta_dispara_i
 
 item_s = [pygame.image.load("Formularios/recursos/llaves/0.png"),
                     pygame.image.load("Formularios/recursos/llaves/1.png"),

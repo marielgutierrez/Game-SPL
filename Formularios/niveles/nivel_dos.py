@@ -10,6 +10,9 @@ from niveles.class_enemy import MiniBot
 from niveles.class_objeto_juego import ObjetoJuego
 
 class NivelDos(Nivel):
+    '''
+    Clase derivada, declara los elementos necesarios para el nivel 2 del juego.
+    '''
     def __init__(self, pantalla: pygame.Surface) -> None:
         #TAMAÑO PANTALLA
         w = pantalla.get_width()
@@ -32,7 +35,7 @@ class NivelDos(Nivel):
         minibot_techo_1 = MiniBot((40,60), minibot_techo, {"quieto_d":[minibot_techo]}, (350,50), 5, False, proyectil_surface)
         minibot_techo_2 = MiniBot((40,60), minibot_techo, {"quieto_d":[minibot_techo]}, (760,232), 5, False, proyectil_surface)
         minibot_techo_3 = MiniBot((40,60), minibot_techo, {"quieto_d":[minibot_techo]}, (500,30), 5, False, proyectil_surface)
-        robot_caminante_1 = MiniBot((40,42), robot_camina[0], {"camina_d":robot_camina_d, "camina_i":robot_camina}, (533, 222), 2, True, proyectil_surface)
+        robot_caminante_1 = MiniBot((40,42), robot_camina[0], {"camina_d":robot_camina_d, "camina_i":robot_camina}, (692, 223), 2, True, proyectil_surface)
         robot_caminante_2 = MiniBot((40,42), robot_camina[0], {"camina_d":robot_camina_d, "camina_i":robot_camina}, (324, 324), 2, True, proyectil_surface)
         robot_caminante_3 = MiniBot((40,42), robot_camina[0], {"camina_d":robot_camina_d, "camina_i":robot_camina}, (527, 256), 2, True, proyectil_surface)
         

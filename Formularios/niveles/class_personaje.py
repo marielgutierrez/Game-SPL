@@ -4,6 +4,9 @@ from niveles.class_objeto_juego import ObjetoJuego
 from niveles.class_proyectil import Proyectil
 
 class Personaje(ObjetoJuego):
+    '''
+    Clase que representa a un personaje dentro del juego. Maneja funciones de su clase base y otras propias.
+    '''
     def __init__(self, tamaño:tuple, imagen, animaciones, posicion_inicial:tuple, velocidad, img_proyectil) -> None:
         super().__init__(tamaño, imagen, posicion_inicial)
         #GRAVEDAD
@@ -49,7 +52,7 @@ class Personaje(ObjetoJuego):
         self.puede_colisionar = True
         self.aparece_boss = True
         self.esta_disparando = False
-        self.tiempo_disparando = 1000
+        self.tiempo_disparando = 500
         self.tiempo_anterior = 0
         self.direccion_dispara = ""
         # #tiempo
@@ -111,6 +114,12 @@ class Personaje(ObjetoJuego):
                 else:
                     self.animar(pantalla, "dispara_i")
                 #print("dispara IZQUIERDA")
+            else:
+                if self.direccion == 1:
+                    self.animar(pantalla, "dispara_salta")
+                    #print("dispara DERECHA")
+                else:
+                    self.animar(pantalla, "dispara_salta_i")
         else:
             match self.que_hace:
                 case "derecha":

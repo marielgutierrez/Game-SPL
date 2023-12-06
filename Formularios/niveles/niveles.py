@@ -4,6 +4,9 @@ from form_ganador import FormGanador
 from form_perdedor import FormPerdedor
 
 class Nivel:
+    '''
+    Clase base, maneja las funciones necesarias para cargar y actualizar los niveles del juego.
+    '''
     def __init__(self, pantalla, w, h, personaje_principal, lista_plataformas, lista_plataformas_rect, imagen_fondo, fuente, items, traps, llave, 
                 lista_armas, portal, nivel_actual:int, aparece:bool, lista_enemigos, boss, lista_paredes_rect, lista_cajas) -> None:
         self._slave = pantalla

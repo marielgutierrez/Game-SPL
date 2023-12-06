@@ -11,6 +11,9 @@ from niveles.class_caja import Caja
 from niveles.class_objeto_juego import ObjetoJuego
 import random
 class NivelTres(Nivel):
+    '''
+    Clase derivada, declara los elementos necesarios para el nivel 3 del juego.
+    '''
     def __init__(self, pantalla: pygame.Surface) -> None:
         #TAMAÑO PANTALLA
         w = pantalla.get_width()

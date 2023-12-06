@@ -1,10 +1,12 @@
 import sqlite3
 
 class BaseDeDatos:
+    '''Clase que contiene las funciones principales para el manejo de base de datos'''
     def __init__(self) -> None:
         self.path_db = "database.db"
 
     def insertar_datos(self, nombre, puntaje, nivel):
+        '''Se encarga de insertar datos en la tabla'''
         with sqlite3.connect(self.path_db) as conexion:
             try:
                 '''# CREATE TABLE
@@ -24,6 +26,7 @@ class BaseDeDatos:
                 print("ERROR! NO se insertaron los datos correctamente")
 
     def traer_datos(self):
+        '''Se encarga de recuperar datos de una tabla'''
         with sqlite3.connect(self.path_db) as conexion:
             try:
                 sentencia = "select nombre, puntaje, nivel from Ranking order by puntaje desc"# limit 3"

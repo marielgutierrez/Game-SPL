@@ -7,7 +7,7 @@ from niveles.nivel_tres import NivelTres
 
 class Manejador_niveles:
     '''
-    Se encarga de instanciar los niveles al momento de usar la interfaz grafica
+    Clase que encarga de instanciar los niveles al momento de usar la interfaz grafica
     '''
     def __init__(self, pantalla) -> None:
         self._slave = pantalla
@@ -15,6 +15,9 @@ class Manejador_niveles:
         self.datos_niveles = self.leer_archivo()
 
     def get_nivel(self, nombre_nivel):
+        '''
+        Se encarga de obtener el nombre del nivel
+        '''
         if nombre_nivel == "nivel_uno":
             return self.niveles[nombre_nivel](self._slave)
         elif self.nivel_desbloqueado(nombre_nivel):
@@ -26,6 +29,9 @@ class Manejador_niveles:
         #return self.niveles[nombre_nivel](self._slave)
     
     def leer_archivo(self):
+        '''
+        Se encarga de leer el archivo con datos de los niveles
+        '''
         try:
             with open('Formularios/desbloqueo_niveles.json', 'r') as archivo:
                 datos_niveles = json.load(archivo)
@@ -34,6 +40,9 @@ class Manejador_niveles:
             print("ERROR! no se abrio el archivo json en desbloquear niveles")
 
     def nivel_desbloqueado(self, nombre_nivel):
+        '''
+        Se encarga de desbloquear el siguiente nivel
+        '''
         match nombre_nivel:
             case "nivel_uno":
                 numero_nivel = 1
