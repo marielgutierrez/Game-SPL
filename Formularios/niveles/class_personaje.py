@@ -1,9 +1,9 @@
 import pygame
 from pygame.locals import *
-from niveles.class_objeto_juego import Objeto_Juego
+from niveles.class_objeto_juego import ObjetoJuego
 from niveles.class_proyectil import Proyectil
 
-class Personaje(Objeto_Juego):
+class Personaje(ObjetoJuego):
     def __init__(self, tamaño:tuple, imagen, animaciones, posicion_inicial:tuple, velocidad, img_proyectil) -> None:
         super().__init__(tamaño, imagen, posicion_inicial)
         #GRAVEDAD

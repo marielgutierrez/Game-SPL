@@ -2,7 +2,7 @@ import pygame
 from niveles.configuraciones import *
 from niveles.class_objeto_juego import *
 
-class Plataforma(Objeto_Juego):
+class Plataforma(ObjetoJuego):
     def __init__(self, tamaño:tuple, imagen:pygame.Surface, posicion_inicial):
         super().__init__(tamaño, imagen, posicion_inicial)
         #CARGA IMAGEN

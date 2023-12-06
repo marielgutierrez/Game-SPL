@@ -8,7 +8,7 @@ from niveles.class_enemy import BossFinal
 from niveles.class_enemy import FlyBot
 from niveles.class_item import Item
 from niveles.class_caja import Caja
-from niveles.class_objeto_juego import Objeto_Juego
+from niveles.class_objeto_juego import ObjetoJuego
 import random
 class NivelTres(Nivel):
     def __init__(self, pantalla: pygame.Surface) -> None:
@@ -50,7 +50,7 @@ class NivelTres(Nivel):
         #FUENTE
         fuente = pygame.font.SysFont("Consolas",20)
         #PORTAL
-        portal = Objeto_Juego((90,80), portal_s, (890, 110))
+        portal = ObjetoJuego((90,80), portal_s, (890, 110))
 
         #LLAVE
         llave = Item((10,20), item_s[0], {"quieto": item_s}, (620,233), True)
@@ -66,8 +66,8 @@ class NivelTres(Nivel):
         #PISO Y TECHO
         piso = Plataforma((w, 200), plataforma_final, (0,490))#490 #510
         techo = Plataforma((w,20), vacio_surface, (0,50))
-        pared_d = Objeto_Juego((20, H), vacio_surface, (W - 30, 0))
-        pared_i = Objeto_Juego((20, H), vacio_surface, (0, 0))
+        pared_d = ObjetoJuego((20, H), vacio_surface, (W - 30, 0))
+        pared_i = ObjetoJuego((20, H), vacio_surface, (0, 0))
         #PLATAFORMAS
         plataformas_1 = Plataforma((120, 30),plataforma3_s, (880, 187))
         plataformas_2 = Plataforma((60, 20),miniplataforma3_s, (429, 250))

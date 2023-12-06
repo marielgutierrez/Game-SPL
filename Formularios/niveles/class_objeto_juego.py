@@ -1,6 +1,6 @@
 import pygame
 
-class Objeto_Juego:
+class ObjetoJuego:
     def __init__(self, tamaño:tuple, imagen:pygame.Surface, posicion_inicial) -> None:
         self.ancho = tamaño[0]
         self.alto = tamaño[1]

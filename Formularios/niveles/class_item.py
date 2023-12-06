@@ -1,8 +1,8 @@
 import pygame
 from niveles.configuraciones import *
-from niveles.class_objeto_juego import Objeto_Juego
+from niveles.class_objeto_juego import ObjetoJuego
 
-class Item(Objeto_Juego):
+class Item(ObjetoJuego):
     def __init__(self,tamaño:tuple, imagen:pygame.Surface, animaciones:dict, posicion_inicial, es_llave):
         super().__init__(tamaño, imagen, posicion_inicial)
         #CARGA IMAGEN

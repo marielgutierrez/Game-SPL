@@ -7,7 +7,7 @@ from niveles.class_plataforma import Plataforma
 from niveles.class_item import Item
 from niveles.class_enemy import BossFinal
 from niveles.class_enemy import MiniBot
-from niveles.class_objeto_juego import Objeto_Juego
+from niveles.class_objeto_juego import ObjetoJuego
 
 class NivelDos(Nivel):
     def __init__(self, pantalla: pygame.Surface) -> None:
@@ -57,7 +57,7 @@ class NivelDos(Nivel):
         fuente = pygame.font.SysFont("Consolas",20)
 
         #PORTAL
-        portal = Objeto_Juego((90,80), portal_s, (890, 110))
+        portal = ObjetoJuego((90,80), portal_s, (890, 110))
 
         #LLAVE
         llave = Item((10,20), item_s[0], {"quieto": item_s}, (620,233), True)
@@ -72,8 +72,8 @@ class NivelDos(Nivel):
         #PISO Y TECHO
         piso = Plataforma((w, 210), vacio_surface, (0,510))#490
         techo = Plataforma((w,40), vacio_surface, (0,50))
-        pared_d = Objeto_Juego((20, H), vacio_surface, (W - 30, 0))
-        pared_i = Objeto_Juego((20, H), vacio_surface, (0, 0))
+        pared_d = ObjetoJuego((20, H), vacio_surface, (W - 30, 0))
+        pared_i = ObjetoJuego((20, H), vacio_surface, (0, 0))
         #PLATAFORMAS
         plataformas_1 = Plataforma((180,50), plataforma_surface, (0, 409))
         plataformas_2 = Plataforma((180,50), plataforma_surface, (265, 358))

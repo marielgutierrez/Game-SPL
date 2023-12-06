@@ -6,7 +6,7 @@ from niveles.class_personaje import Personaje
 from niveles.class_plataforma import Plataforma
 from niveles.class_enemy import BossFinal
 from niveles.class_item import Item
-from niveles.class_objeto_juego import Objeto_Juego
+from niveles.class_objeto_juego import ObjetoJuego
 
 
 class NivelUno(Nivel):
@@ -61,7 +61,7 @@ class NivelUno(Nivel):
         lista_elemento = [llave, bala1, bala2]
 
         #PORTAL
-        portal = Objeto_Juego((90,80), portal_s, (895, 419))
+        portal = ObjetoJuego((90,80), portal_s, (895, 419))
 
         #PISO Y TECHO
         piso = Plataforma((w, 210), vacio_surface, (0,496))#490
